@@ -1,0 +1,28 @@
+{
+    "id": "E596CB1E",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1727819339709.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "id": "be64c1edbc594dd0ac2a5997fe54460c",
+        "name": "bromod1",
+        "title": "bromod1",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 2145711078496,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1727819339709,
+    "read_only": false,
+    "read_only_alternatives": []
+}

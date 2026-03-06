@@ -1,0 +1,28 @@
+{
+    "id": "2177EABE",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1727810941917.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "id": "7b9e0a4991f64160a93a911c6b33be30",
+        "name": "ymod",
+        "title": "ymod",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1727806059,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1727810941917,
+    "read_only": false,
+    "read_only_alternatives": []
+}

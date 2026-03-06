@@ -1,0 +1,1062 @@
+#12/6/2023
+#first attempt at building and using wycoff model with cfi data
+
+# install.packages("fitdistrplus")
+# install.packages("r2glmm")
+# install.packages("tidyverse")
+# install.packages("boot")
+# install.packages("ggeffects")
+# install.packages("patchwork")
+# install.packages("Matrix")
+# install.packages("lme4")
+
+
+library(lmerTest)
+library(tidyverse) #includes dplyr and ggplot
+library(ggeffects)
+library(car)
+
+
+trees <- read.csv("../../../../data/processed/WA_FAI_model_ready.csv")
+
+#print(names(trees))
+
+summary(trees$BAI)
+
+######
+#get response variable 
+trees$log_bai <- log(trees$BAI)
+
+#look at BAI -- much smaller growth increments than PF
+hist(trees$log_bai, breaks = 100, xlim = c(-10,10), xlab = "Log(Basal Area Increment)", main = "Histogram of BAI")
+
+hist(trees$BAI, breaks = 100, xlim = c(-2,2), xlab = "Basal Area Increment", main = "Histogram of BAI")
+
+######
+#QUALITY CONTROL
+#####
+#get BAI where it is not zero
+trees <- trees %>% filter(BAI>0)
+
+#Replace NaN & Inf with NA
+trees[is.na(trees) | trees=="Inf" | trees=="-Inf" ] = NA
+
+#checking for NA's
+na_values <- which(is.na(trees$log_bai))
+anyNA(trees$log_bai)
+max(trees$log_bai)
+
+min(trees$log_bai)
+
+#old version
+#na_values <- which(is.na(trees$SITREE==TRUE))
+
+na_values <- which(is.na(trees$PLOT)) #none
+na_values <- which(is.na(trees$TREE)) #none
+na_values <- which(is.na(trees$INVYR)) #none
+na_values <- which(is.na(trees$SICOND)) #using site index for condition
+trees <- trees[-na_values, ]  # Remove rows with NA values
+
+na_values <- which(is.na(trees$ELEV))
+na_values <- which(is.na(trees$BAL_ln)) 
+na_values <- which(is.na(trees$BAL_ln_dbh_p1))
+na_values <- which(is.na(trees$total_BA))
+na_values <- which(is.na(trees$SLOPE)) 
+max(trees$SLOPE)
+min(trees$SLOPE)
+na_values <- which(is.na(trees$TREE))
+#trees <- trees[-na_values, ]  # Remove rows with NA values
+
+########
+#getting zero's out of BA values
+cfi_BA <- trees[ , c("proportionBA_DF","proportionBA_RA","proportionBA_WH",
+                                  "proportionBA_BM","proportionBA_RC")] 
+
+# Replace NA values with zero within the subset
+cfi_BA[is.na(cfi_BA)] <- 0
+
+# Assign the modified subset back to the original dataframe
+trees[, c("proportionBA_DF", "proportionBA_RA", "proportionBA_WH",
+          "proportionBA_BM", "proportionBA_RC")] <- cfi_BA
+
+#####
+#creating new predictor variables
+######
+trees$dbh_log <- log(trees$DIA)
+trees$dbh_sq<- (trees$DIA)^2
+trees$site_index_log <- log(trees$SICOND)
+
+#%%
+#there's a lot of older stands in this dataset. Let's filter so we're looking at similar age stands
+trees <- trees %>% filter(STDAGE <= 200)
+#####################
+#TEST 1 - DF GROWTH
+###################
+
+#TEST JUST DF log(BAI) 
+trees_df_growth <- trees %>% filter(SPCD %in% "DF")
+
+trees_df_growth$df_wh_interaction <- trees_df_growth$proportionBA_DF*trees_df_growth$proportionBA_WH
+#Get BA mean and sd for later
+Basal_mean <- mean(trees_df_growth$total_BA)
+Basal_sd <- sd(trees_df_growth$total_BA)
+
+#for plotting later
+trees_df_growth_not_scaled <- trees %>% filter(SPCD %in% "DF")
+
+####----SCALING---####
+trees_df_growth$site_index_log <- scale(trees_df_growth$site_index_log)
+trees_df_growth$SLOPE <- scale(trees_df_growth$SLOPE)
+trees_df_growth$ELEV <- scale(trees_df_growth$ELEV)
+trees_df_growth$dbh_sq <- scale(trees_df_growth$dbh_sq)
+trees_df_growth$BAL_ln_dbh_p1 <- scale(trees_df_growth$BAL_ln_dbh_p1)
+trees_df_growth$total_BA <- scale(trees_df_growth$total_BA)
+
+#CHECK SLOPE VALUES -- INF? Looks okay here...
+range(trees_df_growth$SLOPE)
+
+range(trees_df_growth$dbh_sq)
+
+
+#scale all proportion values
+BMmean <- mean(trees_df_growth$proportionBA_BM)
+BMsd <- sd(trees_df_growth$proportionBA_BM)
+trees_df_growth$proportionBA_BM <- scale(trees_df_growth$proportionBA_BM)
+#get mean
+attributes(trees_df_growth$proportionBA_BM)$'scaled:center'
+#get sd
+attributes(trees_df_growth$proportionBA_BM)$'scaled:scale'
+
+RAmean <- mean(trees_df_growth$proportionBA_RA)
+RAsd <- sd(trees_df_growth$proportionBA_RA)
+DFmean <- mean(trees_df_growth$proportionBA_DF)
+DFsd <- sd(trees_df_growth$proportionBA_DF)
+RCmean <- mean(trees_df_growth$proportionBA_RC)
+RCsd <- sd(trees_df_growth$proportionBA_RC)
+WHmean <- mean(trees_df_growth$proportionBA_WH)
+WHsd <- sd(trees_df_growth$proportionBA_WH)
+
+trees_df_growth$proportionBA_RA <- scale(trees_df_growth$proportionBA_RA)
+trees_df_growth$proportionBA_RC <- scale(trees_df_growth$proportionBA_RC)
+trees_df_growth$proportionBA_WH <- scale(trees_df_growth$proportionBA_WH)
+trees_df_growth$proportionBA_DF <- scale(trees_df_growth$proportionBA_DF)
+
+
+
+#making a new variable for the unique tree
+trees_df_growth <- trees_df_growth %>%
+  mutate(uniquetreecall = paste(COUNTYCD, UNITCD, PLOT, SUBP, TREE, sep = ""))
+
+
+#each plot only shows up for one year
+#so plot effect can be nested into year effect so that each PLOT corresponds to year
+#it was measured
+unique_plots <- length(unique(trees_df_growth$PLOT))
+plot_year <-table(trees_df_growth$INVYR, trees_df_growth$PLOT)
+
+# Number of unique combinations of PLOT and INVYR
+sum(plot_year > 0)
+
+
+##############################################################
+#Model Development
+################################################################
+
+base_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                            dbh_log + dbh_sq + #size
+                            BAL_ln_dbh_p1 + total_BA + #comp
+                            (1|INVYR:PLOT), #captures each individual plot and corresponds to the year it was measured
+                          trees_df_growth) 
+
+summary(base_df_growth)
+summary(lm(log_bai ~ predict(base_df_growth), data = trees_df_growth)) #R^2 of .56
+
+
+ra_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                      dbh_log + dbh_sq + #size
+                                      BAL_ln_dbh_p1 + total_BA + #comp
+                                      proportionBA_RA + #sp effect
+                                      (1|INVYR:PLOT), 
+                                    trees_df_growth) 
+summary(ra_df_growth)
+summary(lm(log_bai ~ predict(ra_df_growth), data = trees_df_growth)) #R^2 of .56
+
+
+bm_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_BM + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(bm_df_growth)
+summary(lm(log_bai ~ predict(bm_df_growth), data = trees_df_growth)) #R^2 of .84
+
+rc_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_RC + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(rc_df_growth)
+summary(lm(log_bai ~ predict(rc_df_growth), data = trees_df_growth)) #R^2 of .56
+
+
+wh_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_WH + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(wh_df_growth)
+summary(lm(log_bai ~ predict(wh_df_growth), data = trees_df_growth)) #R^2 of .56
+
+df_df_growth <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_DF + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(df_df_growth)
+summary(lm(log_bai ~ predict(df_df_growth), data = trees_df_growth)) #R^2 of .56
+
+df_df_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_DF*proportionBA_DF + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(df_df_inter)
+
+ra_df_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                 dbh_log + dbh_sq + #size
+                                 BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_DF*proportionBA_RA + #sp effect
+                                 (1|INVYR:PLOT), #random effects
+                               trees_df_growth) 
+summary(ra_df_inter)
+summary(lm(log_bai ~ predict(ra_df_inter), data = trees_df_growth)) #R^2 of .58
+
+ra_wrc_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_RC*proportionBA_RA + #sp effect
+                                (1|INVYR:PLOT), #random effects
+                              trees_df_growth) 
+summary(ra_wrc_inter)
+summary(lm(log_bai ~ predict(ra_wrc_inter), data = trees_df_growth)) #R^2 of .88
+
+ra_bm_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_BM*proportionBA_RA + #sp effect
+                                (1|INVYR:PLOT), #random effects
+                              trees_df_growth)
+summary(ra_bm_inter)
+summary(lm(log_bai ~ predict(ra_bm_inter), data = trees_df_growth)) #R^2 of .84
+
+df_bm_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_BM*proportionBA_DF + #sp effect
+                                (1|INVYR:PLOT), 
+                              trees_df_growth) #random effects
+summary(df_bm_inter) #driven by Douglas-fir in the model
+summary(lm(log_bai ~ predict(df_bm_inter), data = trees_df_growth)) #R^2 of .56
+
+df_rc_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_DF*proportionBA_RC + #sp effect
+                                (1|INVYR:PLOT), #random effects
+                              trees_df_growth)
+summary(df_rc_inter)
+summary(lm(log_bai ~ predict(df_rc_inter), data = trees_df_growth)) #R^2 of .84
+
+df_wh_inter <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_DF*proportionBA_WH + #order of these terms doesn't matter
+                                (1|INVYR)+ (1|PLOT), #random effects
+                              trees_df_growth)
+summary(df_wh_inter)
+summary(lm(log_bai ~ predict(df_wh_inter), data = trees_df_growth)) #R^2 of .84
+
+df_and_wh <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                proportionBA_DF + proportionBA_WH + #order of these terms doesn't matter
+                                (1|INVYR)+ (1|PLOT), #random effects
+                              trees_df_growth)
+summary(df_and_wh)
+summary(lm(log_bai ~ predict(df_and_wh), data = trees_df_growth)) #R^2 of .84
+
+kitchen_sink <- lmerTest::lmer(log_bai ~ 1 + site_index_log + SLOPE + ELEV + #site
+                                dbh_log + dbh_sq + #size
+                                BAL_ln_dbh_p1 + total_BA + #comp
+                                 proportionBA_RC*proportionBA_WH*proportionBA_DF*proportionBA_RA*proportionBA_BM + #sp effect
+                                (1|INVYR)+ (1|PLOT), #random effects
+                              trees_df_growth)
+summary(kitchen_sink)
+summary(lm(log_bai ~ predict(kitchen_sink), data = trees_df_growth)) #R^2 of .84
+########################################################
+#variable selection with AIC
+########################################################
+
+model_labels <- c("base_df_growth", "ra_df_growth", "bm_df_growth", "rc_df_growth", 
+            "wh_df_growth", "df_df_growth", "ra_df_inter", 
+            "ra_wrc_inter", "ra_bm_inter", 
+            "df_bm_inter", "df_rc_inter",  "df_wh_inter", "df_and_wh", "kitchen_sink")
+
+AIC_values <- c(AIC(base_df_growth), AIC(ra_df_growth), AIC(bm_df_growth), AIC(rc_df_growth), 
+                AIC(wh_df_growth), AIC(df_df_growth), AIC(ra_df_inter), 
+                AIC(ra_wrc_inter), AIC(ra_bm_inter),
+                AIC(df_bm_inter), AIC(df_rc_inter), AIC(df_wh_inter), AIC(df_and_wh), AIC(kitchen_sink))
+
+AIC_df <- data.frame(Model = model_labels, AIC = AIC_values)
+delta <- AIC_df$AIC - min(AIC_df$AIC)
+AIC_df$delta <- delta
+
+AIC_df[order(AIC_df$delta), ]
+
+##############################
+table_results <- matrix(data = NA, nrow = 6, ncol = 10)
+
+# Define the labels for the columns
+col_labels <- c("Non-focal species", "# of unique trees", "# of unique plots", "total n",
+                "Interaction?", "Best model?", 
+                "Directionality?", 
+                "coefficient", 
+                "p value", "R^2")
+
+# Assign the labels to the columns
+colnames(table_results) <- col_labels
+
+table_results[ ,1] <- c('base model', 'bigleaf maple', 'Douglas-fir',
+                        'red alder', 'western hemlock', 'western redcedar')
+
+table_results[ , 2] <- length(unique(trees_df_growth$uniquetreecall))
+table_results[ , 3] <- length(unique(trees_df_growth$PLOT))
+table_results[ , 4] <- nrow(trees_df_growth)
+
+#base
+base_sum <- summary(base_df_growth)
+table_results[1 , 10] <- round((summary(lm(log_bai ~ predict(base_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#BM
+bm_sum <- summary(bm_df_growth)
+table_results[2 , 8] <- round(coef(bm_sum)["proportionBA_BM", "Estimate"],2)
+table_results[2 , 9] <- round(coef(bm_sum)["proportionBA_BM", "Pr(>|t|)"],2)
+table_results[2 , 10] <- round((summary(lm(log_bai ~ predict(bm_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#DF
+df_sum <- summary(df_df_growth)
+table_results[3 , 8] <- round(coef(df_sum)["proportionBA_DF", "Estimate"],2)
+table_results[3 , 9] <- round(coef(df_sum)["proportionBA_DF", "Pr(>|t|)"],2)
+table_results[3 , 10] <- round((summary(lm(log_bai ~ predict(df_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#RA 
+ra_sum <- summary(ra_df_growth)
+table_results[4 , 8] <- round(coef(ra_sum)["proportionBA_RA", "Estimate"],2)
+table_results[4 , 9] <- round(coef(ra_sum)["proportionBA_RA", "Pr(>|t|)"],2)
+table_results[4 , 10] <- round((summary(lm(log_bai ~ predict(ra_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#WH
+wh_sum <- summary(wh_df_growth)
+table_results[5 , 8] <- round(coef(wh_sum)["proportionBA_WH", "Estimate"],2)
+table_results[5 , 9] <- round(coef(wh_sum)["proportionBA_WH", "Pr(>|t|)"],2)
+table_results[5 , 10] <- round((summary(lm(log_bai ~ predict(wh_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#WRC
+rc_sum <- summary(rc_df_growth)
+table_results[6 , 8] <- round(coef(rc_sum)["proportionBA_RC", "Estimate"],2)
+table_results[6 , 9] <- round(coef(rc_sum)["proportionBA_RC", "Pr(>|t|)"],2)
+table_results[6 , 10] <- round((summary(lm(log_bai ~ predict(rc_df_growth), data = trees_df_growth)))$adj.r.squared,2)
+
+#view(table_results)
+
+
+########################################################
+########################################################
+#FINAL BEST MODEL? DF_WH_INTER
+########################################################
+########################################################
+#VIF higher of ten would be removed, but nothing here
+vif(rc_df_growth) 
+vif(bm_df_growth) 
+vif(wh_df_growth) 
+vif(ra_df_growth) 
+vif(df_df_growth) 
+vif(df_wh_inter) 
+vif(df_df_inter)
+
+########################################################
+#DIAGNOSTICS
+########################################################
+
+#first thing gonna do is look at diagnostics -- is this a reasonable fit?
+quantile(residuals(rc_df_growth)) #Q1 and Q3 should be about the same; Q1 should be -.25 
+mean(residuals(rc_df_growth)) #should be about zero so we're close
+
+quantile(residuals(bm_df_growth)) ##not perfectly distributed
+mean(residuals(bm_df_growth)) 
+
+quantile(residuals(wh_df_growth)) ##not perfectly distributed
+mean(residuals(wh_df_growth)) #should be about zero so we're close
+
+quantile(residuals(ra_df_growth)) #Q1 and Q3 should be about the same; Q1 should be -.25 
+mean(residuals(ra_df_growth)) #should be about zero so we're close
+
+quantile(residuals(df_df_growth)) ##better distributed
+mean(residuals(df_df_growth)) 
+
+quantile(residuals(df_wh_inter)) ##better distributed
+mean(residuals(df_wh_inter)) 
+
+## resids vs fitted
+plot(fitted(rc_df_growth), residuals(rc_df_growth), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+#note: In a well-behaved plot of residuals vs. fitted values: 
+#The residuals bounce around the x-axis randomly; they don't smile or frown. 
+#No residuals stand out from the others, so there are no obvious outliers.
+
+#all show similar clumping of residuals at higher values, but overall pretty good
+plot(fitted(bm_df_growth), residuals(bm_df_growth), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+plot(fitted(wh_df_growth), residuals(wh_df_growth), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+plot(fitted(ra_df_growth), residuals(ra_df_growth), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+plot(fitted(df_df_growth), residuals(df_df_growth), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+plot(fitted(df_wh_inter), residuals(df_wh_inter), pch = 16, cex = .4,
+     xlab = "Fitted", ylab = "Residuals",
+     main = "Residuals vs fitted")
+abline(h=0, lty = "dashed")
+
+#no big changes for any of these, okay--not perfect fit
+qqnorm(residuals(rc_df_growth), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(rc_df_growth))
+
+qqnorm(residuals(bm_df_growth), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(bm_df_growth))
+
+qqnorm(residuals(wh_df_growth), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(wh_df_growth))
+
+qqnorm(residuals(ra_df_growth), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(ra_df_growth))
+
+qqnorm(residuals(df_df_growth), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(df_df_growth))
+
+qqnorm(residuals(df_wh_inter), main = "QQ plot (residuals)", pch = 16)
+qqline(residuals(df_wh_inter))
+
+#Checking residual errors for random effects
+qqnorm(unlist(ranef(rc_df_growth)$INVYR), main = "QQ plot (Growth Year REs)", pch = 16)
+qqline(unlist(ranef(rc_df_growth)$INVYR))
+
+
+#NEXT: look at histograms of variables and residuals 
+
+#shapiro.test(residuals(rc_df_growth))
+
+########################################################
+plot(trees_df_growth$log_bai, predict(rc_df_growth), xlim = c(-6,2), ylim = c(-6, 2))
+#We should see a 1:1 relationship 
+
+summary(lm(trees_df_growth$log_bai ~ predict(rc_df_growth))) #slope ideally equals one and we're far away here
+
+
+#%%
+########################################################
+#####################
+#Graphing Effects of other species on DF
+###################
+########################################################
+#%%
+
+##===== doing other species with DF in a loop ==####
+
+#proving how to reverse normalization
+#############
+# range(df_growth_data_proportionBA_RC$proportionBA_RC)
+# RCmean <- mean(df_growth_data_proportionBA_RC$proportionBA_RC)
+# RCsd <- sd(df_growth_data_proportionBA_RC$proportionBA_RC)
+# df_growth_data_proportionBA_RC$proportionBA_RC <- (df_growth_data_proportionBA_RC$proportionBA_RC - mean(df_growth_data_proportionBA_RC$proportionBA_RC)) / sd(df_growth_data_proportionBA_RC$proportionBA_RC)
+# range(df_growth_data_proportionBA_RC$proportionBA_RC)
+# 
+# df_growth_data_proportionBA_RC$proportionBA_RC <- df_growth_data_proportionBA_RC$proportionBA_RC*RCsd + RCmean 
+# range(df_growth_data_proportionBA_RC$proportionBA_RC)
+
+
+########################################################
+#FINAL PLOTTING MEIKE METHOD - WRC
+########################################################
+#df_growth_data_proportionBA_RC$proportionBA_RC <- (df_growth_data_proportionBA_RC$proportionBA_RC - mean(df_growth_data_proportionBA_RC$proportionBA_RC)) / sd(df_growth_data_proportionBA_RC$proportionBA_RC)
+#df_growth_data_proportionBA_RC$proportionBA_RC <- df_growth_data_proportionBA_RC$proportionBA_RC*RCsd + RCmean 
+
+range(trees_df_growth$proportionBA_RC)
+#Get model predictions
+final.RC.model.df.growth.pred <- ggpredict(rc_df_growth,
+                                    terms=c("proportionBA_RC [-.4:9.68, by = 0.5]"))
+
+#Store predictions and confidence intervals in a dataframe
+final.RC.model.df.growth.df <-data.frame(prop_BA =(((final.RC.model.df.growth.pred$x*RCsd) + RCmean)),
+                                       Pred= exp(final.RC.model.df.growth.pred$predicted), #back transforming bai from logged version
+                                       CIlow=exp(final.RC.model.df.growth.pred$conf.low),
+                                       CIhigh=exp(final.RC.model.df.growth.pred$conf.high))
+final.RC.model.df.growth.df$RC.Title <- "Western Redcedar"
+
+final.RC.DF.model.pred.df.plot <- ggplot(data = final.RC.model.df.growth.df, aes(x = prop_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2, linetype = "dashed")+
+  labs(x = "proportion western redcedar", y = "", color = " ")+
+  xlim(0, 1) +
+  ylim(0, .75)+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  theme(axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        strip.text= element_text(size = 14, color="white"),
+         strip.background = element_rect(fill = "lightblue3"),
+         panel.background = element_rect(fill = "white"),
+         panel.grid = element_line(color = "grey90"),
+          axis.text.y = element_blank()) +  # Remove y-axis labels for ticks
+  facet_grid(. ~ RC.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
+  annotate("text", x = 0.25, y = 0.65, label = paste("p-value = .9"), size = 4)
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .87")), size = 4)
+
+
+final.RC.DF.model.pred.df.plot
+
+test <- summary(rc_df_growth)
+test
+round(test$coefficients[7,5],3)
+summary(lm(log_bai ~ predict(rc_df_growth), data = trees_df_growth)) #R^2 of .53
+
+#add Looes line to this plot
+#plot(trees$BAI, trees$proportionBA_RC)
+
+########################################################
+#FINAL PLOTTING MEIKE METHOD - RED ALDER
+########################################################
+
+range(trees_df_growth$proportionBA_RA)
+#Get model predictions
+final.RA.DF.model.pred <- ggpredict(ra_df_growth,
+                                    terms=c("proportionBA_RA [-.2:12.47, by = 0.5]"))
+#Store predictions and confidence intervals in a dataframe
+final.RA.DF.model.pred.df <-data.frame(prop_BA =(((final.RA.DF.model.pred$x*RAsd) + RAmean)), #reversing normalization
+                                         Pred= exp(final.RA.DF.model.pred$predicted), #back transforming bai from logged version
+                                         CIlow=exp(final.RA.DF.model.pred$conf.low),
+                                         CIhigh=exp(final.RA.DF.model.pred$conf.high))
+
+final.RA.DF.model.pred.df$RA.Title <- "Red Alder"
+
+final.RA.DF.model.pred.df.plot <- ggplot(data = final.RA.DF.model.pred.df, aes(x = prop_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2)+
+  labs(x = "proportion red alder", y = "DF BAI (ft"^2~"/year)", color = " ")+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  xlim(0, 1) +
+  ylim(0, .75)+
+  theme(axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        strip.text= element_text(size = 14, color="white"),
+        strip.background = element_rect(fill = "lightblue3"),
+        panel.background = element_rect(fill = "white"),
+        panel.grid = element_line(color = "grey90"))+
+        #axis.text.y = element_blank()) +  # Remove y-axis labels for ticks
+  facet_grid(. ~ RA.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
+  annotate("text", x = 0.25, y = 0.65, label = paste("p-value = < 0.001"), size = 4) 
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .89")), size = 4)
+
+final.RA.DF.model.pred.df.plot
+
+
+test <- summary(ra_df_growth)
+test
+round(test$coefficients[9,5], 3)
+summary(lm(log_bai ~ predict(ra_df_growth), data = trees_df_growth)) #R^2 of .84
+
+
+########################################################
+#FINAL PLOTTING MEIKE METHOD - WH
+########################################################
+summary(wh_df_growth)
+range(trees_df_growth$proportionBA_WH)
+
+#Get model predictions
+final.WH.DF.model.pred <- ggpredict(wh_df_growth,
+                                    terms=c("proportionBA_WH [-.599:6.01, by = 0.5]"))
+#Store predictions and confidence intervals in a dataframe
+final.WH.DF.model.pred.df <-data.frame(prop_BA =(((final.WH.DF.model.pred$x*WHsd) + WHmean)), #reversing normalization
+                                       Pred= exp(final.WH.DF.model.pred$predicted), #back transforming bai from logged version
+                                       CIlow=exp(final.WH.DF.model.pred$conf.low),
+                                       CIhigh=exp(final.WH.DF.model.pred$conf.high))
+final.WH.DF.model.pred.df$WH.Title <- "Western Hemlock"
+
+final.WH.DF.model.pred.df.plot <- ggplot(data = final.WH.DF.model.pred.df, aes(x = prop_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2)+
+  labs(x = "proportion western hemlock", y = "DF BAI (ft"^2~"/year)", color = " ")+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  xlim(0, 1) +
+  ylim(0, .75)+
+  theme(axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        strip.text= element_text(size = 14, color="white"),
+        strip.background = element_rect(fill = "lightblue3"),
+        panel.background = element_rect(fill = "white"),
+        panel.grid = element_line(color = "grey90")) +  # Remove y-axis labels for ticks
+  facet_grid(. ~ WH.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
+  annotate("text", x = 0.25, y = 0.65, label = paste("p-value = < 0.001"), size = 4) 
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .83")), size = 4)
+
+final.WH.DF.model.pred.df.plot
+
+test <- summary(wh_df_growth)
+test
+test$coefficients[8,5]
+summary(lm(log_bai ~ predict(wh_df_growth), data = trees_df_growth)) 
+
+
+########################################################
+#FINAL PLOTTING MEIKE METHOD - BM
+########################################################
+summary(bm_df_growth)
+range(trees_df_growth$proportionBA_BM)
+
+#Get model predictions
+final.BM.DF.model.pred <- ggpredict(bm_df_growth,
+                                    terms=c("proportionBA_BM [-.16:19.7, by = 0.5]"))
+#Store predictions and confidence intervals in a dataframe
+final.BM.DF.model.pred.df <-data.frame(prop_BA =(((final.BM.DF.model.pred$x*BMsd) + BMmean)), #reversing normalization
+                                       Pred= exp(final.BM.DF.model.pred$predicted), #back transforming bai from logged version
+                                       CIlow=exp(final.BM.DF.model.pred$conf.low),
+                                       CIhigh=exp(final.BM.DF.model.pred$conf.high))
+final.BM.DF.model.pred.df$BM.Title <- "Bigleaf Maple"
+
+final.BM.DF.model.pred.df.plot <- ggplot(data = final.BM.DF.model.pred.df, aes(x = prop_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2, linetype = "dashed") +
+  labs(x = "proportion bigleaf maple", y = "DF BAI (ft"^2~"/year)", color = " ")+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  xlim(0, 1) +
+  ylim(0, .75)+
+  theme(axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        strip.text= element_text(size = 14, color="white"),
+        strip.background = element_rect(fill = "lightblue3"),
+        panel.background = element_rect(fill = "white"),
+        panel.grid = element_line(color = "grey90"))+
+  facet_grid(. ~ BM.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black")))+
+  annotate("text", x = 0.25, y = 0.65, label = paste("p-value = 0.06"), size = 4) 
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .88")), size = 4)
+
+final.BM.DF.model.pred.df.plot
+
+test <- summary(bm_df_growth)
+test
+test$coefficients[5,5]
+summary(lm(log_bai ~ predict(bm_df_growth), data = trees_df_growth)) 
+
+
+########################################################
+#FINAL PLOTTING MEIKE METHOD - DF
+########################################################
+summary(df_df_growth)
+range(trees_df_growth$proportionBA_DF)
+
+#Get model predictions
+final.DF.DF.model.pred <- ggpredict(df_df_growth,
+                                    terms=c("proportionBA_DF [-3.44:1.2, by = 0.5]"))
+#Store predictions and confidence intervals in a dataframe
+final.DF.DF.model.pred.df <-data.frame(prop_BA =(((final.DF.DF.model.pred$x*DFsd) + DFmean)), #reversing normalization
+                                       Pred= exp(final.DF.DF.model.pred$predicted), #back transforming bai from logged version
+                                       CIlow=exp(final.DF.DF.model.pred$conf.low),
+                                       CIhigh=exp(final.DF.DF.model.pred$conf.high))
+
+final.DF.DF.model.pred.df$DF.Title <- "Douglas-fir"
+
+final.DF.DF.model.pred.df.plot <- ggplot(data = final.DF.DF.model.pred.df, aes(x = prop_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2)+
+  labs(x = "proportion Douglas-fir", y = "", color = " ")+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  xlim(0, 1) +
+  ylim(0, .75)+theme(axis.title.x = element_text(size = 14),
+                    axis.title.y = element_text(size = 14),
+                    strip.text= element_text(size = 14, color="white"),
+                    strip.background = element_rect(fill = "lightblue3"),
+                    panel.background = element_rect(fill = "white"),
+                    panel.grid = element_line(color = "grey90"),
+                    axis.text.y = element_blank()) +  # Remove y-axis labels for ticks
+  facet_grid(. ~ DF.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black")))+
+  annotate("text", x = 0.25, y = 0.65, label = paste("p-value = < .001"), size = 4)
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .84")), size = 4)
+
+final.DF.DF.model.pred.df.plot
+
+test <- summary(df_df_growth)
+test
+test$coefficients[7]
+summary(lm(log_bai ~ predict(df_df_growth), data = trees_df_growth)) #R^2 of .84
+
+########################################################
+library(ggpubr)
+
+library(gridExtra)
+layout_matrix <- rbind(c(1, 1, 2, 2, 3, 3),
+                       c(6, 4, 4, 5, 5, 6))
+#removing wh because interaction was significant: final.WH.DF.model.pred.df.plot
+#saving matrix format:
+#g <- grid.arrange(final.BM.DF.model.pred.df.plot, final.DF.DF.model.pred.df.plot, final.RA.DF.model.pred.df.plot,
+#         final.RC.DF.model.pred.df.plot, layout_matrix = layout_matrix)
+
+g <- grid.arrange(final.BM.DF.model.pred.df.plot, final.DF.DF.model.pred.df.plot, 
+                  final.RA.DF.model.pred.df.plot, final.RC.DF.model.pred.df.plot, nrow = 2)
+ggsave(filename = "../../../../figures/FIA/DF/lmer_df_growth_outcomesv2.png", g,
+       dpi = 800, #800 dots per inch so really high resolution
+       width = 10, 
+       height =8, 
+       units = "in")
+
+ggsave(filename = "../../../../figures/FIA/DF/wh.png", final.WH.DF.model.pred.df.plot,
+       dpi = 800, #800 dots per inch so really high resolution
+       width = 10, 
+       height =8, 
+       units = "in")
+########################################################
+#Meike plot for Total BA using best model: df_wh_inter
+########################################################
+#NEED TO UPDATE THIS
+range(trees_df_growth$total_BA)
+#Get model predictions
+BA.DF.model.pred <- ggpredict(ra_df_inter, #using second best model here
+                                    terms=c("total_BA [-1.8:3.14, by = 0.5]"))
+
+#Store predictions and confidence intervals in a dataframe
+BA.DF.model.pred.df <-data.frame(total_BA =(((BA.DF.model.pred$x*Basal_sd) + Basal_mean)), #reversing normalization
+                                       Pred= exp(BA.DF.model.pred$predicted), #back transforming bai from logged version
+                                       CIlow=exp(BA.DF.model.pred$conf.low),
+                                       CIhigh=exp(BA.DF.model.pred$conf.high))
+
+BA.DF.model.pred.df$BA.Title <- "Basal Area"
+
+BA.DF.model.pred.df.plot <- ggplot(data = BA.DF.model.pred.df, aes(x = total_BA, y = Pred)) +
+  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 1.2)+
+  labs(x = "Basal Area", y = "DF BAI", color = " ")+
+  geom_ribbon(aes(ymin = CIlow, ymax = CIhigh), alpha = 0.2) +  # Add confidence intervals
+  xlim(0, 400) +
+  ylim(0, .75)+theme(axis.title.x = element_text(size = 14),
+                     axis.title.y = element_text(size = 14),
+                     strip.text= element_text(size = 14, color="white"),
+                     strip.background = element_rect(fill = "lightblue3"),
+                     panel.background = element_rect(fill = "white"),
+                     panel.grid = element_line(color = "grey90"))+
+  facet_grid(. ~ BA.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black")))+
+  annotate("text", x = 250, y = 0.65, label = paste("p-value = < 0.001"), size = 4)
+#  annotate("text", x = 0.2, y = 0.6, label = expression(paste("R"^"2", " = .84")), size = 4)
+
+BA.DF.model.pred.df.plot
+summary(ra_df_inter)
+
+ggsave(filename = "../../../../figures/FIA/DF/Basal_area.png", BA.DF.model.pred.df.plot,
+       dpi = 800, #800 dots per inch so really high resolution
+       width = 10, 
+       height =8, 
+       units = "in")
+
+
+########################################################
+#Explanatory plots with non-scaled data 
+########################################################
+#plots that explain something
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RA, y = log_bai, color = BAL_ln_dbh_p1))+
+  geom_point() +
+  scale_color_gradient(low = "#67c9ff", high = "red") +
+  theme_light()
+
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RC, y = log_bai, color = BAL_ln_dbh_p1))+
+  geom_point() +
+  scale_color_gradient(low = "#67c9ff", high = "red") +
+  theme_light()
+
+#are WRC plots influenced by big trees in growth? Yes!
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RC, y = dbh_log, color = log_bai))+
+  geom_point(aes(size = log_bai, color = log_bai), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+#do plots with WRC have bigger trees? Maybe but not so clear...
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RC, y = proportionBA_DF, color = dbh_log))+
+  geom_point(aes(size = dbh_log, color = dbh_log), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+#are WRC plots less dense? Not really?
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_DF, y = total_BA, color = dbh_log))+
+  geom_point(aes(size = dbh_log, color = dbh_log), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RC, y = total_BA, color = dbh_log))+
+  geom_point(aes(size = dbh_log, color = dbh_log), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+
+##############################
+#scaled Douglas-fir dataframe
+
+#is growth influenced by age for RC and WH? Not super clearly 
+ggplot(trees_df_growth, aes(x = proportionBA_RC, y = STDAGE, color = log_bai))+
+  geom_point(aes(size = log_bai, color = log_bai), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+ggplot(trees_df_growth, aes(x = proportionBA_WH, y = STDAGE, color = log_bai))+
+  geom_point(aes(size = log_bai, color = log_bai), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+
+#plots that don't explain much
+
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_RC, y = STDAGE, color = log_bai))+
+  geom_point(aes(size = log_bai, color = log_bai), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "#67c9ff", high = "red") +
+  theme_light()
+
+ggplot(trees_df_growth_not_scaled, aes(x = BAL_ln_dbh_p1, y = BAI, color = proportionBA_RA))+
+  geom_point() +
+  scale_color_gradient(low = "#67c9ff", high = "red") +
+  theme_light()
+
+ggplot(trees_df_growth_not_scaled, aes(x = total_BA , y = log_bai))+
+  geom_point(aes(size = proportionBA_RA, color = proportionBA_RA)) +
+  scale_color_gradient( high = "red",low = "#67c9ff") +
+  theme_light()
+
+ggplot(trees_df_growth_not_scaled, aes(x = proportionBA_DF , y = proportionBA_RA))+
+  geom_point(aes(size = log_bai, color = log_bai), stroke = NA, shape = 20) +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_light()
+
+ggplot(trees_df_growth_not_scaled, aes(x = site_index_log, y = log_bai, color = proportionBA_RA))+
+  geom_point() +
+  scale_color_gradient(low = "#67c9ff", high = "red") +
+  theme_light()
+
+########################################################
+#Surface plots
+########################################################
+# install.packages("plotly")
+# library(plotly)
+# library(lattice)
+# 
+# range(scaled_df_ra_trees_df_growth$proportionBA_RA)
+# proportionBA_RA <- seq(-.08, 4.87, length.out = 100)
+# 
+# range(scaled_df_ra_trees_df_growth$total_BA)
+# total_BA <- seq(-1.47, 26.89, length.out = 100)
+# 
+# g <- expand.grid(proportionBA_RA = scaled_df_ra_trees_df_growth$proportionBA_RA, RC = scaled_df_ra_trees_df_growth$proportionBA_RC)
+# g <- na.omit(g)
+# reg <- lm(log_bai ~ RC*proportionBA_RA, scaled_df_ra_trees_df_growth)
+# g$log_bai <- predict(reg, g)
+# 
+# wf <- wireframe(log_bai ~ total_BA*proportionBA_RA, g, shade = TRUE, zlab = "log_bai",
+#                 xlab = "total_BA", ylab = "proportionBA_RA")
+# 
+# wf
+
+########################################################
+#DF and WH Interaction Plot
+########################################################
+
+########################################################
+#interaction plot final
+########################################################
+library(effects)
+summary(ra_df_inter)
+# Specify custom grids with more points for each predictor variable
+custom_grid <- list(proportionBA_DF = seq(min(trees_df_growth$proportionBA_DF), max(trees_df_growth$proportionBA_DF), length.out = 100),
+                    proportionBA_RA = seq(min(trees_df_growth$proportionBA_RA), max(trees_df_growth$proportionBA_RA), length.out = 100))
+
+
+#get df and wh interaction
+ra_df_effects <- as.data.frame(Effect(c("proportionBA_DF","proportionBA_RA"), mod = ra_df_inter, xlevels = custom_grid))
+
+#back transforming data
+ra_df_effects$proportionBA_DF <- (ra_df_effects$proportionBA_DF*DFsd) + DFmean
+ra_df_effects$proportionBA_RA <- (ra_df_effects$proportionBA_RA*RAsd) + RAmean
+ra_df_effects$fit <- exp(ra_df_effects$fit)
+
+
+#filter this to remove any plots that don't add to one
+ra_df_effects <- ra_df_effects %>%
+  filter((proportionBA_DF + proportionBA_RA) <= 1)
+
+ra_df_effects$RADF.Title <- "RA and DF Interaction Plot"
+
+#this works just takes a while
+df_ra_interaction_plot <- ggplot(data = ra_df_effects, aes(x = proportionBA_DF, y = proportionBA_RA) ) +
+  geom_raster(aes(fill=fit), interpolate = FALSE) +
+  scale_fill_viridis_c(option = "B") + # Adjust color scale if needed
+  labs(x = "Douglas-fir BA Proporiton", y = "Red Alder BA Proportion", color = " ", fill = "DF BAI")+
+  theme_light() +
+  xlim(0, 1) +
+  ylim(0, 1) +
+  theme(axis.title.x = element_text(size = 14),
+         axis.title.y = element_text(size = 14),
+         strip.text= element_text(size = 14, color="white"),
+         strip.background = element_rect(fill = "lightblue3"),
+         panel.background = element_rect(fill = "white"),
+         panel.grid = element_line(color = "grey90")) +
+  facet_grid(. ~ RADF.Title) +
+  guides(linetype = guide_legend(override.aes = list(color = "black")))+
+  annotate("text", x = 250, y = 0.65, label = paste("p-value = < 0.001"), size = 4)
+
+df_ra_interaction_plot
+
+ggsave(filename = "../../../../figures/FIA/DF/ra_df_interaction_raster.png", df_ra_interaction_plot,
+       dpi = 800, #800 dots per inch so really high resolution
+       width = 8, 
+       height =6,
+       units = "in")
+################################################
+#surface plots
+################################################
+library(plotly)
+################################################
+################################################
+Sys.setenv("plotly_username"="sedixon")
+Sys.setenv("plotly_api_key"="8VrTzSckAQFVKEqKbjcu")
+
+
+ra_df_effects
+
+# min_z <- round(min(ra_df_effects$fit),2)
+# max_z <- round(max(ra_df_effects$fit),2)
+# z_ticks <- seq(min_z, max_z, length.out = 6) 
+
+ra_df_interaction_surface <- plot_ly(ra_df_effects, x = ~proportionBA_DF, y = ~proportionBA_RA, z = ~fit,
+                                     color = ~fit) %>% add_markers() 
+
+ra_df_interaction_surface <-        layout(ra_df_interaction_surface,
+                                    scene = list(xaxis = list(title = "DF Basal Area %"),
+                                                 yaxis = list(title = "RA Basal Area %"),
+                                                 zaxis = list(title = "DF BAI growth", tickmode = "array", 
+                                                              tickvals = c(.06, .08, .1, .12), ticktext = c(.06, .08, .1, .12)),
+                                                 colorbar = "DF BAI growth"),
+                                    margin = list(l = 25, r = 25, b = 25, t = 25)) %>% 
+                                    colorbar(title = "DF BAI growth", x = 1, y = .75)
+#colorbar(wh_df_interaction_surface, title = "DF BAI growth")
+
+ra_df_interaction_surface
+
+#
+plotly_IMAGE(ra_df_interaction_surface, format = "png", 
+             out_file = "../../../../figures/FIA/DF/ra_df_interaction_surface.png",
+             width = 1000, height = 800, margin = list(t = 100, b = 100, l = 100))
+
+
+########################################################
+#interaction plot western hemlock
+########################################################
+summary(df_wh_inter)
+# Specify custom grids with more points for each predictor variable
+custom_grid <- list(proportionBA_DF = seq(min(trees_df_growth$proportionBA_DF), max(trees_df_growth$proportionBA_DF), length.out = 100),
+                    proportionBA_WH = seq(min(trees_df_growth$proportionBA_WH), max(trees_df_growth$proportionBA_WH), length.out = 100))
+
+
+#get df and wh interaction
+wh_df_effects <- as.data.frame(Effect(c("proportionBA_DF","proportionBA_WH"), mod = df_wh_inter, xlevels = custom_grid))
+
+#back transforming data
+wh_df_effects$proportionBA_DF <- (wh_df_effects$proportionBA_DF*DFsd) + DFmean
+wh_df_effects$proportionBA_WH <- (wh_df_effects$proportionBA_WH*WHsd) + WHmean
+wh_df_effects$fit <- exp(wh_df_effects$fit)
+
+
+#filter this to remove any plots that don't add to one
+wh_df_effects <- wh_df_effects %>%
+  filter((proportionBA_DF + proportionBA_WH) <= 1)
+
+
+wh_df_interaction_surface <- plot_ly(wh_df_effects, x = ~proportionBA_DF, y = ~proportionBA_WH, z = ~fit,
+                                     color = ~fit) %>% add_markers() 
+
+wh_df_interaction_surface <-  layout(ra_df_interaction_surface,
+                                           scene = list(xaxis = list(title = "DF Basal Area %"),
+                                                        yaxis = list(title = "WH Basal Area %"),
+                                                        zaxis = list(title = "DF BAI growth", tickmode = "array", 
+                                                                     tickvals = c(.06, .08, .1, .12), ticktext = c(.06, .08, .1, .12)),
+                                                        colorbar = "DF BAI growth"),
+                                           margin = list(l = 25, r = 25, b = 25, t = 25)) %>% 
+                                            colorbar(title = "DF BAI growth", x = 1, y = .75)
+#colorbar(wh_df_interaction_surface, title = "DF BAI growth")
+
+wh_df_interaction_surface
+
+#
+plotly_IMAGE(wh_df_interaction_surface, format = "png", 
+             out_file = "../../../../figures/FIA/DF/wh_df_interaction_surface.png",
+             width = 1000, height = 800, margin = list(t = 100, b = 100, l = 100))
+
+
+########################################################
+#interaction plot final WRC
+########################################################
+summary(df_rc_inter)
+# Specify custom grids with more points for each predictor variable
+custom_grid <- list(proportionBA_DF = seq(min(trees_df_growth$proportionBA_DF), max(trees_df_growth$proportionBA_DF), length.out = 100),
+                    proportionBA_RC = seq(min(trees_df_growth$proportionBA_RC), max(trees_df_growth$proportionBA_RC), length.out = 100))
+
+
+#get df and wh interaction
+rc_df_effects <- as.data.frame(Effect(c("proportionBA_DF","proportionBA_RC"), mod = df_rc_inter, xlevels = custom_grid))
+
+#back transforming data
+rc_df_effects$proportionBA_DF <- (rc_df_effects$proportionBA_DF*DFsd) + DFmean
+rc_df_effects$proportionBA_RC <- (rc_df_effects$proportionBA_RC*RCsd) + RCmean
+rc_df_effects$fit <- exp(rc_df_effects$fit)
+
+
+#filter this to remove any plots that don't add to one
+rc_df_effects <- rc_df_effects %>%
+  filter((proportionBA_DF + proportionBA_RC) <= 1)
+
+
+rc_df_interaction_surface <- plot_ly(rc_df_effects, x = ~proportionBA_DF, y = ~proportionBA_RC, z = ~fit,
+                                     color = ~fit) %>% add_markers() 
+
+rc_df_interaction_surface <-  layout(rc_df_interaction_surface,
+                                     scene = list(xaxis = list(title = "DF Basal Area %"),
+                                                  yaxis = list(title = "RC Basal Area %"),
+                                                  zaxis = list(title = "DF BAI growth", tickmode = "array", 
+                                                               tickvals = c(.06, .08, .1, .12), ticktext = c(.06, .08, .1, .12)),
+                                                  colorbar = "DF BAI growth"),
+                                     margin = list(l = 25, r = 25, b = 25, t = 25)) %>% 
+  colorbar(title = "DF BAI growth", x = 1, y = .75)
+#colorbar(wh_df_interaction_surface, title = "DF BAI growth")
+
+rc_df_interaction_surface
+
+#
+plotly_IMAGE(rc_df_interaction_surface, format = "png", 
+             out_file = "../../../../figures/FIA/DF/rc_df_interaction_surface.png",
+             width = 1000, height = 800, margin = list(t = 100, b = 100, l = 100))
+

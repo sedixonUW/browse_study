@@ -1,0 +1,24 @@
+{
+    "id": "6E76F616",
+    "path": "~/PhD/CFI/pack_forest_cfi/notebooks/data_analysis/wycoff_model/wycoff_lmer/WA_FIA/FIA_DF_growthv.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "3143125157",
+    "contents": "",
+    "dirty": false,
+    "created": 1728499125879.0,
+    "source_on_save": false,
+    "relative_order": 10,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1714581639,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1714581639,
+    "read_only": false,
+    "read_only_alternatives": []
+}

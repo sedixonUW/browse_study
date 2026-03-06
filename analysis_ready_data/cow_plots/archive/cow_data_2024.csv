@@ -1,0 +1,972 @@
+﻿east_west,plot,in_out,tree,species,ht_ft,ht_m,diameter,leaders,ht_at_fork,dfv_mm,deformity_y_n,deformity_type,rotation_risk_y_n,deformity_ht,deformity_dfs_mm,comments
+East,1,Out,1,WRC,4.8,1.46,11.12,1,,,Y,SK,Y,0.22,0,
+East,1,Out,1,,, ,,,,,Y,SK,Y,1.11,20,
+East,1,Out,2,DF,10.6,3.23,27.8,1,,,N,,N,,,
+East,1,Out,3,DF,14.4,4.39,62.56,1,,,N ,,N,,,
+East,1,Out,4,DF,13.6,4.15,46.29,1,,,N,,N,,,
+East,1,Out,5,DF,17.1,5.21,79.25,1,,,N,,N,,,
+East,1,Out,6,DF,6.6,2.01,15.07,1,,,Y,SK,N,0.97,0,
+East,1,Out,7,DF,6.5,1.98,16.48,1,,,N,,N,,,
+East,1,Out,8,DF,11.8,3.6,28.45,2,3.29,,N,,N,,,
+East,1,Out,9,DF,13.9,4.24,57.3,1,,,N,,N,,,
+East,1,Out,10,DF,8.4,2.56,18.46,1,,,N,,N,,,
+East,1,Out,11,WRC,2.7,0.82,5.84,3,0.67,90,Y,SK,Y,0.46,20,Measurements at 0.5m
+East,1,Out,11,,, ,,,0.69,,,,,,,
+East,1,Out,12,WRC,1.07,1.07,14.12,1,,96,Y,SK,Y,0.92,0,"Measurements at 0.5m. Shaded by tree 9, very little live foliage"
+East,1,Out,13,DF,25,7.62,,3,,,N,,N,,,Leave tree from harvest. Unable to reach bole due to topography
+East,1,Out,14,DF,23,7.01,116.84,1,,,N,,N,,,Leave tree from harvest. JAB 15
+East,1,Out,15,DF,25.3,7.71,76.2,1,,,N,,N,,,Leave tree from harvest. JAB 14
+East,1,Out,16,WRC,14,4.27,51.8,1,,0,N,,N,,,
+East,1,Out,17,DF,12,3.66,34.92,1,,,Y,SK,N,0.9,0,
+East,1,Out,18,WRC,1.1,1.1,12.67,1,,,Y,SK,Y,0.75,0,Measurements at 0.5m.  
+East,1,Out,19,WRC,0.8,0.8,7.05,3,0.2,270,N,,Y,,,Measurements at 0.5m.
+East,1,Out,19,,, ,,,0.35,,,,,,,
+East,1,Out,20,DF,10.2,3.11,25.25,1,,150,Y,SK,N,0.5,0,
+East,1,Out,21,DF,10.2,3.11,22.56,1,,,N,,N,,,Old paper wasp nest on branch
+East,1,Out,22,WRC,0.93,0.93,8.69,1,,,Y,SK,Y,0.3,0,Measurements at 0.5m.
+East,1,Out,23,DF,6.9,2.1,18.42,1,,62,Y,SK,Y,0.35,0,Yellowing needles
+East,1,Out,24,WRC,0.77,0.77,8.48,4,0.62,110,N,,Y,,,Measurements at 0.5m
+East,1,Out,24,,, ,,,0.64,,,,,,,
+East,1,Out,24,,, ,,,0.6,,,,,,,
+East,1,Out,25,WRC,1.08,1.08,16.09,4,0.79,,Y,SK,Y,0.77,0,Measurements at 0.5m
+East,1,Out,25,,, ,,,0.81,,,,,,,
+East,1,Out,26,WRC,1.05,1.05,10.98,2,0.87,,Y,SK,Y,0.33,0,Measurements at 0.5m
+East,1,Out,27,WRC,1.17,1.17,15.02,1,,,Y,SK,Y,0.33,14,Measurements at 0.5m
+East,1,Out,27,,, ,,,,,Y,SK,Y,0.76,0,
+East,1,Out,28,WRC,0.71,0.71,5.34,2,0.58,,Y,SK,Y,0.14,0,Measurements at 0.5m
+East,1,Out,28,,, ,,,,,Y,SK,Y,0.16,0,
+East,1,Out,29,WRC,0.6,0.6,6.69,2,0.02,,N,,Y,,,Measurements at 0.25m
+East,1,Out,30,WRC,0.59,0.59,9.2,1,,,Y,SK,Y,0.23,0,Measurements at 0.25m
+East,1,Out,30,,, ,,,,,Y,SK,Y,0.13,28,
+East,1,Out,31,WRC,1.18,1.18,14.55,2,1,,Y,BD,Y,0.43,0,Measurements at 0.5m
+East,1,Out,31,,, ,,,,,Y,SW,Y,0,430,
+East,1,Out,32,WRC,0.63,0.63,11.14,2,0.4,,Y,CR,Y,0.12,40,Measurements at 0.25m
+East,1,Out,33,WRC,1.23,1.23,17.49,2,1.1,,Y,SK,Y,0.6,0,Measurements at 0.5m
+East,1,Out,33,,, ,,,,,Y,SW,Y,0,167,
+East,1,Out,34,WRC,1.3,1.3,6.13,3,0.97,,N,,Y,,,
+East,1,Out,34,,, ,,,1.02,,,,,,,
+East,1,Out,35,WRC,1.46,1.46,12.34,3,1.2,,Y,BD,Y,0.58,0,BD likely due to browse. Photo
+East,1,Out,35,,, ,,,,,Y,CR,Y,0.1,35,
+East,1,Out,35,,, ,,,,,Y,SK,Y,1.1,7,
+East,1,Out,36,WRC,0.96,0.96,10.08,3,0.78,,Y,SK,Y,0.33,12,Measurements at 0.5m
+East,1,Out,36,,, ,,,0.82,,Y,SW,Y,0,165,
+East,1,Out,37,WRC,15.4,4.69,77.64,1,,,Y,SW,N,0,240,
+East,1,Out,38,DF,9.3,2.83,32.95,1,,,N ,,N,,,
+East,1,Out,39,DF,9.8,2.99,25.21,1,,,Y,SK,N,0.85,10,
+East,1,Out,40,DF,8,2.44,23.94,1,,140,Y,BD,Y,0.18,0,Likely Phomopsis canker. Photo
+East,1,Out,40,,, ,,,,,Y,BD,Y,0.3,0,
+East,1,Out,40,,, ,,,,,Y,BD,Y,0.52,0,
+East,1,Out,40,,, ,,,,,Y,BD,Y,0.63,0,
+East,1,Out,41,WRC,1.1,1.1,7.64,1,,,Y,SK,Y,0.86,7,
+East,1,Out,42,WRC,1.07,1.07,9.88,1,,,N,,Y,,,
+East,1,Out,43,WRC,6.8,2.07,17.25,1,,,Y,CR,Y,0.76,65,
+East,1,Out,44,WRC,10.1,3.08,33.73,1,,,Y,SW,N,0,60,
+East,1,Out,45,DF,7.7,2.35,22.49,1,,,Y,CR,N,0,58,
+East,1,Out,46,WRC,12.9,3.93,59.23,1,,,Y,SW,N,0,154,
+East,1,Out,47,WRC,0.97,0.97,11.94,2,0.66,,N,,Y,,,Measurements at 0.5m
+East,1,Out,48,DF,9.4,2.87,28.55,1,,,N,,N,,,
+East,1,Out,49,DF,10.4,3.17,41.5,1,,45,N,,N,,,
+East,1,Out,50,DF,9.2,2.8,35.63,1,,,N,,N,,,
+East,1,Out,51,WRC,4.1,1.25,7.75,3,1.21,,Y,SK,Y,0.97,0,
+East,1,Out,51,,, ,,,1.27,,Y,SK,Y,1.07,0,
+East,1,Out,51,,, ,,,,,Y,SK,Y,0.27,0,
+East,1,Out,51,,, ,,,,,Y,SK,Y,0.39,0,
+East,1,Out,52,DF,9.2,2.8,26.63,1,,,N,,N,,,
+East,1,Out,53,DF,13,3.96,44.65,1,,,N,,N,,,
+East,1,Out,54,DF,10.5,3.2,32.15,1,,,N,,N,,,
+East,1,Out,55,DF,6.9,2.1,17.17,1,,,N,,N,,,
+East,1,Out,56,WRC,4.4,1.34,8.65,1,,,Y,SK,Y,0.52,0,
+East,1,Out,56,,, ,,,,,Y,SK,Y,0.18,0,
+East,1,Out,56,,, ,,,,,Y,SK,Y,1.14,0,
+East,1,Out,57,DF,8.3,2.53,20.3,1,,,N,,N,,,
+East,1,Out,58,DF,7.3,2.23,21.25,1,,,N,,N,,,
+East,1,Out,59,DF,11.8,3.6,42.11,1,,,Y,SW,N,0,190,
+East,1,Out,60,DF,14.7,4.48,65.3,1,,,Y,SW,N,0,207,
+East,1,Out,61,DF,11.9,3.63,40.22,1,,,N,,N,,,
+East,1,Out,62,DF,12,3.66,37.95,1,,,N,,N,,,
+East,1,Out,63,WRC,1.02,1.02,12.53,2,0.15,,Y,SK,Y,0.58,0,Measurements at 0.5m
+East,4,In,1,WRC,6.2,1.89,20.71,1,,,N,,N,,,Not browsed; natural regen
+East,4,In,2,DF,23,7.01,97.6,1,,145,Y,BD,Y,1.35,0,Scrape. Photo
+East,4,In,3,WRC,6.3,1.92,13.81,1,,200,Y,SW,N,0,200,Natural regen
+East,4,In,4,DF,8.2,2.5,17.71,1,,,Y,SW,N,0,140,Natural regen
+East,4,In,4,,, ,,,,,Y,BD,N,0.39,0,Likely Phomopsis canker
+East,4,In,4,,, ,,,,,Y,BD,N,0.44,0,Likely Phomopsis canker
+East,4,In,5,DF,38,11.58,200.66,1,,,Y,SW,N,0,470,Leave tree
+East,4,In,6,DF,8.6,2.62,39.9,1,,,Y,SW,N,0,285,Natural regen
+East,4,In,6,,, ,,,,,Y,CR,N,1.1,70,
+East,4,In,7,DF,16.2,4.94,73.03,1,,105,N,,N,,,
+East,4,In,8,DF,12.5,3.81,42.49,1,,,Y,SK,N,0.95,0,
+East,4,In,9,DF,17.2,5.24,54.4,1,,,N,,N,,,Start of dense DF and hemlock clump
+East,4,In,10,DF,17.7,5.39,59.85,1,,,N,,N,,,
+East,4,In,11,DF,14.6,4.45,35.16,1,,,N,,N,,,
+East,4,In,12,DF,20.4,6.22,55.87,1,,,N,,N,,,
+East,4,In,13,DF,23.2,7.07,60.18,1,,80,N,,N,,,
+East,4,In,14,DF,21.1,6.43,58.88,1,,,N,,N,,,
+East,4,In,15,DF,11.2,3.41,22.46,1,,,N,,N,,,Ht is an estimate
+East,4,In,16,DF,16.6,5.06,60.67,1,,,N,,N,,,
+East,4,In,17,DF,25.3,7.71,72.33,1,,,N,,N,,,Ht is an estimate
+East,4,In,18,DF,23.3,7.1,85.49,1,,,N,,N,,,
+East,4,In,19,DF,8,2.44,14.32,1,,,N,,Y,,,
+East,4,In,20,DF,22.6,6.89,85.69,1,,,N,,N,,,
+East,4,In,21,DF,13,3.96,31.05,1,,,Y,SK,N,1.54,10,Last tree of dense clump
+East,4,In,21,,, ,,,,,Y,SK,N,2.26,60,DfS estimated
+East,4,In,22,DF,16.6,5.06,39.29,1,,,N,,N,,,Ht is an estimate
+East,4,In,23,WRC,11.2,3.41,33.9,1,,125,N,,N,,,
+East,4,In,24,WRC,4.3,1.31,6.05,1,,,N,,N,,,Natural regen
+East,4,In,25,WRC,11.8,3.6,50.8,1,,,Y,SK,N,0.2,0,
+East,4,In,25,,, ,,,,,Y,SW,N,0,240,
+East,4,In,26,DF,11.2,3.41,33.45,1,,80,Y,SW,N,0,80,Diameter taken at 0.92m
+East,4,In,27,DF,10.1,3.08,31.15,1,,,N,,N,,,
+East,4,In,28,WRC,5.2,1.58,7.59,1,,,N,,N,,,Natural regen
+East,4,In,29,WRC,11.6,3.54,45.75,1,,145,Y,SW,N,0,145,
+East,4,In,30,WRC,1.25,1.25,2.68,1,,,N,,N,,,Natural regen
+East,4,In,31,WRC,1.06,1.06,7.19,2,0.11,,Y,CR,N,0.28,43,Measured at 0.5m. Natural regen (data entry note)
+East,4,In,32,WRC,8.5,2.59,25.98,1,,100,N,,N,,,
+East,4,In,33,DF,29.5,8.99,106.68,1,,,N,,N,,,Leave tree
+East,4,In,34,DF,21.9,6.68,69.82,1,,140,N,,N,,,Leave tree
+East,4,In,35,WRC,27.3,8.32,185.42,1,,,N,,N,,,Leave tree
+East,4,In,36,DF,17.1,5.21,59.42,1,,,N,,N,,,
+East,4,In,37,WRC,6.4,1.95,12.32,1,,,N,,N,,,Natural regen
+East,4,In,38,WRC,10.2,3.11,43.12,1,,65,N,,N,,,
+East,4,In,39,WRC,8.3,2.53,20.56,1,,,N,,N,,,Probably natural regen
+East,4,In,40,WRC,6.1,1.86,11.89,1,,,N,,N,,,Natural regen
+East,4,In,41,WRC ,8.2,2.5,24.86,1,,75,Y,BD,N,0.83,0,Photo
+East,4,In,42,WRC,8.3,2.53,21.2,1,,,N,,N,,,
+East,4,In,43,DF,11.8,3.6,33.35,1,,,N,,N,,,
+East,4,In,44,WRC,11.7,3.57,46.16,1,,,N,,N,,,
+East,4,In,45,WRC,7.9,2.41,18.87,1,,,N,,N,,,Chlorotic
+East,4,In,46,WRC,8.1,2.47,20.95,1,,,N,,N,,,
+East,4,In,47,WRC,11.4,3.47,49.28,1,,,N,,N,,,
+East,4,In,48,DF,15.2,4.63,69.93,1,,,N,,N,,,
+East,4,In,49,DF,6.2,1.89,14.3,1,,,Y,SK,N,0.91,25,4 branches dead
+East,4,In,50,DF,31,9.45,137.16,1,,,N,,N,,,Leave tree
+East,4,In,51,WRC,8.6,2.62,32.99,1,,,N,,N,,,
+East,4,In,52,WRC,5.4,1.65,30.2,1,,,N,,N,,,Top broken by machinery
+East,4,In,53,DF,8,2.44,34.05,1,,,N,,N,,,Dead tips of some branches
+East,4,In,54,WRC,1.12,1.12,0.41,1,,,N,,N,,,Measurements at 0.5m. Natural regen
+East,4,In,55,WRC,9.5,2.9,31.5,1,,,N,,N,,,
+East,4,In,56,DF,15.9,4.85,63.7,1,,,N,,N,,,
+East,4,In,57,DF,9.8,2.99,36.55,1,,,N,,N,,,
+East,4,In,58,WRC,5.7,1.74,11.5,1,,,N,,N,,,
+East,4,In,59,WRC,14.3,4.36,75.9,1,,,N,,N,,,
+East,4,In,60,DF,12.5,3.81,42.78,1,,,Y,SK,N,0.35,0,
+East,4,In,61,WRC,12.7,3.87,44.74,1,,,N,,N,,,
+East,4,In,62,WRC,7.1,2.16,18.27,1,,,N,,N,,,
+East,4,In,63,DF,11.4,3.47,39.18,1,,,Y,L,N,0,390,
+East,4,In,64,DF,15.9,4.85,53.39,1,,,N,,N,,,
+East,4,In,65,WRC,4.4,1.34,3.95,1,,,N,,N,,,Natural regen
+East,4,In,66,WRC,10.3,3.14,33.53,1,,,N,,N,,,
+East,4,In,67,DF,14.5,4.42,59.94,1,,,N,,N,,,
+East,4,In,68,WRC,9.6,2.93,30.74,1,,,N,,N,,,
+East,4,In,69,WRC,4.8,1.46,5.41,1,,,Y,SW,N,0,136,Natural regen
+East,4,In,70,WRC,15.7,4.79,80.67,1,,,N,,N,,,
+East,4,In,71,DF,8.1,2.47,20.52,1,,,N,,N,,,Natural regen
+East,4,In,72,WRC,4.8,1.46,6.61,1,,,N,,N,,,Natural regen
+East,4,In,73,DF,12.2,3.72,42.51,1,,,Y,SW,N,0,144,
+East,4,In,74,WRC,4.4,1.34,4.6,1,,,N,,N,,,
+East,4,In,75,DF,14.3,4.36,65.82,1,,,N,,N,,,
+East,4,In,76,WRC,4.6,1.4,4.6,1,,,N,,N,,,Natural regen
+East,4,In,77,DF,10.7,3.26,38.74,1,,,N,,N,,,
+East,4,In,78,WRC,6.2,1.89,11.75,1,,,N,,N,,,
+East,4,In,79,WRC,4.8,1.46,5.91,1,,,N,,N,,,
+East,4,In,80,WRC,5.5,1.68,9.76,1,,,N,,N,,,
+East,4,In,81,WRC,5.3,1.62,6.81,1,,,Y,S,N,0,105,
+East,4,In,82,DF,10.2,3.11,31.35,1,,,N,,N,,,
+East,4,In,83,DF,16.6,5.06,60.36,1,,,N,,N,,,
+East,4,In,84,WRC,5.4,1.65,8.48,1,,,N,,N,,,
+East,4,In,85,WRC,4.7,1.43,5.49,1,,,Y,SK,N,0.4,0,
+East,4,In,86,DF,14.8,4.51,48.52,1,,,N,,N,,,
+East,4,In,87,WRC,5.9,1.8,10.25,1,,,N,,N,,,
+East,4,In,88,DF,12.9,3.93,47.76,1,,,N,,N,,,
+West,11,Out,1,WRC,0.98,0.98,12.1,5,0.25,40,Y,SK,Y,0.25,3,measured at 0.5 m
+West,11,Out,1,,,,,,0.33,,Y,SK,Y,0.62,5,
+West,11,Out,1,,,,,,0.52,,Y,SK,Y,0.5,0,
+West,11,Out,1,,,,,,0.15,,,,,,,
+West,11,Out,2,DF,8.2,2.5,19.02,1,,0,Y,SK,N,0.72,0,
+West,11,Out,3,DF,7.3,2.23,17.34,3,0.66,,Y,SK,N,0.66,0,
+West,11,Out,3,,,,,,1.07,,,,,,,
+West,11,Out,4,WRC,0.63,0.63,4.15,1,,0,Y,SK,Y,0.28,0,measured at 0.5 m
+West,11,Out,5,DF,7.3,2.23,20.23,1,,110,Y,SK,N,0.47,0,1 branch dead needles
+West,11,Out,6,WRC,1.11,1.11,23.37,1,,60,Y,SK,Y,0.54,0,measured at 0.5 m
+West,11,Out,6,,,,,,,,Y,SK,Y,0.92,50,
+West,11,Out,7,WRC,1.08,1.08,21.95,2,0.81,50,Y,SK,Y,0.59,5,measured at 0.5 m
+West,11,Out,8,DF,7.4,2.26,26.74,1,,,N,,N,,,3 branches dead needles
+West,11,Out,9,DF,9.2,2.8,23.04,1,,,N,,N,,,2 branches dead needles. Sparse above 1 m
+West,11,Out,10,DF,12.4,3.78,54.71,1,,95,Y,SK,N,1.22,0,original leader dead at 11 ft
+West,11,Out,11,WRC,0.83,0.83,10.2,2,0.54,60,Y,SK,Y,0.54,3,measured at 0.5 m
+West,11,Out,12,WRC,5.9,1.8,17.4,1,,,Y,SK,Y,0.82,0,
+West,11,Out,12,,,,,,,,Y,SK,Y,1.07,0,
+West,11,Out,13,WRC,6.1,1.86,18.82,1,,,Y,SK,Y,1.1,0,
+West,11,Out,13,,,,,,,,Y,SK,Y,1.19,0,
+West,11,Out,13,,,,,,,,Y,SK,Y,1.29,0,
+West,11,Out,14,DF,16.6,5.06,75.27,1,,130,N,,N,,,
+West,11,Out,15,DF,20.3,6.19,83.47,1,,,N,,N,,,
+West,11,Out,16,DF,21.1,6.43,69.54,1,,,N,,N,,,
+West,11,Out,17,DF,19.5,5.94,92.57,1,,,N,,N,,,
+West,11,Out,18,DF,17.3,5.27,69.24,1,,60,Y,SK,N,2.44,50,DfS estimated. 2 branches dead needles
+West,11,Out,19,DF,20.2,6.16,92.73,1,,,Y,SK,N,1.2,10,Diameter taken at 0.95m
+West,11,Out,20,DF,11.3,3.44,30.54,1,,,Y,BD,Y,1.4,0,"chlorotic, sparse, some dead needles"
+West,11,Out,20,,,,,,,,Y,BD,Y,3.14,0,"BD is likely Phomopsis canker, entire tree affected"
+West,11,Out,21,DF,8,2.44,14.93,1,,,N,,N,,,natural regen
+West,11,Out,22,DF,15.1,4.6,55,1,,,N,,N,,,
+East,5,In,1,WRC,11.5,3.51,52.29,1,,55,N,,N,,,
+East,5,In,2,WRC,11.8,3.6,50.75,1,,,Y,BD,N,0.97,0,
+East,5,In,3,WRC,0.99,0.99,6.84,1,,,Y,SW,N,0,210,Natural regen. Measurements at 0.5m
+East,5,In,4,WRC,9.2,2.8,30.38,1,,85,N,,N,,,
+East,5,In,5,DF,9.9,3.02,39.04,1,,105,Y,BD,N,1.16,0,Some dead needles. Fungal damage to branches. Likely Phomopsis canker
+East,5,In,5,,, ,,,,,Y,BD,N,1.46,0,Likely Phomopsis canker
+East,5,In,5,,, ,,,,,Y,BD,N,1.54,0,Likely Phomopsis canker
+East,5,In,5,,, ,,,,,Y,BD,N,1.77,0,Likely Phomopsis canker
+East,5,In,5,,, ,,,,,Y,BD,N,1.87,0,Likely Phomopsis canker
+East,5,In,5,,, ,,,,,Y,SW,N,0,105,
+East,5,In,5,,, ,,,,,Y,CR,N,0.28,20,
+East,5,In,6,WRC,13.8,4.21,67.17,1,,,Y,BD,N,0.1,0,
+East,5,In,6,,, ,,,,,Y,BD,N,0.3,0,
+East,5,In,6,,, ,,,,,Y,BD,N,0.74,0,
+East,5,In,7,DF,14,4.27,51.24,1,,,N,,N,,,
+East,5,In,8,DF,10.8,3.29,29.07,1,,,Y,SW,N,0,135,Natural regen
+East,5,In,9,WRC,0.73,0.73,3.11,1,,,Y,L,N,0,240,Natural regen. Measurements at 0.5m. Lean measured at 0.25m.
+East,5,In,9,,, ,,,,,Y,CR,N,0,31,
+East,5,In,10,WRC,1.46,1.46,5.39,1,,,N,,N,,,Natural regen
+East,5,In,11,WRC,15.4,4.69,88.34,1,,60,N,,N,,,
+East,5,In,12,WRC,14.3,4.36,71.48,1,,,N,,N,,,
+East,5,In,13,WRC,13.6,4.15,66.49,1,,80,Y,L,N,0,80,
+East,5,In,14,WRC,1.98,1.98,16.37,1,,,Y,SK,N,1.04,0,Chlorotic
+East,5,In,15,WRC,1.37,1.37,4.14,1,,,N,,N,,,Natural regen
+East,5,In,16,WRC,9.3,2.83,32.6,1,,140,Y,L,N,0,140,
+East,5,In,17,WRC,12.3,3.75,50.1,1,,,N,,N,,,Chlorotic
+East,5,In,18,WRC,8.1,2.47,20.78,1,,100,N,,N,,,
+East,5,In,19,DF,7.1,2.16,15.97,1,,,Y,BD,N,0.97,0,Natural regen. Likely Phomopsis canker
+East,5,In,19,,, ,,,,,Y,BD,N,1.16,0,Likely Phomopsis canker
+East,5,In,20,DF,13,3.96,42.6,1,,95,Y,BD,N,0.78,0,Likely Phomopsis canker
+East,5,In,20,,, ,,,,,Y,BD,N,0.95,0,Likely Phomopsis canker
+East,5,In,20,,, ,,,,,Y,BD,N,0.43,0,Likely Phomopsis canker
+East,5,In,21,WRC,11.8,3.6,46.79,1,,,Y,BD,N,0.88,0,
+East,5,In,21,,, ,,,,,Y,SW,N,0,120,
+East,5,In,22,DF,11.7,3.57,33.57,1,,,Y,SK,N,1.72,25,
+East,5,In,23,WRC,13.3,4.05,51.51,1,,,Y,SK,N,1.27,0,
+East,5,In,24,WRC,9,2.74,29.94,1,,,N,,N,,,
+East,5,In,25,DF,8.9,2.71,29.14,1,,40,Y,BD,N,0.96,0,Some dead needles. Fungal damage to branches. Likely Phomopsis canker
+East,5,In,25,,, ,,,,,Y,BD,N,1.34,0,Likely Phomopsis canker
+East,5,In,25,,, ,,,,,Y,BD,N,1.74,0,Likely Phomopsis canker
+East,5,In,25,,, ,,,,,Y,BD,N,2.08,0,Likely Phomopsis canker
+East,5,In,26,WRC,13.2,4.02,59.38,1,,,N,,N,,,
+East,5,In,27,DF,16,4.88,48.75,1,,,Y,SW,N,0,100,
+East,5,In,28,WRC,7.9,2.41,24.18,1,,,Y,L,N,0,83,
+East,5,In,29,DF,20.3,6.19,142.24,2,0,,Y,SW,N,0,2621,"See photo for height diagram. Diameter measured at 1m above ground, not along bole. Leave tree"
+East,5,In,29,,, ,,,,,Y,BD,N,1.31,0,Height measured at distance along bole
+East,5,In,29,,, ,,,,,Y,BD,N,1.74,0,Height measured at distance along bole
+East,5,In,29,,, ,,,,,Y,BD,N,2.19,0,Height measured at distance along bole
+East,5,In,29,,, ,,,,,Y,BD,N,2.47,0,Height measured at distance along bole
+East,5,In,29,,, ,,,,,Y,BD,N,2.77,0,Height measured at distance along bole
+East,5,In,29,,, ,,,,,Y,BD,N,3.2,0,Height measured at distance along bole
+East,5,In,30,WRC,11.3,3.44,43.44,1,,,N,,N,,,
+East,5,In,31,DF,10.7,3.26,36.97,1,,130,Y,BD,N,0.69,0,Likely Phomopsis canker
+East,5,In,31,,, ,,,,,Y,BD,N,0.81,0,Likely Phomopsis canker
+East,5,In,31,,, ,,,,,Y,BD,N,0.9,0,Likely Phomopsis canker
+East,5,In,31,,, ,,,,,Y,BD,N,1.1,0,Likely Phomopsis canker
+East,5,In,31,,, ,,,,,Y,BD,N,1.38,0,Likely Phomopsis canker
+East,5,In,32,WRC,6.9,2.1,22.52,1,,,Y,SW,N,0,85,Chlorotic
+East,5,In,32,,, ,,,,,Y,CR,N,0.3,23,
+East,5,In,33,DF,10.2,3.11,28.98,1,,,Y,SK,N,0.94,12,Some dead needles. Fungal damage to branches. Likely Phomopsis canker
+East,5,In,33,,, ,,,,,Y,BD,N,0.41,0,Likely Phomopsis canker
+East,5,In,33,,, ,,,,,Y,BD,N,0.68,0,Likely Phomopsis canker
+East,5,In,33,,, ,,,,,Y,BD,N,0.87,0,Likely Phomopsis canker
+East,5,In,34,DF,8.2,2.5,19.62,1,,,Y,BD,N,0.26,0,Natural regen
+East,5,In,34,,, ,,,,,Y,BD,N,0.71,0,Likely Phomopsis canker
+East,5,In,34,,, ,,,,,Y,BD,N,0.84,0,Likely Phomopsis canker
+East,5,In,34,,, ,,,,,Y,BD,N,1.27,0,Likely Phomopsis canker
+East,5,In,34,,, ,,,,,Y,CR,N,0,19,
+East,5,In,35,WRC,11.3,3.44,42.53,1,,,N,,N,,,
+East,5,In,36,WRC,1.22,1.22,2.14,1,,,Y,SW,N,0,180,Natural regen
+East,5,In,37,DF,11.9,3.63,40.26,1,,51,Y,BD,N,0.34,0,Fungal damage to branches. Likely Phomopsis canker
+East,5,In,37,,, ,,,,,Y,BD,N,0.65,0,Likely Phomopsis canker
+East,5,In,37,,, ,,,,,Y,BD,N,0.8,0,Likely Phomopsis canker
+East,5,In,37,,, ,,,,,Y,BD,N,1.06,0,Likely Phomopsis canker
+East,5,In,37,,, ,,,,,Y,BD,N,1.26,0,Likely Phomopsis canker
+East,5,In,38,DF,13.5,4.11,47.78,1,,,Y,BD,N,0.6,0,Likely Phomopsis canker
+East,5,In,38,,, ,,,,,Y,BD,N,0.97,0,Likely Phomopsis canker
+East,5,In,38,,, ,,,,,Y,BD,N,1.05,0,Likely Phomopsis canker
+East,5,In,39,WRC,10.7,3.26,40.47,1,,,N,,N,,,
+East,5,In,40,WRC,1.21,1.21,2.61,1,,,Y,CR,N,0.33,10,Natural regen
+East,5,In,41,WRC,9.1,2.77,31.24,1,,,N,,N,,,
+East,5,In,42,WRC,9.8,2.99,28.49,1,,,N,,N,,,Growing inside a cherry thicket
+East,5,In,43,WRC,11.8,3.6,39.48,1,,,N,,N,,,
+East,5,In,44,WRC,8.8,2.68,28.14,1,,,Y,SK,N,1.66,75,"Mechanical damage, probably during brushing. Lost original leader"
+East,5,In,44,,, ,,,,,Y,CR,N,0.36,27,
+East,5,In,44,,, ,,,,,Y,BD,N,0.82,0,
+East,5,In,44,,, ,,,,,Y,BD,N,1.07,0,
+East,5,In,44,,, ,,,,,Y,BD,N,1.48,0,
+East,5,In,45,WRC,10.5,3.2,39.71,1,,,Y,SW,N,0,120,
+East,5,In,46,WRC,13.2,4.02,49.27,1,,,Y,SW,N,0,88,Some dead foliage
+East,5,In,47,WRC,1.32,1.32,3.33,1,,,N,,N,,,Natural regen
+East,5,In,48,DF,15.2,4.63,61.83,1,,,Y,BD,N,0.49,0,Fungal damage to branches. Likely Phomopsis canker
+East,5,In,48,,, ,,,,,Y,SW,N,0,113,
+East,5,In,49,DF,13.1,3.99,42.19,1,,,Y,BD,N,0.59,0,Fungal damage to branches. Likely Phomopsis canker
+East,5,In,49,,, ,,,,,Y,BD,N,0.78,0,Likely Phomopsis canker
+East,5,In,49,,, ,,,,,Y,BD,N,0.99,0,Likely Phomopsis canker
+East,5,In,49,,, ,,,,,Y,BD,N,1.4,0,Likely Phomopsis canker
+East,5,In,50,WRC,12.2,3.72,37.01,1,,,N,,N,,,Growing inside a cherry thicket
+East,5,In,51,DF,19.3,5.88,81.55,1,,,Y,SW,N,0,155,
+East,5,In,52,WRC,12.4,3.78,62.19,1,,,Y,SW,N,0,156,
+East,5,In,53,WRC,2.02,2.02,16.94,1,,,Y,CR,N,0.18,76,Natural regen
+East,5,In,54,DF,12,3.66,50.66,1,,,Y,SK,N,1.02,23,Diameter taken at 0.9m
+East,5,In,54,,, ,,,,,Y,SW,N,0,235,
+West,12,Out,1,WRC,3.08,0.94,5.47,1,,,Y,SK,Y,0.46,0,Measurements at 0.5 m
+West,12,Out,2,DF,15.9,4.85,62.85,1,,85,Y,SK,N,1.89,15,
+West,12,Out,2,,, ,,,,,Y,BD,N,0.5,0,healed scrape
+West,12,Out,3,WRC,0.95,0.95,13.12,2,0.74,110,Y,SK,Y,0.51,11,measurements at 0.5m
+West,12,Out,3,,, ,,,,,Y,SK,Y,0.14,0,
+West,12,Out,4,DF,12.5,3.81,40.2,1,,75,N,,N,,,
+West,12,Out,5,DF,9.9,3.02,29.26,2,0.4,,Y,SK,N,0.45,0,"Third top dead, same height"
+West,12,Out,6,WRC,1.48,1.48,16.57,2,1.09,70,N,,Y,,,
+West,12,Out,7,DF,18.6,5.67,79.52,1,,130,N,,N,,,
+West,12,Out,8,DF,14.4,4.39,62.5,1,,130,Y,SW,N,0,130,0.6-1.5 m heavily browsed 
+West,12,Out,9,WRC,14.9,4.54,74.02,1,,,Y,SK,N,1.2,0,lower branches browsed
+West,12,Out,10,DF,12.9,3.93,40.5,1,,65,N,,N,,,
+West,12,Out,11,WRC,0.92,0.92,17.69,3,0.7,90,Y,SK,Y,0.2,0,measurements at 0.5m
+West,12,Out,11,,, ,,,0.65,,Y,SW,Y,0,90,
+West,12,Out,12,WRC,1.18,1.18,19.65,1,,25,Y,SK,Y,0.77,0,measurements at 0.5 m
+West,12,Out,12,,, ,,,,,Y,SK,Y,0.77,0,
+West,12,Out,13,WRC,1.18,1.18,21.13,2,0.87,,N,,Y,,,measurements at 0.5m
+West,12,Out,14,DF,13.5,4.11,56.05,1,,,N,,N,,,
+West,12,Out,15,DF,9.8,2.99,40.11,1,,,N,,N,,,
+West,12,Out,16,WRC,1.43,1.43,11.05,3,1.07,0,N,,Y,,,
+West,12,Out,16,,, ,,,1.09,,N,,Y,,,
+West,12,Out,17,WRC,1.38,1.38,3.4,1,,,Y,SK,Y,0.2,0,
+West,12,Out,18,WRC,1.15,1.15,15.08,2,1,,N,,Y,,,measurements at 0.5m
+West,12,Out,19,WRC,0.7,0.7,2.22,1,,,N,,Y,,,"measurements at 0.5m, likely natural regeneration"
+West,12,Out,20,WRC,1.28,1.28,7.19,3,1.02,,Y,SK,Y,0.6,0,
+West,12,Out,20,,, ,,,1.05,,Y,SK,Y,0.84,5,
+West,12,Out,21,DF,7.5,2.29,17.38,1,,,Y,SK,N,0.7,0,
+West,12,Out,21,,, ,,,,,Y,SW,N,0,125,
+West,12,Out,22,DF,9.3,2.83,28.42,1,,,N,,N,,,Likely natural regeneration
+West,12,Out,23,DF,12.5,3.81,48.28,1,,,N,,N,,,
+West,12,Out,24,WRC,1.01,1.01,9.13,1,,,Y,L,Y,0,150,Measurements at 0.5 m
+West,12,Out,25,WRC,0.98,0.98,9.79,1,,,Y,SW,Y,0,140,Measurements at 0.5 m
+West,12,Out,26,WRC,1.65,1.65,15.48,2,0.93,,N,,Y,,,
+West,12,Out,27,DF,16.2,4.94,62.36,1,,,N,,N,,,
+West,12,Out,28,DF,17.3,5.27,68.27,1,,,N,,N,,,
+West,12,Out,29,WRC,1.22,1.22,5.06,2,1.02,,N,,Y,,,
+West,10,Out,1,DF,8.2,2.5,22.14,1,,55,N,,N,,,
+West,10,Out,2,DF,8.5,2.59,34.24,1,,,Y,SK,N,1.8,15,
+West,10,Out,2,,, ,,,,,Y,BD,N,1,0,
+West,10,Out,2,,, ,,,,,Y,BD,N,0.76,0,
+West,10,Out,3,DF,12.6,3.84,55.36,1,,115,Y,SK,N,1.76,0,
+West,10,Out,3,,, ,,,,,Y,BD,N,1.3,0,
+West,10,Out,3,,, ,,,,,Y,BD,N,1.52,0,
+West,10,Out,3,,, ,,,,,Y,SK,N,1.35,0,
+West,10,Out,4,DF,22.6,6.89,154.94,1,,,N,,N,,,"Leave tree, lowest live limb 8 ft"
+West,10,Out,5,DF,16.9,5.15,58.92,1,,15,Y,SK,N,0.13,30,
+West,10,Out,5,,, ,,,,,Y,BD,N,1.7,0,
+West,10,Out,5,,, ,,,,,Y,SK,N,3.93,20,DFS estimated
+West,10,Out,6,WRC,1.01,1.01,12.54,3,0.4,130,Y,SK,Y,0.02,0,Measured at 0.5m
+West,10,Out,6,,, ,,,,,Y,SK,Y,0.52,0,
+West,10,Out,6,,, ,,,,,Y,SK,Y,0.3,0,
+West,10,Out,6,,, ,,,,,Y,SK,Y,0.66,0,
+West,10,Out,7,DF,9.1,2.77,23.42,1,,,Y,SK,N,0.55,35,
+West,10,Out,7,,, ,,,,,Y,CR,N,0.82,20,
+West,10,Out,8,DF,10.8,3.29,33.91,1,,50,N,,N,,,
+West,10,Out,9,DF,13.8,4.21,57.17,1,,,Y,SK,N,0.81,0,
+West,10,Out,10,DF,8,2.44,17.92,1,,,N,,N,,,natural regen
+West,10,Out,11,DF,11.2,3.41,35.54,1,,,Y,SK,N,0.1,0,some dead needles
+West,10,Out,11,,, ,,,,,Y,BD,N,1.34,0,Likely Phomopsis canker
+West,10,Out,12,WRC,1.11,1.11,12.86,2,0.83,35,Y,SK,Y,0.47,0,Diameter taken at 0.52m
+West,10,Out,12,,, ,,,,,Y,SK,Y,0.55,0,
+West,10,Out,12,,, ,,,,,Y,SK,Y,0.8,0,
+West,10,Out,13,WRC,1.13,1.13,22.07,3,0.7,30,Y,SK,Y,0.52,0,Measured at 0.5m
+West,10,Out,13,,, ,,,,,Y,SK,Y,0.6,0,
+West,10,Out,14,WRC,0.85,0.85,9.6,2,0.62,20,Y,SK,Y,0.45,0,Measured at 0.5m
+West,10,Out,14,,, ,,,,,Y,SK,Y,0.3,0,
+West,10,Out,15,WRC,12.9,3.93,96.52,1,,120,Y,SK,N,1,0,Protected from browse by 2 large logs it was growing between
+West,10,Out,15,,, ,,,,,Y,SK,N,0.33,0,Diameter at 0.9 m
+West,10,Out,16,DF,8.2,2.5,17.94,1,,80,N,,N,,,
+West,10,Out,17,WRC,1.16,1.16,5.95,1,,,Y,CR,Y,0.45,15,Measured at 1 m
+West,10,Out,17,,, ,,,,,Y,SK,Y,0.25,0,
+West,10,Out,18,DF,15.7,4.79,70.73,0,,,Y,SK,N,1,0,Height to highest live branch. Leader dead
+West,10,Out,19,DF,21.1,6.43,85.61,1,,,Y,SK,N,0.2,0,
+West,10,Out,19,,, ,,,,,Y,BD,N,0.19,0,Likely Phomopsis canker
+West,10,Out,19,,, ,,,,,Y,BD,N,0.94,0,Likely Phomopsis canker
+West,10,Out,19,,, ,,,,,Y,BD,N,1.12,0,Likely Phomopsis canker
+West,10,Out,19,,, ,,,,,Y,BD,N,1.5,0,Likely Phomopsis canker
+West,10,Out,20,DF,8.7,2.65,44.77,2,1.06,,Y,BD,N,0.9,0,Likely Phomopsis canker
+West,10,Out,20,,, ,,,,,Y,SK,N,1,0,Diameter at 0.9 m 
+West,10,Out,21,DF,10.9,3.32,41.03,1,,,Y,SK,N,0.87,10,
+West,10,Out,21,,, ,,,,,Y,BD,N,0.75,0,Likely Phomopsis canker
+West,10,Out,21,,, ,,,,,Y,SK,N,1.38,0,
+West,9,In,1,DF,20,6.1,84.77,1,,,N,,N,,,
+West,9,In,2,WRC,14.4,4.39,77.31,1,,115,N,,N,,,
+West,9,In,3,DF,19.2,5.85,73.17,1,,70,Y,BD,N,1.28,0,Some chlorotic needles. Likely Phomopsis canker
+West,9,In,4,DF,18.7,5.7,73.74,1,,,Y,BD,Y,0.84,0,"chlorotic, sparse, likely Phomopsis canker"
+West,9,In,4,,, ,,,,,Y,SK,N,3.35,0,
+West,9,In,5,WRC,18.7,5.7,134.62,1,,,Y,BD,N,3.51,0,
+West,9,In,5,,, ,,,,,Y,BD,N,2.74,0,
+West,9,In,6,WRC,7.4,2.26,17.89,1,,,N,,N,,,natural regen
+West,9,In,7,DF,9.9,3.02,70.74,2,1,,Y,SK,N,1,0,"Formerly the top, measured at 0.9m"
+West,9,In,7,,, ,,,,,Y,BD,N,0.95,0,Likely Phomopsis canker
+West,9,In,7,,, ,,,,,Y,SK,N,1,0,
+West,9,In,8,DF,16.4,5,58.15,1,,,Y,SK,N,0.65,0,
+West,9,In,8,,, ,,,,,Y,SK,N,1.8,0,some dead needles
+West,9,In,8,,,,,,,,Y,BD,N,0.97,0,Likely Phomopsis canker
+West,9,In,9,WRC,15.6,4.75,74.17,1,,40,N,,N,,,
+West,9,In,10,DF,13,3.96,51.38,1,,35,Y,BD,N,1.08,0,Some dead needles. Likely Phomopsis canker
+West,9,In,11,DF,17.5,5.33,78.27,1,,,Y,BD,N,0.79,0,Top broke but it is still living and growing. Some dead needles. Likely Phomopsis canker
+West,9,In,12,DF,20.2,6.16,76.85,1,,120,Y,SK,N,1.71,0,
+West,9,In,12,,, ,,,,,Y,BD,N,0.84,0,Likely Phomopsis canker
+West,9,In,12,,, ,,,,,Y,SK,N,1.06,0,
+West,9,In,13,DF,20.9,6.37,82.43,1,,,Y,BD,N,0.86,0,Likely Phomopsis canker
+West,9,In,13,,, ,,,,,Y,BD,N,0.28,0,Likely Phomopsis canker
+West,9,In,14,WRC,6.3,1.92,13.32,1,,,N,,N,,,Natural regen
+West,9,In,15,WRC,12.2,3.72,58.22,1,,40,N,,N,,,
+West,9,In,16,WRC,11.4,3.47,41.19,1,,,Y,BD,N,0.72,0,
+West,9,In,16,,, ,,,,,Y,BD,N,0.83,0,
+West,9,In,16,,, ,,,,,Y,BD,N,1,0,
+West,9,In,17,WRC,5.4,1.65,10.82,1,,,Y,SK,N,0.74,0,natural regen
+West,9,In,18,DF,8.6,2.62,25.76,2,2.1,,Y,CR,Y,0.83,35,natural regen
+West,9,In,18,,, ,,,,,Y,SK,Y,0.83,0,likely Phomopsis canker on branches
+West,9,In,18,,, ,,,,,Y,BD,Y,0.58,0,Likely Phomopsis canker
+West,9,In,18,,, ,,,,,Y,BD,Y,2.07,0,Likely Phomopsis canker
+West,9,In,19,WRC,1.05,1.05,8.01,2,0.38,,Y,CR,N,0.21,25,natural regen measured at 0.5m
+West,9,In,19,,, ,,,,,Y,SK,N,0.39,0,
+West,9,In,19,,, ,,,,,Y,SK,N,0.49,0,
+West,9,In,20,WRC,4.4,1.34,3.96,1,,,N,,N,,,natural regen
+West,9,In,21,DF,9.4,2.87,30.24,1,,,Y,SK,N,0.7,0,"some dead needles, natural regen"
+West,9,In,21,,, ,,,,,Y,BD,N,1.02,0,Likely Phomopsis canker
+West,9,In,21,,, ,,,,,Y,BD,N,1.32,0,Likely Phomopsis canker
+West,9,In,22,WRC,2.09,0.64,14.44,1,,,N,,N,,,natural regen
+West,9,In,23,DF,12.9,3.93,45.66,1,,40,Y,CR,N,0.83,20,
+West,9,In,23,,, ,,,,,Y,BD,N,0.9,0,Likely Phomopsis canker
+West,9,In,23,,, ,,,,,Y,SK,N,1.47,0,
+West,9,In,24,DF,17,5.18,58.13,1,,,Y,BD,N,1.9,0,Likely Phomopsis canker
+West,9,In,24,,, ,,,,,Y,BD,N,1.19,0,
+West,9,In,24,,, ,,,,,Y,BD,N,1.48,0,
+West,9,In,25,WRC,16.8,5.12,91.44,1,,60,Y,SK,N,0.6,0,
+West,9,In,26,WRC,10.8,3.29,37.66,1,,,N,,N,,,
+West,9,In,27,WRC,1.18,1.18,10.49,1,,,N,,N,,,"natural regen, measured at 0.5m"
+West,9,In,28,WRC,1.52,1.52,5.97,1,,,N,,N,,,natural regen
+West,9,In,29,WRC,1.26,1.26,5.02,1,,,N,,N,,,"natrual regen, chlorotic"
+West,9,In,30,WRC,11.1,3.38,45.35,1,,,N,,N,,,chlorotic
+West,9,In,31,WRC,15.4,4.69,93.98,1,,55,N,,N,,,
+West,9,In,32,WRC,1.65,1.65,7.19,1,,,N,,N,,,"natural regen, chlorotic"
+West,9,In,33,WRC,11.4,3.47,49.18,1,,,N,,N,,,
+West,9,In,34,DF,20.2,6.16,71.24,1,,,Y,BD,N,1.47,0,Likely Phomopsis canker
+West,9,In,34,,, ,,,,,Y,BD,N,1.52,0,"Likely Phomopsis canker, and on branches"
+West,9,In,35,WRC,1.59,1.59,6.58,1,,,N,,N,,,natural regen
+West,9,In,36,WRC,16.2,4.94,99.06,1,,,N,,N,,,
+West,9,In,37,DF,18.4,5.61,76.18,1,,220,Y,BD,N,2.3,0,"some dead needles, measured at 1.1m. Likely Phomopsis canker, and on branches"
+West,9,In,38,WRC,16.2,4.94,101.6,1,,,Y,BD,N,0.82,0,
+West,9,In,39,WRC,15.4,4.69,88.9,1,,,N,,N,,,
+West,9,In,40,WRC,14,4.27,48.47,1,,,Y,BD,N,0.6,0,"Likely Phomopsis canker, some dead needles"
+West,9,In,41,WRC,1.3,1.3,4.17,1,,,N,,N,,,natural regen
+West,9,In,42,WRC,1.72,1.72,8.71,1,,,Y,SW,N,0,60,natural regen
+West,9,In,43,WRC,12.2,3.72,62.63,1,,,N,,N,,,
+West,9,In,44,WRC,2.19,0.67,14.13,1,,,Y,BD,N,0.42,0,natural regen
+West,9,In,44,,, ,,,,,Y,BD,N,0.58,0,
+West,9,In,44,,, ,,,,,Y,CR,N,0.52,13,
+West,9,In,45,DF,2.14,0.65,14.01,1,,,N,,N,,,natural regen
+West,9,In,46,DF,15.4,4.69,56.41,3,10.9,,Y,BD,N,0.9,0,Likely Phomopsis canker
+West,9,In,46,,, ,,,13.4,,Y,BD,N,0.75,0,Likely Phomopsis canker
+West,9,In,46,,, ,,,,,Y,BD,N,0.7,0,Likely Phomopsis canker
+West,9,In,46,,, ,,,,,Y,SK,N,2.53,0,
+West,9,In,47,WRC,16.9,5.15,101.6,1,,,N,,N,,,
+West,9,In,48,WRC,7.2,2.19,13.3,1,,,N,,N,,,natural regen
+West,9,In,49,WRC,14,4.27,78.74,1,,,N,,N,,,
+West,9,In,50,WRC,9.2,2.8,39.49,1,,,N,,N,,,
+West,9,In,51,WRC,10.8,3.29,67.38,1,,,Y,BD,Y,1.1,0,
+West,9,In,51,,, ,,,,,Y,BD,Y,1.25,0,
+West,9,In,51,,, ,,,,,Y,SK,Y,1.45,0,original top (dead) photo
+West,9,In,52,WRC,7.4,2.26,15.61,1,,,N,,N,,,natural regen
+West,9,In,53,DF,13.3,4.05,44.28,1,,,N,,N,,,
+West,9,In,54,WRC,1,1,6.73,2,0.34,,Y,SK,N,0.28,0,natural regen. Diameter at 0.5m
+West,9,In,55,WRC,2.09,0.64,15.75,1,,,N,,N,,,natural regen
+West,9,In,56,DF,8.9,2.71,22.28,1,,,Y,SK,N,0.6,0,"dead needles, natural regen"
+West,9,In,57,DF,7.2,2.19,21.16,1,,,Y,SK,N,0.8,0,"natural regen, some dead needles"
+West,9,In,57,,, ,,,,,Y,BD,N,1.08,0,Likely Phomopsis canker
+West,9,In,57,,, ,,,,,Y,BD,N,0.64,0,Likely Phomopsis canker
+West,9,In,58,WRC,1.96,1.96,11.54,1,,,N,,N,,,natural regen
+West,9,In,59,DF,16.1,4.91,59.39,1,,,N,,N,,,chlorotic
+West,9,In,60,DF,13.2,4.02,52.05,1,,,Y,SK,N,1.71,0,chlorotic
+West,9,In,61,DF,16.1,4.91,71.03,1,,,Y,BD,N,1.52,0,"Likely Phomopsis canker, chlorotic"
+West,9,In,62,WRC,15.4,4.69,79.46,1,,,N,,N,,,
+West,8,In,1,WRC,5.5,1.68,9.46,1,,,Y,SW,N,0,170,"Chlorotic, natural regen"
+West,8,In,2,WRC,5.9,1.8,13.75,1,,,N,,N,,,natrual regen
+West,8,In,3,WRC,16.2,4.94,86.52,1,,270,Y,SW,N,0,270,
+West,8,In,4,WRC,1.85,1.85,10.43,1,,,N,,N,,,natural regen
+West,8,In,5,WRC,1.53,1.53,6.03,1,,,Y,SW,N,0,90,natural regen
+West,8,In,6,WRC,2.24,0.68,13.46,1,,,Y,SW,N,0,175,natural regen
+West,8,In,7,WRC,2.27,0.69,16.86,1,,,Y,CR,N,0.73,25,natural regen
+West,8,In,8,DF,14.7,4.48,63.18,1,,,Y,BD,N,1.1,0,
+West,8,In,9,WRC,12.7,3.87,53.57,1,,80,Y,SW,N,0,80,
+West,8,In,10,WRC,14.2,4.33,79.18,1,,,N,,N,,,
+West,8,In,11,WRC,2.19,0.67,24.55,1,,,Y,SW,N,0,205,natural regen
+West,8,In,12,WRC,8.6,2.62,28.37,1,,90,Y,SW,N,0,90,
+West,8,In,13,DF,18.4,5.61,80.37,1,,150,Y,SW,N,0,150,
+West,8,In,14,WRC,0.92,0.92,8.07,1,,,Y,SW,N,0,155,"measurements at 0.5 m, natural regen"
+West,8,In,15,WRC,13,3.96,51.75,1,,85,N,,N,,,
+West,8,In,16,WRC,6.2,1.89,11.18,1,,,N,,N,,,natural regen
+West,8,In,17,DF,7.7,2.35,16.44,1,,,Y,BD,N,0.72,0,"some dead needles, fungal damage to branches. natural regen"
+West,8,In,17,,, ,,,,,Y,BD,N,0.91,0,Likely Phomopsis canker
+West,8,In,17,,, ,,,,,Y,SW,N,0,105,
+West,8,In,18,DF,7.1,2.16,15.67,1,,,N,,N,,,natural regen
+West,8,In,19,DF,19.2,5.85,100.78,1,,170,Y,BD,N,0.15,0,Likely Phomopsis canker
+West,8,In,19,,, ,,,,,Y,BD,N,0.36,0,Likely Phomopsis canker
+West,8,In,19,,, ,,,,,Y,BD,N,0.55,0,Likely Phomopsis canker
+West,8,In,19,,, ,,,,,Y,SK,N,1.2,0,
+West,8,In,20,WRC,2.53,0.77,21.53,1,,,N,,N,,,natural regen
+West,8,In,21,WRC,14,4.27,75.64,1,,,N,,N,,,
+West,8,In,22,WRC,1.28,1.28,3.8,1,,,Y,SW,N,0,145,natural regen
+West,8,In,23,DF,13.2,4.02,51.45,1,,,Y,SK,N,0.1,0,
+West,8,In,24,WRC,8.9,2.71,32.81,1,,,Y,SW,N,0,90,chlorotic
+West,8,In,25,DF,22.3,6.8,106.8,1,,,Y,BD,N,0.9,0,
+West,8,In,25,,, ,,,,,Y,BD,N,1.2,0,
+West,8,In,25,,, ,,,,,Y,SW,N,0,240,
+West,8,In,26,WRC,14.5,4.42,77.25,1,,,N,,N,,,
+West,8,In,27,WRC,1.8,1.8,10.68,1,,,N,,N,,,natural regen
+West,8,In,28,WRC,1.13,1.13,9.14,1,,,Y,L,N,0,60,"measurement at 0.5m, natural regen"
+West,8,In,29,WRC,2.32,0.71,27.04,1,,,N,,N,,,
+West,8,In,30,WRC,2.37,0.72,25.75,1,,,N,,N,,,
+West,8,In,31,WRC,1.04,1.04,9.48,1,,,N,,N,,,"natural regen, measured at 0.5m"
+West,8,In,32,WRC,1.58,1.58,6.84,1,,,N,,N,,,natural regen
+West,8,In,33,WRC,1.74,1.74,12.63,1,,,N,,N,,,natural regen
+West,8,In,34,DF,10.4,3.17,31.6,1,,,Y,BD,N,0.65,0,"likely natural regen, some dead needles. Likely Phomopsis canker"
+West,8,In,34,,, ,,,,,Y,BD,N,0.3,0,Likely Phomopsis canker
+West,8,In,34,,, ,,,,,Y,BD,N,0.1,0,Likely Phomopsis canker
+West,8,In,34,,, ,,,,,Y,SW,N,0,165,
+West,8,In,35,WRC,13.4,4.08,58.8,1,,105,N,,N,,,
+West,8,In,36,WRC,14.1,4.3,71.46,1,,60,N,,N,,,
+West,8,In,37,DF,11.4,3.47,35.38,1,,,Y,BD,N,1.63,0,"Some dead needles, fungal damage to branches. Likely Phomopsis canker"
+West,8,In,38,WRC,11.2,3.41,43.3,1,,,N,,N,,,
+West,8,In,39,DF,9.7,2.96,31.07,1,,,N,,N,,,natural regen
+West,8,In,40,WRC,1.15,1.15,8.79,3,0.07,,Y,L,N,0,120,"measurements at 0.5 m, natural regen"
+West,8,In,40,,, ,,,0.12,,,,,,,
+West,8,In,41,WRC,11.2,3.41,50.64,1,,,N,,N,,,
+West,8,In,42,WRC,1.31,1.31,11.4,1,,,Y,SW,N,0,45,"measurements at 0.5 m, natural regen"
+West,8,In,43,WRC,1.07,1.07,8.29,1,,,Y,CR,N,0.25,33,"measurements at 0.5 m, natural regen"
+West,8,In,44,WRC,12.6,3.84,46.75,1,,,Y,SK,N,0.98,0,Chlorotic
+West,8,In,45,WRC,13.3,4.05,69.75,1,,,Y,SW,N,0,70,
+West,8,In,46,DF,16,4.88,69.76,1,,,Y,BD,N,1,0,Some dead needles. Likely Phomopsis canker
+West,8,In,46,,, ,,,,,Y,BD,N,1.45,0,Likely Phomopsis canker
+West,8,In,47,WRC,1.62,1.62,7.48,1,,,Y,SW,N,0,120,"natural regen, slightly chlorotic"
+West,8,In,48,WRC,14.2,4.33,59.29,1,,,Y,SW,N,0,50,
+West,8,In,49,WRC,0.8,0.8,9.4,1,,,Y,CR,N,0.33,40,"natural regen, measured at 0.5m"
+West,8,In,49,,, ,,,,,Y,L,N,0,150,
+West,8,In,50,WRC,1.89,1.89,16.53,1,,,Y,SW,N,0,90,"slightly chlorotic, some dead branches"
+West,8,In,51,WRC,16.2,4.94,98.25,1,,,N,,N,,,
+West,8,In,52,DF,7.4,2.26,18.62,1,,,N,,N,,,natural regen
+West,8,In,53,WRC,1.13,1.13,9,3,0.18,,Y,L,N,0,60,"natural regen, measured at 0.5m"
+West,8,In,53,,, ,,,0.35,,,,,,,
+West,8,In,54,WRC,12.5,3.81,58.7,1,,,Y,SW,N,0,70,
+West,8,In,55,WRC,1.41,1.41,6.56,1,,,Y,SW,N,0,40,"natural regen, original leader dead"
+West,8,In,56,DF,13.6,4.15,59.97,1,,215,Y,SW,N,0,215,some dead needles
+West,8,In,57,WRC,0.6,0.6,11.99,2,0.37,,Y,SW,N,0,100,"natural regen, measured at 0.5m"
+West,8,In,58,DF,14.5,4.42,52.69,1,,30,N,,N,,,
+West,8,In,59,WRC,1.34,1.34,4.57,1,,,Y,SW,N,0,160,natural regen
+West,8,In,60,DF,13.4,4.08,53.17,1,,,N,,N,,,some dead needles
+West,8,In,61,WRC,1.65,1.65,8.01,1,,,Y,SW,N,0,65,Natural regen
+West,8,In,62,DF,10.6,3.23,41.79,1,,,N,,N,,,short branches
+West,8,In,63,WRC,1.27,1.27,12.81,1,,,Y,CR,N,0.4,30,"natural regen, measured at 0.5m"
+West,8,In,64,WRC,9.2,2.8,38.44,1,,,N,,N,,,
+West,8,In,65,WRC,1.46,1.46,8.17,1,,,Y,SW,N,0,115,natural regen
+West,8,In,66,WRC,1.52,1.52,9.02,1,,,Y,SW,N,0,90,natural regen
+West,8,In,67,WRC,1.24,1.24,11.15,1,,,N,,N,,,"natural regen, measured at 0.5m"
+West,8,In,68,WRC,12.8,3.9,58.21,1,,,Y,SW,N,0,95,
+West,8,In,69,DF,19.9,6.07,82.75,1,,,N,,N,,,
+West,8,In,70,WRC,1.03,1.03,8.3,1,,,Y,L,N,0,80,"natural regen, chlorotic, measured at 0.5m"
+West,7,In,1,WRC,13.3,4.05,62.37,1,,50,N,,N,,,
+West,7,In,2,WRC,4.5,1.37,4.4,1,,,N,,N,,,Natural regen
+West,7,In,3,DF,12,3.66,35.74,1,,60,N,,N,,,
+West,7,In,4,DF,13.7,4.18,54.77,1,,,N,,N,,,
+West,7,In,5,WRC,5.3,1.62,9.64,1,,,N,,N,,,natural regen
+West,7,In,6,DF,14.6,4.45,59.03,1,,30,N,,N,,,
+West,7,In,7,WRC,9.4,2.87,38.74,1,,25,Y,SK,N,2.35,20,DFS for SK est
+West,7,In,8,WRC,4.2,1.28,3.1,1,,,Y,CR,N,0.35,10,Natural regen 
+West,7,In,9,WRC,5.4,1.65,6.81,1,,105,Y,CR,N,0.36,60,natural regen. 105 DFS due to CR
+West,7,In,10,WRC,3.9,1.19,6.46,1,,,N,,N,,,"natural regen, m @ 0.5m"
+West,7,In,11,WRC,14.8,4.51,75.45,1,,20,N,,N,,,
+West,7,In,12,WRC,4,1.22,10.03,1,,,N,,N,,,"Natural regen, m @ 0.5m"
+West,7,In,13,WRC,13.4,4.08,58.58,1,,80,Y,BD,N,0.81,0,
+West,7,In,13,,, ,,,,,Y,BD,N,0.92,0,
+West,7,In,13,,, ,,,,,Y,BD,N,1.16,0,
+West,7,In,14,WRC,6.6,2.01,24.6,1,,,N,,N,,,
+West,7,In,15,WRC,0.57,0.57,4.75,1,,,Y,SW,N,0,390,"natural regen, m @ 0.5m"
+West,7,In,16,WRC,4.6,1.4,4.75,1,,,N,,N,,,natural regen
+West,7,In,17,DF,20.1,6.13,70.82,1,,95,Y,SW,N,0,95,
+West,7,In,17,,, ,,,,,Y,BD,N,0.49,0,rub from other tree 
+West,7,In,17,,, ,,,,,Y,BD,N,1.55,0,Likely Phomopsis canker
+West,7,In,17,,, ,,,,,Y,BD,N,1.04,0,Likely Phomopsis canker
+West,7,In,17,,,,,,,,Y,BD,N,1.22,0,Likely Phomopsis canker
+West,7,In,17,,,,,,,,Y,BD,N,1.83,0,rub from other tree 
+West,7,In,18,DF,11.3,3.44,34.74,1,,,Y,BD,N,1.05,0,Likely Phomopsis canker
+West,7,In,18,,, ,,,,,Y,CR,N,1.25,9,
+West,7,In,19,WRC,4,1.22,9.07,2,0.66,,Y,SK,N,0.1,0,"natural regen, D @ 0.5m "
+West,7,In,19,,, ,,,,,Y,SK,N,0.07,0,
+West,7,In,19,,, ,,,,,Y,SK,N,0.14,0,
+West,7,In,20,WRC,11.1,3.38,36.75,1,,25,N,,N,,,
+West,7,In,21,WRC,13.1,3.99,57.03,1,,,N,,N,,,
+West,7,In,22,DF,15,4.57,,1,,,Y,BD,N,1.07,0,Some dead needles. Likely Phomopsis canker. Missed collecting or recording diameter in field
+West,7,In,22,,, ,,,,,Y,BD,N,1.19,0,Likely Phomopsis canker
+West,7,In,22,,, ,,,,,Y,BD,N,1.49,0,Likely Phomopsis canker
+West,7,In,22,,, ,,,,,Y,BD,N,1.55,0,Likely Phomopsis canker
+West,7,In,22,,, ,,,,,Y,SK,N,1.43,15,
+West,7,In,23,DF,16.4,5,56.4,2,4.24,30,N,,N,,,
+West,7,In,24,WRC,14.4,4.39,63.98,1,,,N,,N,,,
+West,7,In,25,WRC,0.64,0.64,5.09,1,,,N,,N,,,"natural regen, measured at 0.25 m"
+West,7,In,26,WRC,5.5,1.68,6.67,1,,,N,,N,,,natural regen
+West,7,In,27,WRC,11.2,3.41,53.1,1,,,N,,N,,,
+West,7,In,28,DF,8.7,2.65,24.49,1,,,Y,SW,N,0,65,natural regen
+West,7,In,29,WRC,12.1,3.69,39.76,1,,,N,,N,,,
+West,7,In,30,WRC,11.5,3.51,39.58,1,,,N,,N,,,
+West,7,In,31,WRC,8.7,2.65,23.48,1,,,N,,N,,,
+West,7,In,32,WRC,4.9,1.49,6.68,1,,,N,,N,,,natural regen
+West,7,In,33,WRC,14.4,4.39,70.65,1,,,N,,N,,,
+West,7,In,34,WRC,6.2,1.89,10.32,1,,,N,,N,,,natural regen
+West,7,In,35,DF,15,4.57,62.93,1,,,Y,BD,N,5.6,0,"dead needles, branch damage. Likely Phomopsis canker"
+West,7,In,35,,, ,,,,,Y,BD,N,3.8,0,Likely Phomopsis canker
+West,7,In,35,,, ,,,,,Y,BD,N,2.9,0,Likely Phomopsis canker
+West,7,In,35,,, ,,,,,Y,SW,N,0,150,
+West,7,In,36,WRC,14,4.27,80.05,1,,,N,,N,,,
+West,7,In,37,WRC,4.9,1.49,8.44,1,,,N,,N,,,Natural regen
+West,7,In,38,WRC,3.6,1.1,10.6,1,,,N,,N,,,"natural regen, measured at 0.5 m"
+West,7,In,39,DF,10.1,3.08,27.98,1,,,Y,SK,Y,1.92,30,"original top dead, many needles dead, Dfs estimated"
+West,7,In,39,,, ,,,,,Y,BD,Y,1.92,0,Likely Phomopsis canker
+West,7,In,39,,, ,,,,,Y,BD,Y,1.8,0,Likely Phomopsis canker
+West,7,In,39,,, ,,,,,Y,BD,Y,1.68,0,Likely Phomopsis canker
+West,7,In,39,,, ,,,,,Y,BD,Y,1.4,0,Likely Phomopsis canker
+West,7,In,39,,, ,,,,,Y,BD,Y,1.16,0,Likely Phomopsis canker
+West,7,In,40,WRC,14.7,4.48,68.22,1,,,N,,N,,,
+West,7,In,41,WRC,8.9,2.71,31.59,1,,,N,,N,,,
+West,7,In,42,WRC,10.3,3.14,41.09,1,,,N,,N,,,
+West,7,In,43,WRC,9.1,2.77,27.41,1,,,N,,N,,,
+West,7,In,44,WRC,12,3.66,51.7,1,,,N,,N,,,
+West,7,In,45,WRC,6,1.83,8.18,1,,,N,,N,,,natural regen
+West,7,In,46,WRC,13.1,3.99,63.7,1,,,N,,N,,,
+West,7,In,47,WRC,8,2.44,20.5,1,,,Y,CR,N,0.2,20,"chlorotic, natural regen"
+West,7,In,48,WRC,5.4,1.65,9.05,1,,,N,,N,,,natural regen
+West,7,In,49,WRC,10.1,3.08,28.34,1,,,Y,CR,N,0,35,
+West,7,In,49,,, ,,,,,Y,BD,N,0.73,0,
+West,7,In,50,WRC,6.4,1.95,10.57,1,,,N,,N,,,natural regen
+West,7,In,51,WRC,12.2,3.72,57.85,1,,,N,,N,,,
+West,7,In,52,WRC,12.1,3.69,53.68,1,,,N,,N,,,chlorotic
+West,7,In,53,DF,9.3,2.83,25,1,,,Y,BD,N,1.28,0,Likely Phomopsis canker
+West,7,In,53,,, ,,,,,Y,BD,N,1.22,0,Likely Phomopsis canker
+West,7,In,53,,, ,,,,,Y,BD,N,1.16,0,Likely Phomopsis canker
+West,7,In,53,,, ,,,,,Y,BD,N,1.07,0,Likely Phomopsis canker
+West,7,In,53,,, ,,,,,Y,SK,N,0.35,15,
+West,7,In,54,WRC,12.3,3.75,57.33,1,,,N,,N,,,
+West,7,In,55,WRC,6,1.83,11.95,1,,,N,,N,,,natural regen
+East,6,In,1,WRC,13,3.96,47.72,1,,50,N,,N,,,
+East,6,In,2,WRC,12.4,3.78,50.62,1,,115,N,,N,,,some dead needles
+East,6,In,3,DF,8.1,2.47,27.95,1,,95,N,,N,,,
+East,6,In,4,DF,17.4,5.3,64.39,1,,120,Y,BD,N,0.5,0,Likely Phomopsis canker
+East,6,In,4,,, ,,,,,Y,BD,N,0.9,0,
+East,6,In,5,DF,8.1,2.47,27.15,1,,85,Y,BD,Y,1.27,0,Likely Phomopsis canker. Dead needles on some branches
+East,6,In,5,,, ,,,,,Y,SK,Y,0.2,0,
+East,6,In,5,,, ,,,,,Y,SK,Y,0.6,0,
+East,6,In,5,,, ,,,,,Y,BD,Y,0.83,0,
+East,6,In,5,,, ,,,,,Y,BD,Y,0.98,0,
+East,6,In,6,WRC,3.51,1.07,9.23,1,,,Y,BD,N,0.27,0,"natural regen, measured at 0.5m"
+East,6,In,7,WRC,14.5,4.42,60.73,1,,130,N,,N,,,
+East,6,In,8,WRC,1.45,1.45,4.49,1,,,N,,N,,,natural regen
+East,6,In,9,WRC,9.7,2.96,38.4,1,,55,N,,N,,,
+East,6,In,10,WRC,11.65,3.55,43.33,1,,,N,,N,,,
+East,6,In,11,WRC,13,3.96,54.01,1,,140,N,,N,,,
+East,6,In,12,DF,7.9,2.41,15.62,1,,,N,,N,,,natural regen
+East,6,In,13,WRC,1.86,1.86,9.61,1,,,N,,N,,,natural regen
+East,6,In,14,WRC,11.9,3.63,70.14,1,,,Y,BD,N,1.65,0,photo
+East,6,In,14,,, ,,,,,Y,BD,N,1.1,0,photo
+East,6,In,15,WRC,1.15,1.15,8.53,1,,,N,,N,,,"natural regen, m @ 0.5 m "
+East,6,In,16,DF,9.2,2.8,30.67,1,,,Y,BD,N,0.6,0,Likely Phomopsis canker. Dead needles
+East,6,In,17,DF,7.6,2.32,29.22,2,1.95,,Y,SK,n,0.33,0,diam @ 0.9
+East,6,In,17,,, ,,,,115,Y,BD,Y,0.28,0,Likely Phomopsis canker. Dead needles
+East,6,In,17,,, ,,,,,Y,BD,Y,0.62,0,
+East,6,In,17,,, ,,,,,Y,SW,Y,0,115,
+East,6,In,18,WRC,9.8,2.99,46.18,1,,,Y,BD,N,1.51,0,BD continuous until 6.6ft
+East,6,In,18,,, ,,,,,Y,BD,N,0.23,0,same as damage on tree #14
+East,6,In,18,,, ,,,,,Y,BD,N,0.79,0,
+East,6,In,18,,, ,,,,,Y,BD,N,1.5,0,
+East,6,In,19,WRC,1.34,1.34,5.43,1,,,N,,N,,,natural regen
+East,6,In,20,DF,12.4,3.78,41.17,1,,,N,,N,,,"dead needles, fungal damage on branches"
+East,6,In,21,DF,12.6,3.84,39.81,1,,,Y,BD,N,0.25,0,"dead needles, Likely Phomopsis canker"
+East,6,In,22,DF,10.9,3.32,32.32,1,,,N,,N,,,"dead needles, Likely Phomopsis canker"
+East,6,In,23,WRC,1.09,1.09,9.68,1,,,N,,N,,,"natural regen, m @ 0.5m"
+East,6,In,24,DF,11,3.35,33.41,1,,65,Y,BD,N,0.7,0,"dead needles, fungal damage on branches "
+East,6,In,25,DF,11.1,3.38,37.99,1,,,Y,BD,N,0.62,0,"chlorotic, Likely Phomopsis canker"
+East,6,In,26,WRC,7.8,2.38,26.07,1,,,N,,N,,,
+East,6,In,27,WRC,1.13,1.13,10.62,1,,,N,,N,,,"natural regen, m @ 0.5 "
+East,6,In,28,DF,6.9,2.1,19.31,1,,,N,,N,,,natural regen
+East,6,In,29,WRC,1.54,1.54,6.22,1,,,N,,N,,,Natural regen
+East,6,In,30,WRC,8.5,2.59,26.12,1,,,N,,N,,,
+East,6,In,31,DF,13.2,4.02,47.16,1,,,N,,N,,,
+East,6,In,32,WRC,6.7,2.04,18.85,1,,,N,,N,,,
+East,6,In,33,WRC,9,2.74,32.69,1,,,N,,N,,,
+East,6,In,34,DF,11.9,3.63,43.72,1,,,N,,N,,,"dead needles, fungal damage"
+East,6,In,35,WRC,13.8,4.21,90.21,1,,,N,,N,,,
+East,6,In,36,WRC,9.9,3.02,39.48,1,,,Y,BD,N,1.57,0,
+East,6,In,36,,, ,,,,,Y,BD,N,0.94,0,
+East,6,In,36,,, ,,,,,Y,BD,N,1.52,0,
+East,6,In,36,,, ,,,,,Y,BD,N,1.62,0,
+East,6,In,36,,, ,,,,,Y,BD,N,1.22,0,
+East,6,In,37,WRC,1.37,1.37,4.87,1,,,N,,N,,,Natural regen
+East,6,In,38,WRC,11.2,3.41,54.62,1,,,N,,N,,,Some dead needles
+East,6,In,39,WRC,6.9,2.1,18.04,1,,,N,,N,,,some dead/chlorotic needles
+East,6,In,40,WRC,12.5,3.81,64.6,1,,,Y,BD,N,1.05,0,weird branch (photo)
+East,6,In,41,WRC,5.2,1.58,6.74,1,,,N,,N,,,natural regen
+East,6,In,42,WRC,6.5,1.98,16.21,1,,,N,,N,,,natural regen
+East,6,In,43,DF,12.3,3.75,32.13,1,,,N,,N,,,growing within crown of #44
+East,6,In,44,DF,17.2,5.24,65.65,1,,,N,,N,,,
+East,6,In,45,WRC,5.2,1.58,5.99,1,,,N,,N,,,natural regen
+East,6,In,46,DF,13.1,3.99,42.62,1,,,Y,BD,N,0.95,0,some needles dying
+East,6,In,47,DF,10.2,3.11,35.86,1,,,Y,BD,N,0.96,0,Likely Phomopsis canker
+East,6,In,47,,, ,,,,,Y,BD,N,1.89,0,Likely Phomopsis canker
+East,6,In,47,,, ,,,,,Y,BD,N,2.1,0,Likely Phomopsis canker
+East,6,In,48,WRC,4.5,1.37,10.44,1,,,N,,N,,,"natural regen, measured at 0.5m"
+East,6,In,49,DF,8,2.44,19.31,1,,,Y,BD,N,0.65,0,Likely Phomopsis canker
+East,6,In,50,WRC,12,3.66,55.03,1,,,N,,N,,,some dead needles
+East,6,In,51,WRC,9.9,3.02,30.37,1,,,N,,N,,,some dead needles
+East,6,In,52,WRC,10.6,3.23,46.6,1,,,Y,BD,N,0.96,0,
+East,6,In,52,,, ,,,,,Y,BD,N,0.66,0,
+East,6,In,52,,, ,,,,,Y,BD,N,0.61,0,
+East,6,In,52,,, ,,,,,Y,BD,N,0.91,0,
+East,6,In,53,DF,12.4,3.78,42.12,1,,,N,,N,,,
+East,6,In,54,WRC,12,3.66,45.73,1,,,N,,N,,,
+East,6,In,55,DF,7.6,2.32,17.2,1,,,N,,N,,,
+East,6,In,56,DF,17.3,5.27,58.6,1,,,Y,BD,N,0.92,0,Likely Phomopsis canker
+East,6,In,56,,, ,,,,,Y,BD,N,0.64,0,
+East,6,In,56,,, ,,,,,Y,BD,N,0.77,0,
+East,6,In,57,WRC,9.8,2.99,34.65,1,,,N,,N,,,
+East,6,In,58,DF,7,2.13,12.22,1,,,N,,N,,,some dead needles
+East,6,In,59,DF,12.5,3.81,50.25,1,,,Y,BD,N,0.8,0,
+East,3,Out,1,DF,8.9,2.71,23.05,2,2.38,,Y,BD,N,1.22,0,"Natural regen, fungal damage to branch, original leader dead, BD likely Phomopsis canker"
+East,3,Out,2,DF,14.4,4.39,44.75,1,,150,Y,SK,N,0.9,0,
+East,3,Out,2,,, ,,,,,Y,SK,N,0.98,0,
+East,3,Out,2,,, ,,,,,Y,SK,N,0.52,0,
+East,3,Out,2,,, ,,,,,Y,SW,N,0,150,
+East,3,Out,2,,, ,,,,,Y,BD,N,0.89,0,Likely Phomopsis canker
+East,3,Out,3,DF,14.5,4.42,51.95,1,,,Y,BD,N,0.64,0,Likely Phomopsis canker
+East,3,Out,3,,, ,,,,,Y,SK,N,0.8,0,
+East,3,Out,3,,, ,,,,,Y,SK,N,0.9,0,
+East,3,Out,3,,, ,,,,,Y,SK,N,0.75,0,
+East,3,Out,3,,, ,,,,,Y,CR,N,1.08,15,
+East,3,Out,4,DF,12.4,3.78,36.39,1,,150,Y,SK,N,0.81,15,
+East,3,Out,4,,, ,,,,,Y,BD,N,0.75,0,Likely Phomopsis canker
+East,3,Out,4,,, ,,,,,Y,BD,N,1.19,0,Likely Phomopsis canker
+East,3,Out,4,,, ,,,,,Y,SK,N,1.22,0,
+East,3,Out,4,,, ,,,,,Y,SK,N,1.41,5,
+East,3,Out,5,DF,17.4,5.3,68.6,1,,,Y,BD,N,0.71,0,Likely Phomopsis canker
+East,3,Out,6,DF,16.8,5.12,67.5,2,3.54,205,Y,BD,N,0.65,0,Likely Phomopsis canker
+East,3,Out,6,,, ,,,,,Y,BD,N,1.15,0,Likely Phomopsis canker
+East,3,Out,6,,, ,,,,,Y,BD,N,1.3,0,Likely Phomopsis canker
+East,3,Out,6,,, ,,,,,Y,BD,N,1.65,0,Likely Phomopsis canker
+East,3,Out,6,,, ,,,,,Y,SW,N,0,205,
+East,3,Out,7,DF,8.6,2.62,24.48,1,,145,Y,BD,N,0.1,0,natural regen
+East,3,Out,7,,, ,,,,,Y,SK,N,0.23,20,
+East,3,Out,7,,, ,,,,,Y,SW,N,0,145,
+East,3,Out,8,WRC,0.5,0.5,7.79,3,0.26,10,N,,Y,,,"m @ 0.25m, DFV is estimated"
+East,3,Out,8,,, ,,,0.2,,,,,,,
+East,3,Out,9,WRC,1,1,8.79,2,0.52,195,Y,SW,Y,0,195,"m @ 0.5m,"
+East,3,Out,10,DF,7.5,2.29,15.46,1,,,Y,SK,N,0.74,15,natural regen
+East,3,Out,10,,, ,,,,,Y,CR,N,0.51,20,
+East,3,Out,11,DF,18.2,5.55,78.87,1,,180,Y,BD,N,1.3,0,Likely Phomopsis canker
+East,3,Out,11,,, ,,,,,Y,SW,N,0,180,
+East,3,Out,12,DF,16.3,4.97,75.95,1,,,Y,SK,N,0.9,0,diameter @ 1.1m 
+East,3,Out,12,,, ,,,,,Y,SK,N,0.9,0,
+East,3,Out,12,,, ,,,,,Y,BD,N,1,0,Likely Phomopsis canker
+East,3,Out,12,,, ,,,,,Y,BD,N,1.3,0,Likely Phomopsis canker
+East,3,Out,12,,, ,,,,,Y,BD,N,0.4,0,Likely Phomopsis canker
+East,3,Out,12,,, ,,,,,Y,SW,N,0,,couldnt get DFS
+East,3,Out,13,DF,7.8,2.38,25.42,2,1,,Y,SK,N,0.36,5,diameter at 0.8m. Natural regen
+East,3,Out,14,DF,2.1,0.64,12.51,1,,,N,,N,,,natural regen
+East,3,Out,15,DF,13.3,4.05,57.27,1,,130,Y,BD,N,2.2,20,"likely Phomopsis canker, photo of BD"
+East,3,Out,16,DF,12.2,3.72,36.87,1,,,Y,SK,N,2.1,0,
+East,3,Out,16,,, ,,,,,Y,SK,N,0.95,5,
+East,3,Out,16,,, ,,,,,Y,BD,N,0.98,0,Likely Phomopsis canker
+East,3,Out,17,DF,19.1,5.82,64.08,1,,170,Y,CR,N,2.74,50,Dfs estimated
+East,3,Out,17,,, ,,,,,Y,BD,N,1.86,0,
+East,3,Out,17,,, ,,,,,Y,SW,N,0,170,
+East,3,Out,18,DF,13.4,4.08,46.59,1,,,Y,SK,N,2.26,0,"some dead needles, damage on branches, likely Phomopsis canker "
+East,3,Out,18,,, ,,,,,Y,BD,N,1.6,0,
+East,3,Out,19,DF,14.7,4.48,54.82,1,,60,Y,SK,N,2.93,40,Dfs estimated
+East,3,Out,19,,, ,,,,,Y,CR,N,3.35,60,"Dfs estimated, Diameter at 0.9m"
+East,3,Out,19,,, ,,,,,Y,BD,N,1,0,Likely Phomopsis canker
+East,3,Out,19,,, ,,,,,Y,BD,N,1.2,0,Likely Phomopsis canker
+East,3,Out,19,,, ,,,,,Y,BD,N,1.3,0,Likely Phomopsis canker
+East,3,Out,19,,, ,,,,,Y,SK,N,0.2,0,
+East,3,Out,20,WRC,0.81,0.81,5.41,2,0.3,80,Y,SK,Y,0.35,0,measured at 0.5m
+East,3,Out,20,,, ,,,,,Y,SK,Y,0.1,0,
+East,3,Out,21,WRC,0.98,0.98,4.22,1,,60,Y,SK,Y,0.48,0,measured at 0.5m
+East,3,Out,21,,, ,,,,,Y,SK,Y,0.43,0,
+East,3,Out,21,,, ,,,,,Y,SK,Y,0.36,0,
+East,3,Out,21,,, ,,,,,Y,SK,Y,0.22,0,
+East,3,Out,22,WRC,0.71,0.71,6.38,4,0.46,70,Y,SK,Y,0.31,0,measured at 0.5m
+East,3,Out,22,,, ,,,0.45,,,,,,,measured at 0.5m
+East,3,Out,22,,, ,,,0.44,,,,,,,
+East,3,Out,22,,, ,,,,,,,,,,measured at 0.5m
+East,3,Out,23,WRC,1.01,1.01,9.05,1,,,Y,SK,Y,0.7,10,measured at 0.5m
+East,3,Out,23,,, ,,,,,Y,SK,Y,0.48,0,
+East,3,Out,24,WRC,1.04,1.04,14.39,1,,,Y,SK,Y,0.6,5,measured at 0.5m
+East,3,Out,24,,, ,,,,,Y,SK,Y,0.52,0,
+East,3,Out,24,,, ,,,,,Y,SK,Y,0.35,0,
+East,3,Out,25,DF,9.1,2.77,18.46,1,,,Y,BD,N,1.5,0,"natural regen, likely Phomopsis canker"
+East,3,Out,26,DF,18.3,5.58,62.75,1,,,Y,BD,N,1.15,0,Likely Phomopsis canker
+East,3,Out,27,DF,18,5.49,130,1,,190,Y,BD,N,0.1,0,"leave tree, diameter estimated"
+East,3,Out,27,,, ,,,,,Y,SW,N,0,190,"Likely Phomopsis canker, bushy top and branches concentrated at top 1/3, flat top"
+East,3,Out,28,DF,13.5,4.11,55.32,1,,,N,,N,,,
+East,3,Out,29,DF,12.6,3.84,40.65,1,,,Y,BD,N,0.82,0,"dead needles, likely Phomopsis canker, also on branches"
+East,3,Out,30,DF,18.5,5.64,74.87,1,,140,Y,SK,N,2.03,40,estimates for SK
+East,3,Out,30,,, ,,,,,Y,BD,N,1.5,0,Likely Phomopsis canker
+East,3,Out,30,,, ,,,,,Y,BD,N,0.4,0,Likely Phomopsis canker
+East,3,Out,30,,, ,,,,,Y,SW,N,0,140,
+East,3,Out,31,DF,18.3,5.58,57.23,1,,,Y,BD,N,2.13,0,Likely Phomopsis canker
+East,3,Out,31,,, ,,,,,Y,BD,N,1.52,0,Likely Phomopsis canker
+East,3,Out,31,,, ,,,,,,BD,N,0.5,0,
+East,3,Out,32,DF,15.4,4.69,53.69,1,,,Y,BD,N,0.4,0,Likely Phomopsis canker
+East,3,Out,33,WRC,0.63,0.63,4.73,1,,205,Y,SW,Y,0,205,measured at 0.5m
+East,3,Out,34,DF,8.1,2.47,22.77,1,,,Y,SK,N,0.35,0,
+East,3,Out,35,WRC,1.15,1.15,17.5,2,1.01,,Y,SK,Y,0.8,0,measured at 0.5m
+East,3,Out,35,,, ,,,,,Y,SK,Y,0.25,0,
+East,2,Out,1,DF,12.2,3.72,48.78,1,,10,Y,CR,N,2.47,40,DFS is an est. some dead needles
+East,2,Out,2,DF,10.9,3.32,38.37,1,,,Y,SK,N,5.3,0,
+East,2,Out,2,,, ,,,,,Y,SW,N,0,150,
+East,2,Out,3,WRC,1.38,1.38,26.83,3,1.05,50,Y,SK,Y,0.67,0,m @ 0.5m. DFV est.
+East,2,Out,3,,, ,,,1.02,,Y,SK,Y,0.53,0,
+East,2,Out,4,DF,16.4,5,73.36,1,,5,N,,N,,,some dead needles
+East,2,Out,5,WRC,1.46,1.46,8.32,5,0,,Y,SK,Y,0.98,0,
+East,2,Out,5,,, ,,,1.2,,Y,SK,Y,1.03,0,
+East,2,Out,5,,, ,,,1.26,,Y,SW,Y,0,220,
+East,2,Out,6,DF,11.7,3.57,29.62,1,,120,Y,SK,N,0.7,5,
+East,2,Out,6,,, ,,,,,Y,BD,N,0.51,0,Likely Phomopsis canker
+East,2,Out,6,,, ,,,,,Y,BD,N,0.47,0,Likely Phomopsis canker
+East,2,Out,6,,, ,,,,,Y,SK,N,1,0,
+East,2,Out,6,,, ,,,,,Y,SW,N,0,120,
+East,2,Out,7,DF,11.3,3.44,36.88,1,,50,Y,BD,N,0.52,0,fungal damage on branches
+East,2,Out,7,,, ,,,,,Y,BD,N,0.6,0,Likely Phomopsis canker
+East,2,Out,7,,, ,,,,,Y,BD,N,0.75,0,Likely Phomopsis canker
+East,2,Out,7,,, ,,,,,Y,SK,N,0.91,0,
+East,2,Out,8,WRC,0.93,0.93,13.81,1,,80,Y,SK,Y,0.28,0,measurements at 0.5m
+East,2,Out,8,,, ,,,,,Y,SK,Y,0,0,(old fork)
+East,2,Out,9,WRC,1.03,1.03,13.23,4,0.71,55,Y,SK,Y,0.65,0,measurements at 0.5m
+East,2,Out,9,,, ,,,0.81,,Y,SK,Y,0.44,0,
+East,2,Out,9,,, ,,,0.55,,,,,,,
+East,2,Out,10,DF,12.4,3.78,48.36,2,11.3,,Y,BD,N,0.5,0,Likely Phomopsis canker
+East,2,Out,10,,, ,,,,,Y,BD,N,0.65,0,Likely Phomopsis canker
+East,2,Out,10,,, ,,,,,Y,BD,N,1.05,0,Likely Phomopsis canker
+East,2,Out,10,,, ,,,,,Y,BD,N,2.01,0,Likely Phomopsis canker
+East,2,Out,11,DF,15.5,4.72,60.48,1,,200,Y,BD,N,0.3,0,Likely Phomopsis canker
+East,2,Out,11,,, ,,,,,Y,BD,N,0.7,0,Likely Phomopsis canker
+East,2,Out,11,,, ,,,,,Y,BD,N,1.32,0,Likely Phomopsis canker
+East,2,Out,11,,, ,,,,,Y,BD,N,1.55,0,Likely Phomopsis canker
+East,2,Out,11,,, ,,,,,Y,SW,N,0,200,
+East,2,Out,12,DF,10.7,3.26,32.31,1,,,Y,SK,N,0.71,0,
+East,2,Out,12,,, ,,,,,Y,BD,N,0.55,0,Likely Phomopsis canker
+East,2,Out,12,,, ,,,,,Y,BD,N,0.28,0,Likely Phomopsis canker
+East,2,Out,13,DF,13,3.96,44,1,,,Y,BD,N,1.52,0,Likely Phomopsis canker
+East,2,Out,13,,, ,,,,,Y,SK,N,1.8,0,Likely Phomopsis canker
+East,2,Out,13,,, ,,,,,Y,BD,N,0.95,0,Likely Phomopsis canker
+East,2,Out,13,,, ,,,,,Y,BD,N,1.27,0,Likely Phomopsis canker
+East,2,Out,14,DF,9.2,2.8,21.28,2,0.9,,Y,SK,N,0.91,0,
+East,2,Out,15,DF,7.2,2.19,22.24,1,,,Y,BD,N,0.48,0,"Likely Phomopsis canker, natural regen"
+East,2,Out,15,,, ,,,,,Y,BD,N,1.71,0,
+East,2,Out,16,DF,9.8,2.99,25.44,1,,,Y,BD,N,0.34,0,Likely Phomopsis canker
+East,2,Out,17,DF,8.8,2.68,21.49,1,,,Y,BD,N,0.82,0,"Likely Phomopsis canker, natural regen"
+East,2,Out,17,,, ,,,,,Y,BD,N,0.9,0,
+East,2,Out,17,,, ,,,,,Y,SK,N,0.49,0,
+East,2,Out,18,DF,13.1,3.99,78.19,1,,,Y,BD,Y,1.1,0,"Very chlorotic, leader bent"
+East,2,Out,19,DF,9.3,2.83,24.06,1,,,Y,BD,N,0.94,0,"Likely Phomopsis canker, natural regen"
+East,2,Out,20,WRC,0.62,0.62,9.27,3,0.38,50,Y,SK,Y,0.16,0,measured at 0.25m
+East,2,Out,20,,, ,,,,,Y,SK,Y,0.8,0,
+East,2,Out,20,,, ,,,,,Y,SK,Y,0.18,0,
+East,2,Out,20,,, ,,,,,Y,SK,Y,0.2,0,
+East,2,Out,21,DF,9,2.74,24.03,1,,,Y,BD,N,0.86,0,"Natural regen, likely Phomopsis canker"
+East,2,Out,21,,, ,,,,,Y,BD,N,0.63,0,Likely Phomopsis canker
+East,2,Out,21,,, ,,,,,Y,BD,N,0.38,0,Likely Phomopsis canker
+East,2,Out,21,,, ,,,,,Y,BD,N,1.19,0,Likely Phomopsis canker
+East,2,Out,22,DF,13.2,4.02,45.44,1,,,Y,BD,N,1.22,0,Likely Phomopsis canker
+East,2,Out,23,DF,12.2,3.72,47.75,1,,,Y,SW,Y,0,400,
+East,2,Out,23,,, ,,,,,Y,BD,Y,0,0,Continuous BD up to 6 ft likely Phomopsis canker
+East,2,Out,24,DF,14.8,4.51,51.7,1,,,Y,BD,N,0.65,0,Likely Phomopsis canker
+East,2,Out,24,,, ,,,,,Y,BD,N,0.2,0,Likely Phomopsis canker
+East,2,Out,24,,, ,,,,,Y,BD,N,1,0,Likely Phomopsis canker
+East,2,Out,24,,, ,,,,,Y,BD,N,0.89,0,Likely Phomopsis canker
+East,2,Out,25,WRC,0.67,0.67,9.89,1,,35,Y,SK,Y,0.35,0,measured at 0.25m
+East,2,Out,25,,, ,,,,,Y,SK,Y,0.39,0,
+East,2,Out,25,,, ,,,,,Y,SK,Y,0.49,30,Dfs estimated
+East,2,Out,26,WRC,1.05,1.05,12.56,5,0.4,90,Y,SK,Y,0.52,0,measured at 0.5m
+East,2,Out,26,,, ,,,0.53,,Y,SK,Y,0.59,0,
+East,2,Out,26,,, ,,,0.57,,Y,SK,Y,0.49,0,
+East,2,Out,26,,, ,,,0.39,,Y,,,,,
+East,2,Out,27,DF,15.3,4.66,64.17,1,,,N,,N,,,some dead needles
+East,2,Out,28,DF,12.2,3.72,37.82,1,,,Y,BD,N,0.4,0,Likely Phomopsis canker
+East,2,Out,28,,, ,,,,,Y,BD,N,0.46,0,Likely Phomopsis canker
+East,2,Out,28,,, ,,,,,Y,BD,N,0.8,0,Likely Phomopsis canker
+East,2,Out,29,DF,12.9,3.93,41.85,1,,,Y,SW,N,0,280,DFS est due to log
+East,2,Out,29,,, ,,,,,Y,BD,N,0.98,0,Likely Phomopsis canker
+East,2,Out,29,,, ,,,,,Y,BD,N,1.07,0,Likely Phomopsis canker
+East,2,Out,30,DF,11.2,3.41,46.55,1,,,Y,SW,N,0,85,
+East,2,Out,30,,, ,,,,,Y,BD,N,1.95,0,Likely Phomopsis canker
+East,2,Out,31,DF,10,3.05,30.09,1,,,Y,SW,N,0,57,
+East,2,Out,31,,, ,,,,,Y,BD,N,1.18,0,Likely Phomopsis canker
+East,2,Out,32,DF,8.1,2.47,21.07,1,,,N,,N,,,Natural regen
+East,2,Out,33,DF,18.9,5.76,116.8,1,,,Y,SW,N,0,1058,leave tree
+East,2,Out,33,,, ,,,,,Y,BD,N,0.4,0,BD extends up most of tree
+East,2,Out,34,DF,11.7,3.57,48.78,3,2.38,,Y,SK,N,2.13,0,
+East,2,Out,35,DF,8.8,2.68,30.35,1,,,N,,Y,,,"chlorotic, dead needles, natural regen"
+East,2,Out,36,DF,13.1,3.99,54.29,1,,,Y,SW,N,0,59,
+East,2,Out,36,,, ,,,,,Y,SK,N,3.02,20,DFS est
+East,2,Out,37,DF,23.8,7.25,104.14,1,,,Y,SK,N,1.76,62,Leave tree
+East,2,Out,38,DF,13.1,3.99,36.92,1,,,Y,BD,N,0.96,0,Likely Phomopsis canker
+East,2,Out,38,,, ,,,,,Y,BD,N,1.67,0,Likely Phomopsis canker
+East,2,Out,38,,, ,,,,,Y,BD,N,2,0,Likely Phomopsis canker
+East,2,Out,38,,, ,,,,,Y,BD,N,1.48,0,Likely Phomopsis canker
+East,2,Out,39,DF,23.7,7.22,114.3,1,,,N,,N,,,Leave tree
+East,2,Out,40,DF,9.1,2.77,23.12,1,,,N,,N,,,natural regen
+East,2,Out,41,DF,8.9,2.71,29.05,1,,,Y,BD,N,1.18,0,natural regen
+East,2,Out,42,WRC,0.65,0.65,6.85,1,,,Y,SK,N,0.51,0,"measured at 0.25, natural regen"
+East,2,Out,43,DF,21.3,6.49,93.98,1,,,Y,SW,N,0,320,leave tree
+East,2,Out,43,,, ,,,,,Y,BD,N,1.2,0,Likely Phomopsis canker
+East,2,Out,43,,, ,,,,,Y,BD,N,1.7,0,Likely Phomopsis canker
+East,2,Out,43,,, ,,,,,Y,BD,N,2,0,Likely Phomopsis canker
+East,2,Out,44,DF,15,4.57,66.58,1,,,Y,SW,N,0,137,height estimated
+East,2,Out,45,DF,8.5,2.59,23.3,1,,,Y,SW,N,0,255,natural regen
+East,2,Out,46,DF,17.5,5.33,62.1,1,,,Y,BD,N,0.47,0,likely Phomopsis canker
+East,2,Out,46,,, ,,,,,Y,BD,N,0.69,0,likely Phomopsis canker
+East,2,Out,47,WRC,8.4,2.56,25.61,1,,,Y,SW,N,0,0.55,
+East,2,Out,47,,, ,,,,,Y,SK,N,1.26,0,
+East,2,Out,47,,, ,,,,,Y,SK,N,1.61,0,
+East,2,Out,48,WRC,6.4,1.95,15.76,1,,,Y,SK,N,1.04,0,
+East,2,Out,49,DF,8.1,2.47,20.78,1,,,Y,SW,N,0,53,one dead branch at 0.45 m
+East,2,Out,49,,, ,,,,,Y,SK,N,0.53,0,
+East,2,Out,50,WRC,3.7,1.13,15.41,3,0.62,,Y,SK,N,0.45,0,measured at 0.5m
+East,2,Out,51,DF,13.2,4.02,54.54,1,,,Y,BD,N,0.9,0,likely Phomopsis canker
+East,2,Out,51,,, ,,,,,Y,BD,N,0.51,0,likely Phomopsis canker
+East,2,Out,51,,, ,,,,,Y,SK,N,1.04,0,
+East,2,Out,52,WRC,4.9,1.49,19.85,2,0.86,,Y,SK,Y,0.51,0,m @ 0.5m
+East,2,Out,52,,, ,,,,,Y,SK,Y,0.74,0,
+East,2,Out,53,DF,18.2,5.55,81.28,1,,,Y,SW,N,0,147,Leave tree
+East,2,Out,53,,, ,,,,,Y,BD,N,0.65,0,likely Phomopsis canker
+East,2,Out,54,DF,9.9,3.02,24.35,1,,,Y,SW,N,0,130,
+East,2,Out,54,,, ,,,,,Y,SK,N,0.33,0,
+East,2,Out,54,,, ,,,,,Y,SK,N,0.63,0,
+East,2,Out,54,,, ,,,,,Y,SK,N,1.14,20,
+East,2,Out,54,,, ,,,,,Y,BD,N,0.49,0,likely Phomopsis canker
+East,2,Out,54,,, ,,,,,Y,BD,N,0.6,0,likely Phomopsis canker
+East,2,Out,54,,, ,,,,,Y,BD,N,0.66,0,likely Phomopsis canker
+East,2,Out,54,,, ,,,,,Y,BD,N,1.07,0,likely Phomopsis canker
+East,2,Out,55,DF,15,4.57,55.84,1,,,Y,SW,N,0,128,
+East,2,Out,55,,, ,,,,,Y,SK,N,0.54,0,
+East,2,Out,55,,, ,,,,,Y,SK,N,1.34,18,
+East,2,Out,55,,, ,,,,,Y,SK,N,1.84,37,
+East,2,Out,55,,, ,,,,,Y,BD,N,0.53,0,likely Phomopsis canker
+East,2,Out,56,WRC,0.54,0.54,6.01,2,0.17,,Y,SW,Y,0,0.92,m @ 0.25m
+East,2,Out,57,DF,12.7,3.87,49.33,1,,,Y,SW,N,0,35,
+East,2,Out,57,,, ,,,,,Y,BD,N,0.51,0,likely Phomopsis canker
+East,2,Out,57,,, ,,,,,Y,BD,N,1.15,0,likely Phomopsis canker
+East,2,Out,57,,, ,,,,,Y,BD,N,1.3,0,likely Phomopsis canker
+East,2,Out,58,WRC,7.5,2.29,19.73,1,,,Y,SW,N,0,130,
+East,2,Out,58,,, ,,,,,Y,SK,N,0.56,0,
+East,2,Out,58,,, ,,,,,Y,SK,N,0.97,0,
+East,2,Out,59,WRC,4.9,1.49,8.21,1,,,Y,SW,N,0,93,
+East,2,Out,59,,, ,,,,,Y,SK,N,1,0,
+East,2,Out,59,,, ,,,,,Y,SK,N,1.3,0,
+East,2,Out,60,DF,13.5,4.11,49.92,1,,,Y,SW,N,0,147,
+East,2,Out,60,,, ,,,,,Y,SK,N,1.14,0,
+East,2,Out,60,,, ,,,,,Y,BD,N,0.58,0,

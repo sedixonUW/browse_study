@@ -1,0 +1,2063 @@
+## Sappho LTEP Tree Analysis using Early + Mid dataset only
+# with tree growth from 1993 to 2020. 
+
+
+#####===== Load Packages:=====#####
+
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(vegan)
+library(RColorBrewer)
+library(MASS)
+library(ggpubr)
+
+###====Add in datafiles====#####
+
+getwd()
+setwd("~/Google Drive/My Drive/PhD/Sappho LTEP Paper/Sappho LTEP Analysis/CSV files")
+
+sappho_em_trees<- read_csv("EM_Trees_1993_2020_Sappho.csv")
+sappho_em_trees<- sappho_em_trees %>% filter(!Tag== "A") %>%
+  filter(!Tag== "B") %>% filter(!Tag== "C") %>%
+  filter(!Tag == "D") %>% 
+  filter(!Tag == "E") %>%
+  filter(!Tag == "F") %>%
+  filter(!Tag == "G") %>%
+  filter(!Tag == "H")
+
+trees95<- read_csv("Trees_1995_BA.csv")
+tph95<- read_csv("Trees_1995_TPH.csv")
+tph96<- read_csv("Trees_1996_TPH.csv")
+dbh<-read.csv("timberspp.csv")
+trees2012<- read_csv("Sappho_LTEP_2012Trees.csv")
+tph2012<- read.csv("TPH_2012.csv")
+tph2020<- read.csv("TPH_2020.csv")
+
+seedlings02<-read_csv("Seedlings02_alder_analysis.csv")
+# Includes all seedlings from 2002
+
+soils<-read_csv("Sappho_Soils_93.csv")
+
+SI<- read_csv("SI_values.csv")
+
+usbiomass<- read_csv("Sappho_Biomass_Data.csv")
+# 2016 understory biomass data from 3x3m plots
+
+treebio<- read_csv("Biomass_2002.csv")
+#tree biomass from 2002
+
+allbio<- read_csv("Biomass_AllYears.csv")
+
+
+###==== cleaning up the columns of data so they are correct===####
+
+
+sappho_em_trees$Seasons<- as.character(sappho_em_trees$Seasons)
+sappho_em_trees$Year<- as.factor(sappho_em_trees$Year)
+sappho_em_trees$Wood<- as.character(sappho_em_trees$Wood)
+
+trees2012$Year<- as.factor(trees2012$Year)
+trees2012$Wood<- as.character(trees2012$Wood)
+
+trees<- sappho_em_trees %>% filter(!DBH == "N/A") %>% 
+  filter(!DBH =="MISSING") %>% filter(!DBH == "XXX") %>%
+  filter(Live_Dead == "L")
+# filtering out only live trees and removing trees with no
+# or missing DBH values 
+
+trees$DBH<- as.numeric(trees$DBH)
+trees$Treat<- as.character(trees$Treat)
+
+
+###=====Looking at DBH per treatment per year with all data====#######
+
+earlys<- trees %>% filter(Treat== "E") 
+
+tapply(earlys$DBH, earlys$Year, FUN= mean)
+
+## mean DBH for early seral units: 
+# 1993 (pre-treatment): 23.742 cm
+# 2002: 1.92
+# 2020: #16.480   
+
+## when I ran this analysis with the other dataset 
+# (that probably had some errors), the mean value was 
+# 24ish for 2020. 
+
+mids<- trees %>% filter(Treat== "M")
+tapply(mids$DBH, mids$Year, FUN= mean)
+# 1993: 23.887
+# 2002: 1.511
+# 2020: 15.64
+
+trees02m<- trees %>% filter(Year== "2002") %>%
+                   filter(Treat == "M")
+
+trees02e<- trees %>% filter(Year== "2002") %>%
+  filter(Treat == "E")
+
+tapply(trees02e$DBH, trees02e$Species, FUN=mean)
+
+trees20m<- trees %>% filter(Year== "2020") %>%
+  filter(Treat == "M")
+
+tapply(trees20m$DBH, trees20m$Species, FUN=mean)
+
+trees20e<- trees %>% filter(Year== "2020") %>%
+  filter(Treat == "E")
+tapply(trees20e$DBH, trees20e$Species, FUN=mean)
+
+
+
+#### 2012 DBH data ####
+
+trees12e<- trees2012 %>% filter(Treat== "E") %>%
+  filter(!DBH== "NA")
+trees12m<- trees2012 %>% filter(Treat== "M") %>%
+  filter(!DBH == "NA")
+
+
+tapply(trees12m$DBH, trees12m$Species, FUN=mean)
+
+####== regression analysis w/ DBH and basal area ======####
+
+dbh93<- trees %>% filter(Year== "1993")
+
+summary(lm(dbh93$DBH~ dbh93$Treat + dbh93$ExpUnit))
+# lots of exp unit differences in 1993 data but R2 is super low
+
+summary(lm(dbh93$DBH~ dbh93$Treat))
+# no treatment level differences 
+
+
+
+## 2002:
+
+dbh02<- trees %>% filter(Year== "2002")
+summary(lm(dbh02$DBH~ dbh02$Treat + dbh02$Wood + dbh02$Block))
+# there is a significant difference between treatments in 2002 
+
+tapply(dbh02$DBH, dbh02$Treat, FUN=mean)
+# there is a difference but the mean is really very similar and 
+# the R2 is super low 
+
+
+# 2012:
+
+View(trees2012)
+
+dbh12e<- trees2012 %>% filter(Treat== "E") %>%
+  filter(!DBH == "NA")
+tapply(dbh12e$DBH, dbh12e$Species, FUN=mean)
+
+dbh12m<- trees2012 %>% filter(Treat== "M") %>%
+  filter(!DBH == "NA")
+tapply(dbh12m$DBH, dbh12m$Species, FUN=mean)
+
+summary(lm(trees2012$DBH~ trees2012$Wood))
+# only that is significant but R2=0.01
+
+dbh12species<- trees2012 %>% 
+  filter(!Species == "ACCI") %>%
+  filter(!Species == "CASC")
+
+ggplot(data= dbh12species, aes(x= Block, y= DBH, fill= Block))+
+  geom_boxplot()+
+  scale_fill_brewer(palette="Dark2")+
+  ylab("2012 DBH")+
+  facet_wrap(.~Species)
+
+
+# 2020:
+
+dbh20<- trees %>% filter(Year== "2020")
+summary(lm(dbh20$DBH~ dbh20$Treat))
+# still significant here but R2 is 0.001
+tapply(dbh20$DBH, dbh20$Treat, FUN=mean)
+# mean DBH in 2020 is very similar still 
+
+# ** this would all be more interesting if broken down by spp. 
+
+#### DBH ~ soils ####
+
+dbh02<- trees %>% filter(Year== "2002")
+dbh_carbo<- merge(dbh02, carbon_o, by = "ExpUnit")
+summary(lm(dbh_carbo$DBH ~ dbh_carbo$SoilC * dbh_carbo$Treat.y))
+# significant but R2 is super low
+
+ggplot(data= dbh_carbo, 
+       aes(x=SoilC, 
+           y= DBH))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Carbon O Horizon")+
+  ylab("DBH")+
+  facet_wrap(.~Treat.x)
+
+dbh_carba<- merge(dbh02, carbon_a, by = "ExpUnit")
+summary(lm(dbh_carba$DBH ~ dbh_carba$SoilC * dbh_carba$Treat.x))
+# very significant but R2= 0.01
+
+
+## Nitrogen
+
+dbh_nita<- merge(nitrogen_a, dbh02, by= "ExpUnit")
+summary(lm(dbh_nita$DBH~ dbh_nita$SoilN * dbh_nita$Treat.x))
+
+dbh_nito<- merge(nitrogen_o, dbh02, by= "ExpUnit")
+summary(lm(dbh_nito$DBH ~ dbh_nito$SoilN * dbh_nito$Treat.x))
+
+####====FIGURE // DBH by species===#####
+
+unique(trees$Species)
+
+timber_spp<- trees %>% 
+  filter(!Species== "UNKN") %>%
+  filter(!Species== "UNKN1") %>%
+  filter(!Species== "UNKN2") %>%
+  filter(!Species== "UNKN3") %>%
+  filter(!Species== "UNKN4") %>%
+  filter(!Species== "UNKN5") %>%
+  filter(!Species== "NA") %>%
+  filter(!Species== "FRLA") %>%
+  filter(!Species== "MAFU") %>%
+  filter(!Species=="UNK") %>%
+  filter(!Species== "SNAG") %>%
+  filter(!Species== "ACMA") %>%
+  filter(!Species== "ABAM") %>%
+  filter(!Species== "ACCI") %>%
+  filter(!Species== "THPL") %>%
+  filter(!Species == "UNK")
+
+# pulling out uncommon species to just focus on the ones that are 
+# most prevalent
+
+timber20<- dbh %>% filter(Year== "2020") %>%
+  filter(Species== "ALRU")
+
+tapply(timber20$DBH, timber20$Treat, FUN=mean)
+
+dbh$Year<- as.character(dbh$Year)
+
+dbh<- dbh %>% mutate(Treat = 
+           recode(Treat, "M" = "Douglas-fir Plantation", 
+                    "E" = "Early Seral" ))
+# using mutate() to change labels of treatment column 
+
+DBH<- ggplot(data= dbh, 
+       aes(x=Year, 
+           y= DBH, shape= Species))+ 
+  stat_summary(fun=mean, geom="point", size=3)+ 
+  stat_summary(fun=mean, geom="line", aes(group=Species))+
+  guides(color=guide_legend("Treatments"))+
+  xlab(element_blank())+
+  ylab("DBH (cm)")+
+  ylim(0,50)+
+  theme_bw() + 
+  geom_vline(xintercept= 2, linetype= "solid", col="darkgray")+
+  geom_vline(xintercept= 3.6, linetype= "dashed", col="darkgray")+
+  facet_wrap(.~Treat, ncol=1)
+
+DBH
+
+####== calculating mean DBH per spp. for paper====#####
+
+spp93early<- timber_spp %>% filter(Year== "1993") %>% 
+  filter(Treat=="Early Seral")
+
+tapply(spp93early$DBH, spp93early$Species, FUN= mean)
+
+# mean DBH for each species in the early seral treat in 1993:
+# ALRU= 13.620
+# PISI= 29.255
+# PSME= 41.870
+# RHPU= 7.749
+# TSHE= 23.759
+
+
+spp93df<- timber_spp %>% filter(Year== "1993") %>% 
+  filter(Treat=="Douglas-fir Plantation")
+
+tapply(spp93df$DBH, spp93df$Species, FUN=mean)
+
+# mean DBH for species in DF in 1993:
+# ALRU= 26.9444
+# PISI= 40.485
+# PSME= 49.427
+# RHPU= 7.641
+# TSHE= 24.0594
+
+## 2002:
+
+spp02early<- timber_spp %>% filter(Year== "2002") %>% 
+  filter(Treat=="Early Seral")
+
+tapply(spp02early$DBH, spp02early$Species, FUN= mean)
+
+# mean spp values for early seral in 2002:
+# ALRU= 5.412
+# PISI= 0.982
+# PSME= 2.330
+# TSHE= 0.7881
+
+spp02df<- timber_spp %>% filter(Year== "2002") %>% 
+  filter(Treat=="Douglas-fir Plantation")
+
+tapply(spp02df$DBH, spp02df$Species, FUN=mean)
+
+# mean values for spp. in DF in 2002:
+# ALRU= 1.8958
+# PISI= 1.0132
+# PSME= 1.9218
+# TSHE= 0.9633
+
+### 2020:
+
+spp20early<- timber_spp %>% filter(Year== "2020") %>% 
+  filter(Treat=="E")
+
+tapply(spp20early$DBH, spp20early$Species, FUN= mean)
+
+# mean values of spp. in early seral in 2020:
+# ALRU= 21.9661
+# PISI= 10.296
+# PSME= 26.4075
+# RHPU= 4.882
+# TSHE= 11.01799
+
+spp20df<- timber_spp %>% filter(Year== "2020") %>% 
+  filter(Treat=="M")
+
+tapply(spp20df$DBH, spp20df$Species, FUN=mean)
+
+# mean values for spp. in DF in 2020:
+# ALRU= 17.9000
+# PISI= 8.7767
+# PSME= 25.61697
+# RHPU= 4.5954
+# TSHE= 10.6835
+
+## figure of 2020 DBH by species 
+
+df20 <- timber_spp %>% filter(Year== 2020) %>% 
+  filter(Species== "PSME")
+
+
+ggplot(data= df20, aes(x= Block, y= DBH))+
+  geom_boxplot()+
+  facet_wrap(.~Treat)
+
+###====calculating Basal Area m2 and cm2===####
+
+# adding in two new columns into the datasheet that are 
+# BA m2 and cm2
+
+# formula for BA in m2 is Pi* (DBH/200)^2
+
+trees<- trees %>% mutate(BA_m2= pi * (DBH/200)^2) # adding Basal Area (m2)
+
+trees<- trees %>% mutate(BA_cm2= BA_m2*10000) # adding Basal Area (cm2)
+
+####==== summarizing tree data for analysis===#####
+
+tree_per_xy <- trees %>%
+  group_by(Year, Seasons, Block, Wood, 
+           Treat_Wood, ExpUnit_XY, Treat, 
+           ExpUnit, TreePlotX_Y) %>%
+  summarize(BA_cm2 = sum(BA_cm2)) 
+# this summarized the basal area by summing the BA of every tree 
+# within a given tree plot
+
+
+tree_summary_cm2 <- tree_per_xy %>%
+  group_by(Year, Seasons, Block, 
+           Treat_Wood, Treat, 
+           ExpUnit) %>%
+  summarize(BA_cm2 =sum(BA_cm2)/5)
+# takes the summed value from above, and adds up every 
+# tree plot within an experimental unit, then divides it by 5
+# (the # of Tree Plots w/in 1 experimental unit)
+#this has the mean basal area in any given experimental unit 
+
+## just testing to make sure this worked:
+
+
+test<- trees %>% filter(Year == 1993) %>%
+  filter(ExpUnit=="B1-E1") %>% filter(TreePlotX_Y =="25_125")
+
+sum(test$BA_cm2)
+
+# ok, this worked and it confirmed that the above 
+# code worked. It summed up the trees in each tree plot 
+# in every unit in each year separately. 
+# Then, it divided that by summed value by 5 since each 
+# unit has 5 tree plots so it now gave the 
+# average Basal Area (cm2) for each unit for every year
+
+
+# creating a new column that is BA per ha 
+tree_summary_cm2<-tree_summary_cm2 %>% 
+  mutate(BA_ha_cm= (BA_cm2/324)*10000)
+
+
+# Calculating BA per m
+
+tree_per_xy_m <- trees %>%
+  group_by(Year, Seasons, Block, Wood, 
+           Treat_Wood, Treat, 
+           ExpUnit, ExpUnit_XY ,TreePlotX_Y) %>%
+  summarize(BA_m2 = sum(BA_m2))
+
+tree_summary_m2 <- tree_per_xy_m %>%
+  group_by(Year, Seasons, Block,
+           Treat_Wood, Wood, Treat,
+           ExpUnit) %>%
+  summarize(BA_m2 =sum(BA_m2)/5) %>%
+  mutate(BA_ha_m= (BA_m2/324)*10000)
+
+# BA_ha_m<-tree_per_xy_m %>%
+#   mutate(BA_ha_m= (BA_m2/324)*10000)
+
+# same thing for 2012 data that has subsampling
+
+tree2012_per_xy_m <- trees2012 %>%
+  group_by(Year, Seasons, Block, Wood, 
+           Treat_Wood, Treat, Sampled_area,
+           ExpUnit, ExpUnit_XY) %>%
+  summarize(BA_m2 = sum(Tree_BA_m2))%>% 
+  mutate(BA_ha_m= (BA_m2/Sampled_area)*10000)
+
+tree2012_summary_m2<- tree2012_per_xy_m %>%
+  group_by(Year, Seasons, Block, Wood, 
+           Treat_Wood, Treat, Sampled_area,
+           ExpUnit, BA_m2) %>%
+  summarize(BA_ha_m = mean(BA_ha_m))
+
+
+tree2012_summary_m2$Seasons<- as.character(tree2012_summary_m2$Seasons)
+
+
+#merging into one dataset:
+BA_ha_m_col<- rbind(tree_summary_m2, tree2012_summary_m2)
+
+ba_test<- BA_ha_m_col %>% filter(!Year== 1993)
+
+# Making this one data frame to look at BA per hectare:
+
+BA_ha_m_col<- BA_ha_m_col %>% mutate(Treat = 
+            recode(Treat, "M" = "Douglas-fir Plantation", 
+            "E" = "Early Seral" ))
+
+BA_ha_m_col$Year<-as.numeric(BA_ha_m_col$Year)
+
+
+ggplot(data= BA_ha_m_col, 
+       aes(x=Year, 
+           y= BA_ha_m, shape= Treat))+ 
+  stat_summary(fun=mean, geom="point", size= 3)+ 
+  stat_summary(fun=mean, geom="line", aes(group=Treat))+
+  # scale_x_continuous(breaks= c(1993, 1995, 2002, 2012, 2020))+
+  ylab("Basal Area" ~ha^-1)+
+  geom_vline(xintercept = 1995, col="darkgray")+
+  geom_vline(xintercept= 2013, linetype= "dashed", col="darkgray")+
+  theme(axis.text = element_text(size= 112))+
+  theme(axis.title = element_text(size=12))+
+  theme_bw()
+
+ba_test$Year<- as.numeric(format(ba_test$Year, "%Y"))
+
+####== regression on all BA data ===####
+
+# 1993 BA
+
+allba93<- BA_ha_m_col %>% filter(Year== "1993")
+
+summary(lm(allba93$BA_ha_m ~ allba93$Block))
+
+ggplot(data= allba93, aes(x= Block, y= BA_ha_m))+
+  geom_boxplot()+
+  labs(y= bquote("Basal Area"~(m^2~ha^-1)))+
+  facet_wrap(.~Treat)
+
+
+
+mean(allba93$BA_ha_m)
+
+# 2002: 
+
+allba02<- BA_ha_m_col %>% filter(Year== "2002")
+
+summary(lm(allba02$BA_ha_m~ allba02$Treat))
+# treatment is significant w/ early seral having a higher BA 
+# p= 0.002 and R2= 0.37
+
+summary(lm(allba02$BA_ha_m~ allba02$Block))
+
+
+summary(lm(allba02$BA_ha_m~ allba02$Treat * allba02$Block))
+# very significant 
+
+
+summary(lm(allba02$BA_ha_m~ allba02$Wood + allba02$Block))
+# wood is not a significant predictor 
+
+summary(lm(allba02$BA_ha_m ~ allba02$Block))
+tapply(allba02$BA_ha_m, allba02$Block, FUN= mean)
+
+summary(lm(allba02$BA_ha_m ~ allba02$Block * allba02$Treat))
+
+
+Ba_2002<-ggplot(data= allba02, aes(x= Block, y= BA_ha_m, fill= Block))+
+  geom_boxplot()+
+  labs(y= bquote("Basal Area"~(m^2~ha^-1)))+
+  scale_fill_brewer(palette="Reds")+
+  theme_bw() + 
+  theme(legend.position= "none")+
+  facet_wrap(.~Treat)
+
+Ba_2002
+
+# 2012:
+
+allba12<- BA_ha_m_col %>% filter(Year== "2012")
+
+summary(lm(allba12$BA_ha_m~  allba12$Wood))
+summary(lm(allba12$BA_ha_m~  allba12$Block))
+
+
+ggplot(data= allba12, aes(x= Block, y= BA_ha_m, fill= Block))+
+  geom_boxplot()+
+  labs(y= bquote("2012 Basal Area"~(m^2~ha^-1)))+
+  scale_fill_brewer(palette="Purples")+
+  theme_bw() + 
+  facet_wrap(.~Treat)
+
+# 2020:
+
+allba20<- BA_ha_m_col %>% filter(Year == "2020")
+
+summary(lm(allba20$BA_ha_m~ allba20$Block))
+# treatment and block are not significant 
+
+summary(lm(allba20$BA_ha_m~ allba20$Block * allba20$Treat))
+tapply(allba20$BA_ha_m, allba20$Treat, FUN=mean)
+
+ggplot(data= allba20, 
+       aes(x=Treat, 
+           y= BA_ha_m, col= Treat))+ 
+  geom_boxplot()+
+  theme_bw() + 
+  xlab("Block")+
+  ylab("Basal Area")+
+  facet_wrap(.~Block)
+
+#### BA with soils data #####
+
+nita_ba<- merge(allba02, nitrogen_a, by= "ExpUnit")
+
+summary(lm(nita_ba$BA_ha_m ~ nita_ba$SoilN))
+# significant
+
+summary(lm(nita_ba$SoilN ~ nita_ba$BA_ha_m + nita_ba$Treat.x))
+# very significant 
+
+summary(lm(nita_ba$BA_ha_m~ nita_ba$SoilN * nita_ba$Treat.x))
+# super significant with high R2
+
+summary(lm(nita_ba$BA_ha_m ~ nita_ba$SoilN + nita_ba$Block.x +
+             nita_ba$Treat.x))
+
+
+ggplot(data= nita_ba, 
+       aes(x=SoilN, 
+           y= BA_ha_m))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Nitrogen A Horizon")+
+  ylab("Basal Area")+
+  facet_wrap(.~Treat.x)
+
+
+# looking at just early seral
+
+early_nita<- nita_ba %>% filter(Treat.y =="E")
+summary(lm(early_nita$BA_ha_m ~ early_nita$SoilN + early_nita$Block.x))
+
+ggplot(data= nita_ba, 
+       aes(x=SoilN, 
+           y= BA_ha_m))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Nitrogen A Horizon")+
+  ylab("Basal Area")+
+  facet_wrap(.~Block.y)
+
+# Block is not significant. The relationship between Soil N and 
+# BA is not different between blocks. 
+
+# positive relationship
+
+
+# Soil N; O horizon:
+
+nito_ba<- merge(allba02, nitrogen_o, by= "ExpUnit")
+
+summary(lm(nito_ba$BA_ha_m~ nito_ba$SoilN * nito_ba$Treat.x))
+summary(lm(nito_ba$BA_ha_m ~ nito_ba$Block.y))
+# block is not significant 
+
+ggplot(data= nito_ba, 
+       aes(x=SoilN, 
+           y= BA_ha_m))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Nitrogen O Horizon")+
+  ylab("Basal Area")+
+  facet_wrap(.~Treat.x)
+
+# Nitrogen B1
+
+nitb1<- nitrogen %>% filter(Layer== "B1")
+nitb1_ba<- merge(nitb1, allba02, by= "ExpUnit")
+
+summary(lm(nitb1_ba$BA_ha_m ~ nitb1_ba$SoilN))
+# not significant 
+
+nitb2<- nitrogen %>% filter(Layer== "B2")
+nitb2_ba<- merge(nitb2, allba02, by= "ExpUnit")
+summary(lm(nitb2_ba$BA_ha_m ~ nitb2_ba$SoilN))
+# also not significant
+
+#### BA ~ Soil Carbon ####
+
+carba_ba<- merge(carbon_a, allba02, by= "ExpUnit")
+summary(lm(carba_ba$BA_ha_m ~ carba_ba$SoilC * 
+             carba_ba$Treat.x))
+# significant 
+
+summary(lm(carba_ba$SoilC ~ carba_ba$BA_ha_m * carba_ba$Treat.y))
+
+ggplot(data= carba_ba, 
+       aes(x=SoilC, 
+           y= BA_ha_m))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Carbon A Horizon")+
+  ylab("Basal Area")+
+  facet_wrap(.~Treat.y)
+
+carba_b4<- carba_ba %>% filter(Block.y=="B4")
+
+carbo_ba<-merge(carbon_o, allba02, by="ExpUnit")
+summary(lm(carbo_ba$BA_ha_m ~ carbo_ba$SoilC * carbo_ba$Treat.x))
+summary(lm(carbo_ba$SoilC~ carbo_ba$BA_ha_m * carbo_ba$Treat.x))
+
+
+ggplot(data= carbo_ba, 
+       aes(x=SoilC, 
+           y= BA_ha_m))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Carbon O Horizon")+
+  ylab("Basal Area")
+  facet_wrap(.~Treat.y)
+  
+carbonb1<- carbon %>% filter(Layer== "B1")
+carbb1_ba<- merge(carbonb1, allba02, by= "ExpUnit")
+summary(lm(carbb1_ba$BA_ha_m ~ carbb1_ba$SoilC))
+
+carbonb2<- carbon %>% filter(Layer== "B2")
+carbb2_ba<- merge(carbonb2, allba02, by= "ExpUnit")
+summary(lm(carbb2_ba$BA_ha_m ~ carbb2_ba$SoilC))
+
+###==== BA broken down by species====######
+
+### copied from earlier section. Adapting to doing this by spp.##
+tree_spp_xy <- trees %>%
+  group_by(Year, Seasons, Species, Block, Wood, 
+           Treat_Wood, ExpUnit_XY, Treat, 
+           ExpUnit, TreePlotX_Y) %>%
+  summarize(BA_m2 = sum(BA_m2)) 
+# this summarized the basal area by summing the BA of every tree 
+# within a given tree plot based on species 
+
+
+tree_spp_sum_m2 <- tree_spp_xy %>%
+  group_by(Year, Species, Seasons, Block, Wood,
+           Treat_Wood, Treat, 
+           ExpUnit) %>%
+  summarize(Mean_BA_m2 = (sum(BA_m2))/5)
+# takes the summed value from above, and adds up every 
+# tree plot within an experimental unit, then divides it by 5
+# (the # of Tree Plots w/in 1 experimental unit)
+#this has the mean basal area in any given experimental unit 
+
+
+####==
+
+# taking the mean BA/unit and converting it per hectare
+
+BA_m_ha<-as.data.frame((tree_spp_sum_m2$Mean_BA_m2/324)*10000) 
+mean_ba<- cbind(BA_m_ha, tree_spp_sum_m2)
+
+names(mean_ba)[1]<- "BA_ha_m"
+
+# need to remove all of the species that are not relevant 
+
+ba_spp<- mean_ba %>%
+  filter(!Species== "UNKN") %>%
+  filter(!Species== "UNKN1") %>%
+  filter(!Species== "UNKN2") %>%
+  filter(!Species== "UNKN3") %>%
+  filter(!Species== "UNKN4") %>%
+  filter(!Species== "UNKN5") %>%
+  filter(!Species== "FRLA") %>%
+  filter(!Species== "MAFU") %>%
+  filter(!Species== "ABAM") %>%
+  filter(!Species== "ACCI") %>%
+  filter(!Species== "ACMA") %>%
+  filter(!Species=="UNK") %>%
+  filter(!Species=="THPL") %>%
+  filter(!Species== "SNAG")
+
+####== calculating BA by spp for analysis ==####
+
+# 2002
+
+tshe02_ba<- mean_ba %>% filter(Species== "TSHE") %>%
+  filter(Year== "2002")
+
+summary(lm(tshe02_ba$BA_ha_m~ tshe02_ba$Treat))
+# BA is not significantly different between treatments 
+
+tapply(tshe02_ba$BA_ha_m, tshe02_ba$Treat, FUN=mean)
+
+alru02_ba<- mean_ba %>% filter(Species== "ALRU") %>%
+  filter(Year== "2002")
+
+psme02_ba<- mean_ba %>% filter(Species== "PSME") %>%
+  filter(Year== "2002")
+
+pisi02_ba<- mean_ba %>% filter(Species== "PISI") %>%
+  filter(Year== "2002")
+
+rhpu02_ba<- mean_ba %>% filter(Species== "RHPU") %>%
+  filter(Year== "2002")
+
+# 2020 data:
+
+alru20_ba<- mean_ba %>% filter(Species== "ALRU") %>%
+  filter(Year== "2020")
+
+tapply(alru20_ba$BA_ha_m, alru20_ba$Treat, FUN=mean)
+# mean basal area per hectare: 
+
+summary(lm(alru20_ba$BA_ha_m~ alru20_ba$Treat))
+# significantly different BA between treatments 
+
+## Looking at TSHE
+
+tshe20<-mean_ba %>% filter(Species== "TSHE") %>%
+  filter(Year== "2020")
+
+tapply(tshe20$BA_ha_m, tshe20$Treat, FUN=mean)
+
+summary(lm(tshe20$BA_ha_m~ tshe20$Treat))
+# no significant difference in BA of tshe between treatments
+
+# PSME
+
+psme20<-mean_ba %>% filter(Species== "PSME") %>%
+  filter(Year== "2020")
+
+tapply(psme20$BA_ha_m, psme20$Treat, FUN=mean)
+
+# PISI
+pisi20<-mean_ba %>% filter(Species== "PISI") %>%
+  filter(Year== "2020")
+
+tapply(pisi20$BA_ha_m, pisi20$Treat, FUN=mean)
+
+# RHPU
+
+rhpu20<-mean_ba %>% filter(Species== "RHPU") %>%
+  filter(Year== "2020")
+
+tapply(rhpu20$BA_ha_m, rhpu20$Treat, FUN=mean)
+
+
+ba20<- mean_ba %>% filter(Year== "2020")
+tapply(ba20$BA_ha_m, ba20$Treat, FUN=mean)
+
+ 
+
+####====FIGURE // BA in m2 by spp===####
+
+ba_spp$Year<- as.character(ba_spp$Year)
+
+ba<- ba_spp[ ,1:9]
+alldata<- rbind(ba, trees95)
+
+alldata<- alldata %>% mutate(Treat = 
+      recode(Treat, "M" = "Douglas-fir Plantation", 
+      "E" = "Early Seral" ))
+
+
+BA<- ggplot(data= alldata, aes(x=Year, 
+  y= BA_ha_m, shape= Species))+
+  stat_summary(fun=mean, geom="point", size=2)+
+  stat_summary(fun=mean, geom="line", aes(group=Species))+
+  xlab("Year")+
+  ylab(expression("BA ("~m^2*" "~ha^-1*")"))+
+  theme_bw() +
+  geom_vline(xintercept= 2, linetype= "solid", col="darkgray")+
+  geom_vline(xintercept= 3.65, linetype= "dashed", col="darkgray")+
+  facet_wrap(.~Treat)
+BA
+#####==== Figure of total BA  #####
+
+
+ggplot(data= BA_ha_m_col, aes(x=Year, 
+                          y= BA_ha_m, shape= Treat))+
+  stat_summary(fun=mean, geom="point", size=2)+
+  stat_summary(fun=mean, geom="line", aes(group= Treat))+
+  xlab("Year")+
+  ylab(expression("BA ("~m^2*" "~ha^-1*")"))+
+  theme_bw() +
+  geom_vline(xintercept= 2, linetype= "solid", col="darkgray")+
+  geom_vline(xintercept= 3.65, linetype= "dashed", col="darkgray")
+
+###=== linear regression of Doug-fir BA==####
+# Douglas-fir (PSME) in 2002:
+psme_02ba<- ba_spp %>% filter(Year== "2002") %>%
+  filter(Species== "PSME")
+
+# Basal area~ treatment
+summary(lm(psme_02ba$BA_ha_m~ psme_02ba$Treat))
+
+# Douglas-fir in 2020:
+psme_ba<- ba_spp %>% filter(Year== "2020") %>%
+  filter(Species== "PSME")
+
+summary(lm(psme_ba$BA_ha_m~ psme_ba$Treat))
+# not significantly different 
+
+###==== Analyzing trees per hectare in all treatments====####
+
+#Steps to figuring this out:
+# 1. count all trees in each tree plot 
+# 2. divide by 324 (to get to 1 sq m) and multiply by 10k 
+# to get to the hectare scale 
+
+trees_per_expxy<- trees %>%
+  group_by(Year, Block, Treat, Treat_Wood, ExpUnit) %>%
+  summarize(Count=n()) %>% 
+  mutate(TPH=((Count/5)/324)*10000) %>%
+  ungroup()
+# 
+# Sappho_TPH<- trees_per_expxy %>%
+#   group_by(Year, Block, Treat, ExpUnit) %>%
+#   summarize(TPH=mean(TPH)) %>%
+#   ungroup()
+
+trees93<- trees_per_expxy %>% filter(Year== "1993")
+trees20<- trees_per_expxy %>% filter(Year== "2020")
+trees02<- trees_per_expxy %>% filter(Year== "2002")
+
+tapply(trees02$TPH, trees02$Treat, FUN=mean)
+
+### TPH in pre-treat data #####
+
+
+ggplot(data= trees93, aes(x=Year, y= TPH))+
+  geom_boxplot()+
+  facet_wrap(.~ExpUnit)
+
+
+all93<- trees_per_expxy %>% filter(Year== "1993")
+ggplot(data= all93, aes(x= ExpUnit, y= TPH))+
+  geom_boxplot()+
+  ylab("1993 TPH")
+
+
+####====TPH by spp====#####
+
+spp_per_expxy<- trees %>%
+  group_by(Year, Block, Treat, Treat_Wood, Wood,
+           Species, ExpUnit, ExpUnit_XY) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=(Count/324)*10000) %>%
+  ungroup()
+
+# 
+# spp_tph<- trees %>%
+#   group_by(Year, Block, Treat, Treat_Wood, Wood,
+#            Species, ExpUnit) %>%
+#   summarize(Count=n()) %>%
+#   mutate(TPH=((Count/5)/324)*10000) %>%
+#   ungroup()
+
+spp_tph_tp<- trees %>%
+  group_by(Year, Block, Treat, Treat_Wood, Wood,
+           Species, ExpUnit, ExpUnit_XY) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=(Count/324)*10000) %>%
+  ungroup()
+
+spp_tph<-spp_tph_tp %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit ,Species) %>%
+  summarize(TPH= mean(TPH))
+  
+
+## This is counting all the trees within an exp unit. Then, dividing that 
+# by the 5 Tree Plots, dividing that total by 324 sq m. to get the mean 
+# for 1 sq meter. Then, multiplying by 10k to get the mean at the 
+# hectare scale. 
+
+tph02e<- spp_tph %>% filter(Year== "2002") %>% filter(Treat== "E")
+tapply(tph02e$TPH, tph02e$Species, FUN=mean)
+
+tph02m<- spp_tph %>% filter(Year== "2002") %>% 
+  filter(Treat== "M")
+tapply(tph02m$TPH, tph02m$Species, FUN=mean)
+
+
+# trying to test these and figure out why the total TPH and the # 
+# broken down by spp is not adding up to the same #
+# spp93mids<- Spp_TPH %>% filter(Year=="1993") %>% filter(Treat== "M")
+# sum(tapply(test6$TPH, test6$Species, FUN=mean))
+
+## 2012 data:
+
+trees2012_spp_tph<- trees2012 %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit, Sampled_area, ExpUnit_XY ,Species) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=(Count/Sampled_area)*10000)
+
+trees2012_unit_tph<- trees2012_spp_tph %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit ,Species) %>%
+  summarize(TPH= mean(TPH))
+
+
+# adding in a new file that has all the plots where 
+# alder TPH =0. 
+# this includes all measuremnet years
+no_alru<- read.csv("No_Alder.csv")
+no_alru$Year<- as.character(no_alru$Year)
+no_alru$Wood<- as.character(no_alru$Wood)
+
+
+mids2012<- trees2012_unit_tph %>% filter(Treat== "M")
+tapply(mids2012$TPH, mids2012$Species, FUN=mean)
+
+ 
+earlys2012<- trees2012_unit_tph %>% filter(Treat== "E")
+tapply(earlys2012$TPH, earlys2012$Species, FUN=mean)
+
+trees12_tph<- trees2012_spp_tph %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit) %>%
+  summarize(TPH= sum(TPH))
+
+alru12<- trees2012 %>% filter(Species== "ALRU")
+
+alru12_tph <- alru12 %>%
+group_by(Year, Block, Treat, Wood, Treat_Wood, 
+         ExpUnit, Sampled_area, ExpUnit_XY) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=(Count/Sampled_area)*10000)
+
+tapply(alru12_tph$TPH, alru12_tph$Treat, FUN=mean)
+
+alru12m<- alru12_tph %>% filter(Treat== "M")
+
+tshe12<- trees2012 %>% filter(Species == "TSHE")
+
+tshe12_tph <- tshe12 %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit, Sampled_area, ExpUnit_XY) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=(Count/Sampled_area)*10000)
+
+tshe12_unit<- tshe12_tph %>%
+  group_by(Year, Block, Treat, Wood, Treat_Wood, 
+           ExpUnit) %>%
+  summarize(TPH= mean(TPH))
+
+tapply(tshe12_unit$TPH, tshe12_unit$Treat, FUN= mean)
+
+b1e1tshe<- tshe12_tph %>% filter(ExpUnit == "B1-E1")
+b2m1tshe<- tshe12_tph %>% filter(ExpUnit == "B2-M1")
+
+
+##
+
+spp_per_unit<- rbind(spp_tph, trees2012_unit_tph, no_alru)
+spp_per_unit$Year<- as.factor(spp_per_unit$Year)
+
+Sappho_spp_edits_TPH<- spp_per_unit %>% 
+  filter(!Species== "UNKN") %>%
+  filter(!Species== "UNKN1") %>%
+  filter(!Species== "UNKN2") %>%
+  filter(!Species== "UNKN3") %>%
+  filter(!Species== "UNKN4") %>%
+  filter(!Species== "UNKN5") %>%
+  filter(!Species== "FRLA") %>%
+  filter(!Species== "MAFU") %>%
+  filter(!Species== "ABAM") %>%
+  filter(!Species== "ACCI") %>%
+  filter(!Species=="UNK") %>%
+  filter(!Species == "THPL") %>%
+  filter(!Species== "SNAG") %>%
+  filter(!Species== "CASC") %>%
+  filter(!Species == "ACMA")
+
+Sappho_spp_edits_TPH$Treat<- as.character(Sappho_spp_edits_TPH$Treat)
+Sappho_spp_edits_TPH$Year<- as.character(Sappho_spp_edits_TPH$Year)
+
+test1<- Sappho_spp_edits_TPH %>% filter(Year== "2002" & Treat== "M")
+tapply(test1$TPH, test1$Species, FUN=mean)
+
+# unsure what is happening, but when I take mean values on 
+# the dataset that has removed spp, the values of the 
+# means change for the remaining spp-- which they shouldn't 
+# bc their mean should be the same regardless of the presence of 
+# other spp in the dataset 
+
+
+
+spp93<- Sappho_spp_edits_TPH %>% filter(Year== "1993")
+
+spp02<- Sappho_spp_edits_TPH %>% filter(Year== "2020") %>% 
+  filter(Treat== "E")
+tapply(spp02$TPH, spp02$Species, FUN=mean)
+
+spp02m<- Sappho_spp_edits_TPH %>% filter(Year== "2002") %>% 
+  filter(Treat== "M")
+tapply(spp02m$TPH, spp02m$Species, FUN=mean)
+
+
+
+# 2020
+
+# Test to comfirm the subsetting object (Sappho_spp_edits) was working
+# and it was.
+spp20e<- spp_per_expxy %>% filter(Year== "2020") %>% 
+  filter(Treat== "E")
+tapply(spp20e$TPH, spp20e$Species, FUN=mean)
+
+
+spp20e<- Sappho_spp_edits_TPH %>% filter(Year== "2020") %>% 
+  filter(Treat== "E")
+tapply(spp20e$TPH, spp20e$Species, FUN=mean)
+
+spp20m<- Sappho_spp_edits_TPH %>% filter(Year== "2020") %>% 
+  filter(Treat== "M")
+tapply(spp20m$TPH, spp20m$Species, FUN=mean)
+
+alru3<- Sappho_spp_edits_TPH %>% filter(Year== "2020" & Species== "ALRU")
+summary(lm(alru3$TPH~ alru3$Treat))
+
+ggplot(data= alru3, aes(x= Block, y= TPH))+ geom_boxplot() 
+summary(lm(alru3$TPH ~ alru3$Block)) 
+# not significant 
+
+ggplot(data= psme20, aes(x= Block, y= TPH))+ geom_boxplot()
+summary(lm(psme20$TPH ~ psme20$Block)) 
+# not significant
+
+ggplot(data= tshe20, aes(x= Block, y= TPH))+ geom_boxplot()
+summary(lm(tshe20$TPH ~ tshe20$Block)) 
+
+
+####=== Linear regression on TPH dataset====#####
+
+# subset 1993:
+
+# trees93<- Sappho_spp_TPH %>% filter(Year== "1993")
+
+trees93<- spp_per_expxy %>% filter(Year== "1993")
+
+summary(lm(trees93$TPH~ trees93$Treat + trees93$Treat_Wood +
+             trees93$Species))
+# TPH of TSHE were significantly different 
+
+summary(lm(trees93$TPH~ trees93$ExpUnit))
+# not significant
+
+psme93<- trees93 %>% filter(Species == "PSME")
+summary(lm(psme93$TPH ~ psme93$Block))
+
+alru93<- trees93 %>% filter(Species == "ALRU")
+summary(lm(alru93$TPH ~ alru93$Block))
+
+tshe93<- trees93 %>% filter(Species== "TSHE")
+summary(lm(tshe93$TPH ~ tshe93$Block))
+
+# Subset 2002:
+
+trees02<- spp_per_expxy %>% filter(Year== "2002")
+
+summary(lm(trees02$TPH~ trees02$Treat + trees02$Treat_Wood +
+             trees02$Species))
+
+# TPH of PSME and TSHE are significantly different 
+
+summary(lm(trees02$TPH~ trees02$Treat + trees02$Block +
+             trees02$Wood))
+# nothing is significant in this model 
+
+summary(lm(trees02$TPH~ trees02$ExpUnit))
+# not significant
+
+alru02<- trees02 %>% filter(Species== "ALRU")
+summary(lm(alru02$TPH~ alru02$Treat))
+# no difference in 2002
+
+tshe02_tph<- trees02 %>% filter(Species== "TSHE")
+summary(lm(tshe02_tph$TPH~ tshe02_tph$Treat))
+
+
+psme02_tph<- trees02 %>% filter(Species== "PSME")
+summary(lm(psme02_tph$TPH~ psme02_tph$Treat))
+
+# Subset 2012:
+
+trees12<- spp_per_expxy %>% filter(Year== "2012")
+
+psme12<- trees12 %>% filter(Species== "PSME") 
+# psme has no significant predictor variables
+
+tshe12<- trees12 %>% filter(Species== "TSHE")
+
+summary(lm(tshe12$TPH~ tshe12$Block))
+# TSHE different by block
+
+summary(lm(tshe12$TPH~ tshe12$Block *
+             tshe12$Treat))
+
+
+ggplot(data=tshe12, aes(x= Block, y= TPH))+
+  geom_boxplot()
+
+tapply(tshe12$TPH, tshe12$Block, FUN=mean)
+#block 4 has significantly more TSHE
+
+trees12_subset<- trees12 %>% filter(!Species== "CASC") %>%
+  filter(!Species== "ACCI")
+
+ggplot(data= tshe12, aes(x= Block, y=TPH, fill= Block))+
+  geom_boxplot()+
+  scale_fill_brewer(palette="Set2")+
+  facet_wrap(.~Treat)
+
+# Subset 2020:
+
+trees20<- spp_per_expxy %>% filter(Year== "2020")
+
+summary(lm(trees20$TPH~ trees20$Treat + trees20$Treat_Wood +
+             trees20$Species))
+# TPH of PSME and TSHE are significant 
+
+summary(lm(trees20$TPH~ trees20$Block))
+
+tshe20<- trees20 %>% filter(Species== "TSHE")
+summary(lm(tshe20$TPH~ tshe20$Treat))
+# not significantly different levels of TSHE in either treat
+
+alru20<- trees20 %>% filter(Species== "ALRU")
+summary(lm(alru20$TPH~ alru20$Treat))
+
+tapply(alru20$TPH, alru20$Treat, FUN=mean)
+# E= 94 TPH
+# M= 20 TPH
+
+psme20<- trees20 %>% filter(Species == "PSME")
+summary(lm(psme20$TPH ~ psme20$Block * psme20$Treat))
+
+####== TPH totals ==####
+
+alltph<- trees %>%
+  group_by(Year, Block, Treat, Treat_Wood, Wood,
+           ExpUnit) %>%
+  summarize(Count=n()) %>%
+  mutate(TPH=((Count/5)/324)*10000) %>%  
+  ungroup()
+
+alltph93<- alltph %>% filter(Year== "1993")
+
+write.csv(alltph, "tphLTEP.csv")
+
+alltph02<- alltph %>% filter(Year == "2002")
+alltph93<- alltph %>% filter(Year == "1993")
+tapply(alltph02$TPH, alltph02$Treat, FUN=mean)
+
+alltph20<- alltph %>% filter(Year == "2020")
+tapply(alltph20$TPH, alltph20$Treat, FUN=mean)
+
+alltph02e<- alltph02 %>% filter(Treat == "E")
+t.test(alltph02e$TPH)
+
+mod<- lm(alltph02$TPH ~ alltph02$Treat)
+predict(mod, data.frame(x= 24), interval= "confidence")
+predict(mod, data.frame(x= 24), interval= "prediction")
+
+
+b1e_12<- alltph02e %>% filter(Block == "B1")
+
+alltphm<- alltph02 %>% filter(Treat == "M")
+t.test(alltphm$TPH)
+
+
+alru<- trees %>% filter(Species== "ALRU")
+
+
+####  TPH ~ soils  #####
+
+Sappho_spp_edits_TPH
+tph02<- Sappho_spp_edits_TPH %>% filter(Year== "2002")
+
+tph_carbo<- merge(tph02, carbon_o, by= "ExpUnit")
+summary(lm(tph_carbo$TPH ~ tph_carbo$SoilC * tph_carbo$Treat.x))
+# not significant 
+
+ggplot(data= tph_carbo, 
+       aes(x=SoilC, 
+           y= TPH))+ 
+  stat_summary(fun=mean, geom="point")+
+  theme_bw() + 
+  geom_smooth(method=lm)+ 
+  xlab("Soil Carbon O Horizon")+
+  ylab("TPH")
+  facet_wrap(.~Treat.y)
+
+tph_carba<- merge(tph02, carbon_a, by= "ExpUnit")
+summary(lm(tph_carba$TPH~ tph_carba$SoilC * tph_carba$Treat.x))
+
+#### TPH for 2012 only ######
+
+
+summary(lm(tph2012$TSHE~ tph2012$Treat))
+
+summary(lm(tph2012$TSHE ~ tph2012$Treat *
+             tph2012$Block))
+# same as 2002, tshe's in block 4 earlys sign
+# p=0.01, R2=0.53
+
+ggplot(tph2012, aes(x= Block, y= TSHE))+
+  geom_boxplot()+
+  facet_wrap(.~ Treat)
+
+##### TPH for 2020 only #####
+
+summary(lm(tph2020$PSME~ tph2020$Treat))
+
+ggplot(tph2020, aes(x= Block, y= PSME))+
+  geom_boxplot()+
+  facet_wrap(.~Treat)
+
+ggplot(tph2020, aes(x= Treat, y= PSME))+
+  geom_boxplot()
+
+tapply(tph2020$PSME, tph2020$Treat, FUN= mean)
+####=== pre-treat tree data 1993   ######
+
+spp93<- spp93 %>% filter(!Species== "RHPU")
+
+ggplot(data= spp93, aes(x= Species, y=TPH, col= Species))+
+  geom_boxplot()+
+  ylab("1993 TPH")+
+  facet_wrap(.~ExpUnit)
+         
+summary(lm(spp93$TPH~ spp93$ExpUnit))
+# when all the trees are combined here, there is no statisical 
+# difference between experimental units
+
+tshe1993<- spp93 %>% filter(Species =="TSHE")
+
+summary(lm(tshe1993$TPH~ tshe1993$Block))
+# there are differences in pre-treatment areas based on block
+# R= 0.48. Also differences in treatment. # Can't do 
+# exp unit because n=1 because of way data's summarized. 
+
+####=== all 2002 trees  ####
+
+trees02<- Sappho_spp_edits_TPH %>% filter(Year== "2002")
+
+trees02<- trees02 %>% mutate(Treat = 
+         recode(Treat, "M" = "Douglas-fir Plantation", 
+                "E" = "Early Seral" ))
+
+tph_2002<- ggplot(data= trees02, aes(x= Block, y=TPH, fill= Block))+
+  geom_boxplot()+
+  scale_fill_brewer(palette="Greens")+
+  theme_bw()+
+  ylab("Trees" ~ha^-1)+
+  theme(legend.position= "none")+
+  facet_wrap(.~Treat)
+
+tph_2002
+
+summary(lm(trees02$TPH ~ trees02$Treat * trees02$Block))
+
+####== Looking at PSME ~ saplings 2002 #####
+
+
+ggplot(data= psme02_tph, aes(x= Year, y=TPH))+
+  geom_boxplot()+
+  ylab("Douglas-fir trees "~ha^-1*"")+
+  facet_wrap(.~ExpUnit)
+
+# Seedlings dataset
+seedlings02<- seedlings02 %>% filter(!Treat== "L" &
+                                  !Treat== "C") %>% filter(!SdlgHtClass== "UNKN")
+
+seeds02 <- seedlings02 %>%
+  group_by(Site, Year, Block, Wood, Treat_Wood, Treat, 
+           ExpUnit, SdlgHtClass) %>%
+  summarize(SdlgHA = mean(SdlgHA))
+
+seeds02_sap<- seeds02 %>% filter(SdlgHtClass =="3")
+
+
+# merging the 2002 PSME and sapling datasets
+
+psme_saplings<- merge(psme02_tph, seeds02_sap, by= "ExpUnit")
+
+
+# Plotting
+
+ggplot(data= psme_saplings, 
+       aes(x=TPH, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("PSME TPH")+ ylab("Saplings per hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+summary(lm(psme_saplings$TPH ~ psme_saplings$SdlgHA))
+# not significant
+
+
+# All trees and sapling dataset
+
+
+### adding DF mortality column to 2002 data  =#####
+
+PSME02_early<- psme02_tph %>% filter(Treat== "E")
+PSME02_mids<- psme02_tph %>% filter(Treat== "M")
+
+df02_early<- PSME02_early %>% mutate(Mortality= 1-(TPH/433))
+df02_mid<- PSME02_mids %>% mutate(Mortality= 1-(TPH/866))
+
+
+df02_early<- df02_early %>% mutate(Mortality = Mortality*100)
+df02_mid<-df02_mid %>% mutate(Mortality = Mortality*100)
+
+
+df_mort<- rbind(df02_early, df02_mid)
+
+summary(lm(df_mort$Mortality ~ df_mort$Treat * df_mort$Block))
+
+
+df_mort<- df_mort %>% mutate(Treat = 
+                               recode(Treat, "M" = "Douglas-fir Plantation", 
+                                      "E" = "Early Seral" ))
+
+df_mort<- ggplot(data= df_mort, aes(x= Block, y= Mortality, fill= Block))+
+  geom_boxplot()+
+  theme_bw()+
+  theme(legend.position= "none")+
+  scale_fill_brewer(palette="Blues")+
+  ylab("Mortality (%)") + 
+  facet_wrap(.~Treat)
+
+df_mort
+
+
+#### adding DF mortality column to 2020 data #####
+
+
+PSME20_early<- psme20 %>% filter(Treat == "E")
+PSME20_mid<- psme20 %>% filter(Treat == "M")
+
+df20_early<- PSME20_early %>% mutate(Mortality= 1-(TPH/433))
+df20_mid<- PSME20_mid %>% mutate(Mortality= 1-(TPH/866))
+
+df20_mort<- rbind(df20_early, df20_mid)
+
+summary(lm(df20_mort$Mortality ~ df20_mort$Block * df20_mort$Treat))
+# the interaction effect is barely significant with block 4 having less
+# DF mortality
+
+ggplot(data= df20_mort, aes(x= Block, y= Mortality))+
+  geom_boxplot()+
+  facet_wrap(.~Treat)
+
+#### 2002 DF mortality ~ saplings  #####
+
+
+dfmort_sap<- merge(df_mort, seeds02_sap, by= "ExpUnit")
+
+summary(lm(dfmort_sap$Mortality~ dfmort_sap$SdlgHA))
+# not significant 
+
+ggplot(data= dfmort_sap, 
+       aes(x=Mortality, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Mortality")+ ylab("Saplings per hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+dfmort_mids<- dfmort_sap %>% filter(Treat.x== "M")
+
+summary(lm(dfmort_mids$Mortality ~ dfmort_mids$SdlgHA))
+# also not significant when just looking at the mid seral data
+
+#### 2002 DF mortality ~ class 2 seedlings ####
+
+
+class2<- seeds02 %>% filter(SdlgHtClass =="2")
+
+dfmort_class2<- merge(class2, df_mort, by= "ExpUnit")
+
+ggplot(data= dfmort_class2, 
+       aes(x=Mortality, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Mortality")+ ylab("Class 2 Seedlings per Hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+summary(lm(dfmort_class2$Mortality ~ dfmort_class2$SdlgHA))
+# not significant
+
+###== DF mort ~ 1993 soils ===####
+
+soils$Block<- as.character(soils$Block)
+soils$Wood<- as.character(soils$Wood)
+soils<- soils %>% filter(!Treat== "C") %>%
+  filter(!Treat== "L")
+
+clean_n<- soils %>% filter(SoilN> 0) 
+
+nitrogen <- clean_n %>%
+  group_by(Site, Year, Block, Wood, Treat_Wood, Treat, 
+           ExpUnit, Layer) %>%
+  summarize(SoilN= mean(SoilN))
+
+nitrogen_a<- nitrogen %>% filter(Layer== "A")
+df_nit_a<- merge(df_mort, nitrogen_a, by= "ExpUnit")
+
+ggplot(data= df_nit_a, 
+       aes(x=Mortality, 
+           y= SoilN))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Douglas-fir Mortality")+ ylab("Nitrogen A Horizon")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+summary(lm(df_nit_a$Mortality~ df_nit_a$SoilN))
+# not significant at all
+
+## Looking at O horizon:
+
+nitrogen_o<- nitrogen %>% filter(Layer== "O")
+df_nit_o<- merge(df_mort, nitrogen_o, by= "ExpUnit")
+summary(lm(df_nit_o$Mortality~ df_nit_o$SoilN))
+# not significant 
+
+ggplot(data= df_nit_o, 
+       aes(x=Mortality, 
+           y= SoilN))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Douglas-fir Mortality")+ ylab("Nitrogen O Horizon")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+## B horizons
+nitrogen_b1<- nitrogen %>% filter(Layer== "B1")
+df_nit_b1<- merge(df_mort, nitrogen_b1, by= "ExpUnit")
+summary(lm(df_nit_b1$Mortality~ df_nit_b1$SoilN))
+# not significant
+
+
+nitrogen_b2<- nitrogen %>% filter(Layer== "B2")
+df_nit_b2<- merge(df_mort, nitrogen_b2, by= "ExpUnit")
+summary(lm(df_nit_b2$Mortality~ df_nit_b2$SoilN))
+# not significant
+
+####== soils ==#####
+
+ggplot(data= nitrogen_a, 
+       aes(x=Block, 
+           y= SoilN))+
+        geom_boxplot()+
+      ylab("Nitrogen: A Horizon")+
+    theme_bw()
+
+ggplot(data= carbon_o, 
+       aes(x=Block, 
+           y= SoilN))+
+  geom_boxplot()+
+  ylab("Nitrogen: B Horizon")+
+  theme_bw()
+
+
+summary(lm(nitrogen_a$SoilN ~ nitrogen_a$Block))
+# barely significant with block 2 having more N
+
+summary(lm(nitrogen_a$SoilN ~ nitrogen_a$Treat))
+# not significant
+
+ggplot(data= nitrogen_o, 
+       aes(x=Block, 
+           y= SoilN))+
+  geom_boxplot()+
+  ylab("Soil Nitrogen: O Horizon")
+
+summary(lm(nitrogen_o$SoilN ~ nitrogen_o$Block))
+tapply(nitrogen_o$SoilN, nitrogen_o$Block, FUN= mean)
+# blocks 1 and 3 have more N in the O horizon but it's not significant
+# based on the above regression.
+
+
+# Carbon:
+ggplot(data= carbon_a, 
+       aes(x=Block, 
+           y= SoilC))+
+  geom_boxplot()+
+  ylab("Soil Carbon: A Horizon")
+
+summary(lm(carbon_a$SoilC ~ carbon_a$Block))
+# not a significant difference, but block 2 has more 
+
+ggplot(data= carbon_o, 
+       aes(x=Block, 
+           y= SoilC))+
+  geom_boxplot()+
+  ylab("Soil Carbon: O Horizon")
+
+summary(lm(carbon_o$SoilC ~ carbon_o$Block))
+# jsut barely significant with blocks 2 and 4 having less C
+
+# Carbon in the A and O horizon are both significant and have 
+# higher values in block 4
+
+
+# soil mass:
+
+soil_mass<- soils %>% filter(SoilMass >0)
+
+clean_sm<- soil_mass %>%
+  group_by(Site, Year, Block, Wood, Treat_Wood, Treat, 
+           ExpUnit, Layer) %>%
+  summarize( SoilMass= mean(SoilMass))
+
+
+sm_a<- clean_sm %>% filter(Layer == "A")
+sm_o<- clean_sm %>% filter(Layer == "O")
+
+
+ggplot(data= sm_o, 
+       aes(x=Block, 
+           y= SoilMass))+
+  geom_boxplot()+
+  ylab("Soil Mass: O Horizon")
+
+summary(lm(sm_o$SoilMass ~ sm_o$Block))
+
+# rocks
+
+rocks<- soils %>% filter(`Rock>4mmOAB` >0)
+
+clean_rocks<- rocks %>%
+  group_by(Site, Year, Block, Wood, Treat_Wood, Treat, 
+           ExpUnit, Layer) %>%
+  summarize(`Rock>4mmOAB`= mean(`Rock>4mmOAB`))
+
+rocks_o<- clean_rocks %>% filter(Layer== "O")
+ggplot(data= rocks_o, 
+       aes(x=Block, 
+           y= `Rock>4mmOAB` ))+
+  geom_boxplot()+
+  ylab("Rocks > 4mm: O Horizon")
+
+summary(lm(rocks_o$`Rock>4mmOAB`~ rocks_o$Block))
+
+
+#### ALRU mortality 2002   ######
+
+alru02_early<- alru02 %>% filter(Treat== "E")
+
+alru_mort<- alru02_early %>% mutate(Mortality= 1-(TPH/433))
+
+ggplot(data= alru_mort, aes(x= Block, y= Mortality))+
+  geom_boxplot()+
+  ylab("Alder Mortality")
+
+summary(lm(alru_mort$Mortality ~ alru_mort$Block))
+# sign. with p=0.02 and R2=0.71
+
+alru_mort_sap<- merge(seeds02_sap, alru_mort, by= "ExpUnit")
+
+ggplot(data= alru_mort_sap, 
+       aes(x=Mortality, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Alder Mortality")+ ylab("Saplings per hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+# alder + hemlock
+
+alru_tshe<- merge(alru_mort, tshe02_tph, by= "ExpUnit")
+
+ggplot(data= alru_tshe, 
+       aes(x=Mortality, 
+           y= TPH.y))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Alder Mortality")+ ylab("Hemlock TPH")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+# not significant 
+#### ALRU mortality 2020  #####
+
+alru20_early<- alru20 %>% filter(Treat== "E")
+
+alru20_mort<- alru20_early %>% mutate(Mortality= 1-(TPH/433))
+
+
+ggplot(data= alru20_mort, 
+       aes(x= Block, 
+           y= Mortality))+ 
+  geom_boxplot()+
+  theme_bw() + 
+  facet_wrap(.~Treat)
+
+summary(lm(alru20_mort$Mortality~ alru20_mort$Block))
+# not significant
+
+tapply(alru20_mort$Mortality, alru20_mort$Block, FUN=mean)
+
+####== ALRU ~ 1993 soils ==####
+
+alru_nit_o<- merge(alru_mort, nitrogen_o, by= "ExpUnit")
+summary(lm(alru_nit_o$Mortality~ alru_nit_o$SoilN))
+# significant w/ R2= 0.523
+
+alru_nit_a<- merge(alru_mort, nitrogen_a, by= "ExpUnit")
+summary(lm(alru_nit_a$Mortality~ alru_nit_a$SoilN))
+
+ggplot(data= alru_nit_a, 
+       aes(x=Mortality, 
+           y= SoilN))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("2002 Alder Mortality")+ ylab("1993 Nitrogen A Horizon")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+alru_nit_b1<- merge(alru_mort, nitrogen_b1, by= "ExpUnit")
+summary(lm(alru_nit_b1$Mortality~ alru_nit_b1$SoilN))
+
+alru_nit_b2<- merge(alru_mort, nitrogen_b2, by= "ExpUnit")
+summary(lm(alru_nit_b2$Mortality~ alru_nit_b2$SoilN))
+# neither of these are significant
+
+# doing the same process with soil carbon:
+
+clean_c<- soils %>% filter(SoilC> 0) 
+
+carbon <- clean_c %>%
+  group_by(Site, Block, Wood, Treat_Wood, Treat, 
+           ExpUnit, Layer) %>%
+  summarize(SoilC= mean(SoilC)) %>%
+  ungroup()
+
+carbon_o<- carbon %>% filter(Layer== "O")
+alru_carb_o<- merge(alru_mort, carbon_o, by="ExpUnit")
+summary(lm(alru_carb_o$Mortality~ alru_carb_o$SoilC))
+# not significant
+
+carbon_a<- carbon %>% filter(Layer== "A")
+alru_carb_a<- merge(alru_mort, carbon_a, by="ExpUnit")
+summary(lm(alru_carb_a$Mortality~ alru_carb_a$SoilC))
+# not significant
+
+ggplot(data= alru_carb_a, 
+       aes(x=Mortality, 
+           y= SoilC))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("2002 Alder Mortality")+ ylab("1993 Carbon A Horizon")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+####== Alder and soil at 
+####== ALRU ~ saplings 2002  ==#####
+
+
+alru_sap<- merge(alru02, seeds02_sap, by= "ExpUnit")
+summary(lm(alru_sap$TPH ~ alru_sap$SdlgHA))
+# not significant
+
+ggplot(data= alru_sap, 
+       aes(x=TPH, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Alder TPH")+ ylab("Saplings per hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+
+####=== ALRU ~ class 2 seedlings 2002 ####
+
+alru_class2<- merge(alru_mort, class2, by= "ExpUnit")
+
+ggplot(data= alru_class2, 
+       aes(x=Mortality, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Alder Mortality")+ ylab("Class 2 Seedlings per Hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+summary(lm(alru_class2$Mortality~ alru_class2$SdlgHA))
+# This is significant 
+
+####== TSHE ~ saplings 2002 ==####
+
+
+tshe_sap<- merge(tshe02_tph, seeds02_sap, by= "ExpUnit")
+
+summary(lm(tshe_sap$TPH ~ tshe_sap$SdlgHA))
+# This is very significant w/ an R2= 0.55
+
+ggplot(data= tshe_sap, 
+       aes(x=TPH, 
+           y= SdlgHA))+ 
+  stat_summary(fun=mean, geom="point")+
+  xlab("Hemlock TPH")+ ylab("Saplings per hectare")+
+  theme_bw() + 
+  geom_smooth(method=lm)
+
+
+####== FIGURE// TPH by spp ====####
+
+# tph_spp<- Sappho_spp_edits_TPH[ ,-c(9)]
+
+
+all_tph<-rbind(tph95, tph96, 
+               Sappho_spp_edits_TPH)
+
+tshe<- all_tph %>% filter(Species== "TSHE")
+write.csv(tshe, "tshe_treedata.csv")
+
+all_tph_sum<- all_tph %>%
+  group_by(Year, Block, Treat, Treat_Wood,
+           ExpUnit, TPH) %>%
+  summarize(TPH= sum(TPH))
+
+
+all_tph<- all_tph %>% mutate(Treat = 
+        recode(Treat, "M" = "Douglas-fir Plantation", 
+              "E" = "Early Seral" ))
+
+
+
+# Sappho_spp_edits_TPH$Year<- as.character(Sappho_spp_edits_TPH$Year)
+
+# all_tph$Year<- as.character(all_tph$Year)
+all_tph_sppedits<- all_tph %>% filter(!Species == "ACCI" &
+                    !Species== "CASC" & !Species =="ACMA")
+        
+# all_tph_sppedits$Year<- as.factor(all_tph_sppedits$Year)
+
+TPH<-ggplot(data= all_tph_sppedits, 
+            aes(x=Year, 
+                y= TPH, color= Species))+ 
+  stat_summary(fun=mean, geom="point", size= 3)+ 
+  theme(text= element_text(size= 15))+
+  stat_summary(fun=mean, geom="line", aes(group=Species))+
+  guides(color=guide_legend("Treatments"))+
+  xlab(element_blank())+
+  ylab("TPH")+
+  theme_bw() + 
+  # scale_x_date(date_breaks= "5 years", date_labels = "%Y")+
+  geom_vline(xintercept= 2, linetype= "solid", col="darkgray")+
+  geom_vline(xintercept= 5.2, linetype= "dashed", col="darkgray")+
+  facet_wrap(.~Treat, ncol=1)
+
+TPH
+
+test<- all_tph_sppedits
+test$Year<- as.numeric(test$Year)
+
+tph_post<- test %>% filter(!Year== 1993)
+
+ggplot(data= tph_post, 
+            aes(x=Year, 
+                y= TPH, shape= Species))+ 
+  stat_summary(fun=mean, geom="point", size= 3)+ 
+  stat_summary(fun=mean, geom="line", aes(group=Species))+
+  scale_x_continuous(breaks= c(1993, 1995, 2002, 2012, 2020))+
+  ylab("Trees" ~ha^-1)+
+  geom_vline(xintercept = 1995, col="darkgray")+
+  geom_vline(xintercept= 2013, linetype= "dashed", col="darkgray")+
+  theme(axis.text = element_text(size= 12))+
+  theme(axis.title = element_text(size=12))+
+  theme_bw()+
+  facet_wrap(.~Treat, ncol=1)
+
+# ggsave("TPH_fig2.png")
+
+post95<- test %>% filter(Year > 1993)
+
+ggplot(data= test, 
+       aes(x=Year, 
+           y= TPH, color= Species))+ 
+  scale_fill_brewer(palette="Blues")+
+  stat_summary(fun=mean, geom="point", size=3)+ 
+  stat_summary(data= post95, fun=mean, geom="line", aes(group=Species))+
+  scale_x_continuous(breaks= c(1993, 1995, 2002, 2012, 2020))+
+  ylab("Trees" ~ha^-1)+
+  geom_vline(xintercept = 1995, col="darkgray")+
+  geom_vline(xintercept= 2013, linetype= "dashed", col="darkgray")+
+  theme_bw()+
+  theme(axis.text = element_text(size= 12))+
+  theme(axis.title = element_text(size=12))+
+  facet_wrap(.~Treat, ncol=1)
+
+
+spp<- all_tph %>% filter(Year== "2020" & Species== "PSME")
+tapply(spp$TPH, spp$Treat, FUN=mean)
+
+# ggsave("TPH_color.png")
+### isolating TSHE dataset #####
+
+
+
+
+
+##### TPH looking at block effect  ######
+
+ggplot(data= tshe02_tph, 
+            aes(x=Block,
+                y= TPH))+ 
+  geom_boxplot()+
+  xlab(element_blank())+
+  ylab("Hemlock TPH")+
+  theme_bw() 
+
+####== FIGURE combining // TPH + BA + DBH ====####
+
+ggarrange(TPH,
+          DBH, 
+          common.legend = TRUE, nrow=2, align= "v", legend= "right")
+
+#### 2002 FIGURE combining all block 4 effect ######
+
+ggarrange(biomass, Ba_2002, df_mort, tph_2002, 
+          common.legend = FALSE, nrow=2, ncol=2)
+
+# ggsave("all2002_figs.png")
+
+###=== regression on the TPH ~ treatment + spp===#####
+
+
+## doing some regression on basal area and TPA between treatments
+# can do this between years as well 
+
+
+# 1993: 
+
+TPH93<- spp_per_expxy  %>% filter(Year== "1993")
+
+summary(lm(TPH93$TPH~ TPH93$Treat +
+             TPH93$Wood +  TPH93$Species))
+# only difference is TSHE
+
+# 2002: 
+TPH02<- spp_per_expxy  %>% filter(Year== "2002")
+
+summary(lm(TPH02$TPH~ TPH02$Treat +
+             TPH02$Wood +  TPH02$Species))
+
+# both PSME and TSHE had significant significant TPH
+# meaning TSHE TPA are significantly different than other spp. 
+# PSME TPH are also different than other spp. 
+# Total TPH are not different between treatments  
+
+
+# 2020 
+TPH20<- spp_per_expxy  %>% filter(Year== "2020")
+
+summary(lm(TPH20$TPH~ TPH20$Treat +
+             TPH20$Wood +  TPH20$Species))
+# again, PSME and TSHE are statistically significant 
+
+## So PSME and TSHE both have significantly different TPH 
+# compared to other spp. 
+
+
+####==== regression of BA~ species=====#####
+
+
+#1993: 
+BA93<- mean_ba %>% filter(Year== "1993")
+
+summary(lm(BA93$BA_ha~ BA93$Species + BA93$Treat + BA93$Wood))
+# TSHE was significant 
+
+#2002:
+
+BA02<- mean_ba %>% filter(Year== "2002")
+
+summary(lm(BA02$BA_ha~ BA02$Species + BA02$Treat + BA02$Wood))
+# PISI, PSME, and TSHE were all significant 
+# R2= 0.44
+
+# PSME, PISI, and TSHE all are significant 
+
+
+ggplot(data= BA02, aes(x= Species, y= Mean_BA_m2))+ 
+  geom_boxplot()   # looking at species in 2002
+
+
+unique(BA02$Species)
+
+
+#####=== Site Index ===#####
+
+
+summary(lm(SI$Mean_TreeHt~ SI$Block))
+# There is a significant block effect with 
+# block 4 having a higher mean tree height 
+
+summary(lm(SI$SI~ SI$Block * SI$Treat))
+# Also significant with block 4 having higher SI value
+# Block is significant on it's own and also the interaction
+# effect is also very significant with R2=0.54
+
+
+SI_fig<-ggplot(data=SI, aes(x= Block, y=SI, fill= Block))+ geom_boxplot()+
+  ylab("Site Index")+
+  theme_bw()+
+  scale_fill_brewer(palette="Blues")+
+  facet_wrap(.~Treat)
+
+### This is super interesting! Block 4 in the early's is really high! 
+# That might be due to the alder effect + better site conditions
+
+tapply(SI$Mean_TreeHt, SI$Block, FUN=mean)
+
+
+ggarrange(bafig, SI_fig, nrow=1, 
+          common.legend = FALSE, align= "h")
+
+#####   Understory biomass ######
+
+usbiomass$Year<- as.factor(usbiomass$Year)
+usbiomass<- usbiomass %>% filter(!Treat == "C") %>%
+  filter(!Treat== "L")
+
+tapply(usbiomass$Avg_Biomass, usbiomass$Block, FUN=mean)
+
+summary(lm(usbiomass$Avg_Biomass ~ usbiomass$Treat *
+             usbiomass$Block))
+
+ggplot(data= usbiomass, aes(x= Block, y= Avg_Biomass, fill= Block))+
+  geom_boxplot()+
+  ylab("2016 Mean Understory Biomass")+
+  facet_wrap(.~ Treat)
+
+usbio_e<- usbiomass %>% filter(Treat == "E")
+tapply(usbio_e$Avg_Biomass, usbio_e$Block, FUN=mean)
+
+usbio_m<- usbiomass %>% filter(Treat== "M")
+tapply(usbio_m$Avg_Biomass, usbio_m$Block, FUN=mean)
+
+
+##### Tree biomass #####
+
+summary(lm(treebio$Bio_ha ~ treebio$Block))
+# block differences with block 4 significant;
+# p=0.05 and R2=0.31
+
+summary(lm(treebio$Bio_ha ~ treebio$Block * 
+             treebio$Treat))
+
+summary(lm(treebio$Bio_ha ~ treebio$Treat))
+
+treebio<- treebio %>% filter(!Bio_ha == "NA")
+
+
+treebio<- treebio %>% mutate(Treat = 
+                               recode(Treat, "M" = "Douglas-fir Plantation", 
+                                      "E" = "Early Seral" ))
+
+biomass<- ggplot(data= treebio, aes(x= Block, y= Bio_ha, fill= Block))+
+  geom_boxplot()+
+  theme_bw() + 
+  scale_fill_brewer(palette="RdPu")+
+  theme(legend.position= "none")+
+  ylab("Biomass" ~(Mg~ha^-1))+
+  facet_wrap(.~ Treat)
+
+biomass
+
+
+##### Tree bio in all years #####
+
+ggplot(data=allbio, aes(x=Year, y= PSME, col= Treat))+
+  stat_summary(fun=mean, geom="point", size= 2)+ 
+  stat_summary(fun=mean, geom="line", aes(group=Treat))+
+  theme_bw()
+  # facet_wrap(.~Block)
+
+
+
+
+#### looking at mean tree height of tallest 20% #####
+
+ggplot(SI, aes(x= Treat, y= Mean_TreeHt, fill= Treat))+
+  geom_boxplot()+
+  scale_fill_brewer(palette= "Pastel1")+
+  ylab("Tree Height (ft)")+
+  xlab("Treatment")+
+  theme_bw()+
+  facet_wrap(.~Block)
+
+ggsave("TallestTrees.png")
+
+summary(lm(SI$Mean_TreeHt~ SI$Block * SI$Treat))
+# p=0.05; R2=0.54
+
+SIm<- SI %>% filter(Treat== "Douglas-fir Plantation")
+
+tapply(SIm$Mean_TreeHt, SIm$Block, FUN=mean)
+# B1: 42
+# B2: 46
+# B3: 42
+# B4: 45
+
+SIe<- SI %>% filter(Treat== "Early Seral")
+tapply(SIe$Mean_TreeHt, SIe$Block, FUN=mean)
+# B1: 42
+# B2: 45
+# B3: 43
+# B4: 50
+
+
