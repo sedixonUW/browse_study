@@ -1,0 +1,19 @@
+response,term,estimate,std.error,statistic,p.value,conf.low,conf.high,method,alternative
+Deformity 2024,Intercept,0.5436,0.1711,3.1774,0.0015,NA,NA,NA,NA
+Deformity 2024,Fence Effect,-0.3238,0.2425,-1.3349,0.1819,NA,NA,NA,NA
+Deformity 2024,Species Effect,0.9678,0.3326,2.9097,0.0036,NA,NA,NA,NA
+Deformity 2024,Fence x Species,-1.8928,0.3977,-4.759,0,NA,NA,NA,NA
+Diameter 2024,Intercept,45.5552,2.2422,20.3169,0,NA,NA,NA,NA
+Diameter 2024,Fence Effect,3.7755,3.2433,1.1641,0.2449,NA,NA,NA,NA
+Diameter 2024,Species Effect,-21.6182,5.6097,-3.8537,1.00E-04,NA,NA,NA,NA
+Diameter 2024,Fence x Species,7.4582,6.3374,1.1769,0.2398,NA,NA,NA,NA
+Height 2024,Intercept,3.8701,0.1103,35.0905,0,NA,NA,NA,NA
+Height 2024,Fence Effect,0.3596,0.1588,2.2644,0.0239,NA,NA,NA,NA
+Height 2024,Species Effect,-2.5418,0.1836,-13.8445,0,NA,NA,NA,NA
+Height 2024,Fence x Species,0.8898,0.2321,3.8332,1.00E-04,NA,NA,NA,NA
+Rotation Risk 2024,Intercept,-3.157,0.4168,-7.5736,0,NA,NA,NA,NA
+Rotation Risk 2024,Fence Effect,0.0736,0.59,0.1247,0.9008,NA,NA,NA,NA
+Rotation Risk 2024,Species Effect,4.9348,0.5207,9.4763,0,NA,NA,NA,NA
+Rotation Risk 2024,Fence x Species,-7.3728,1.2039,-6.1239,0,NA,NA,NA,NA
+Browse 2016,NA,Inf,NA,NA,0,8.0958,Inf,Fisher's Exact Test for Count Data,two.sided
+Browse 2018,NA,Inf,NA,NA,0,111.885,Inf,Fisher's Exact Test for Count Data,two.sided
