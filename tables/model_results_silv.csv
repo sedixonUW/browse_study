@@ -1,65 +1,68 @@
 "response","effect","group","term","estimate","std.error","statistic","p.value","df"
-"Survival 2019","fixed",NA,"Intercept",-1.2804,0.8632,-1.4834,0.138,NA
-"Survival 2019","fixed",NA,"Treatment F/NW",-28.9018,143.5307,-0.2014,0.8404,NA
-"Survival 2019","fixed",NA,"Treatment F/W",-0.4275,0.9754,-0.4382,0.6612,NA
-"Survival 2019","fixed",NA,"Treatment W",-1.8863,1.3154,-1.434,0.1516,NA
-"Survival 2019","fixed",NA,"Species Effect",0.3083,0.8845,0.3485,0.7275,NA
-"Survival 2019","fixed",NA,"F/NW x Species",5.5443,145.8273,0.038,0.9697,NA
-"Survival 2019","fixed",NA,"F/W x Species",-0.0891,1.0454,-0.0852,0.9321,NA
-"Survival 2019","fixed",NA,"W x Species",2.3513,1.3732,1.7123,0.0868,NA
-"Survival 2019","ran_pars","plot","sd__(Intercept)",0.4199,NA,NA,NA,NA
-"Height 2019","fixed",NA,"Intercept",100.6729,11.8043,8.5285,0,40.7923
-"Height 2019","fixed",NA,"Treatment F/NW",-47.7556,12.0065,-3.9775,1e-04,412.4352
-"Height 2019","fixed",NA,"Treatment F/W",-41.0051,11.3867,-3.6011,4e-04,412.7524
-"Height 2019","fixed",NA,"Treatment W",-53.0489,11.9914,-4.4239,0,411.0681
-"Height 2019","fixed",NA,"Species Effect",-44.2159,10.9891,-4.0236,1e-04,412.3688
-"Height 2019","fixed",NA,"F/NW x Species",88.767,12.9648,6.8468,0,412.1432
-"Height 2019","fixed",NA,"F/W x Species",81.2048,12.3163,6.5933,0,412.651
-"Height 2019","fixed",NA,"W x Species",48.3529,13.0638,3.7013,2e-04,411.3771
-"Height 2019","ran_pars","plot","sd__(Intercept)",11.7177,NA,NA,NA,NA
-"Height 2019","ran_pars","Residual","sd__Observation",28.6462,NA,NA,NA,NA
-"Diameter 2019","fixed",NA,"Intercept",13.0864,1.8731,6.9865,0,34.114
-"Diameter 2019","fixed",NA,"Treatment F/NW",-6.469,1.8705,-3.4583,6e-04,412.281
-"Diameter 2019","fixed",NA,"Treatment F/W",-4.5197,1.774,-2.5477,0.0112,412.5775
-"Diameter 2019","fixed",NA,"Treatment W",-4.2565,1.868,-2.2787,0.0232,411.0581
-"Diameter 2019","fixed",NA,"Species Effect",-3.9624,1.712,-2.3144,0.0211,412.2188
-"Diameter 2019","fixed",NA,"F/NW x Species",8.8349,2.0198,4.3742,0,412.0149
-"Diameter 2019","fixed",NA,"F/W x Species",7.7782,1.9189,4.0536,1e-04,412.4815
-"Diameter 2019","fixed",NA,"W x Species",2.8147,2.0351,1.3831,0.1674,411.3297
-"Diameter 2019","ran_pars","plot","sd__(Intercept)",1.9592,NA,NA,NA,NA
-"Diameter 2019","ran_pars","Residual","sd__Observation",4.4624,NA,NA,NA,NA
-"Deformity 2024","fixed",NA,"Intercept",0.94,0.7885,1.1921,0.2332,NA
-"Deformity 2024","fixed",NA,"Treatment F/NW",-0.3853,0.8132,-0.4738,0.6357,NA
-"Deformity 2024","fixed",NA,"Treatment F/W",-0.915,0.813,-1.1254,0.2604,NA
-"Deformity 2024","fixed",NA,"Treatment W",-0.3698,0.9109,-0.4059,0.6848,NA
-"Deformity 2024","fixed",NA,"Species Effect",0.3281,0.8163,0.4019,0.6878,NA
-"Deformity 2024","fixed",NA,"F/NW x Species",-1.5709,1.0061,-1.5614,0.1184,NA
-"Deformity 2024","fixed",NA,"F/W x Species",-0.3338,0.9928,-0.3362,0.7367,NA
-"Deformity 2024","fixed",NA,"W x Species",-0.3995,1.1659,-0.3426,0.7319,NA
-"Deformity 2024","ran_pars","plot","sd__(Intercept)",0.8086,NA,NA,NA,NA
-"Rotation Risk 2024","fixed",NA,"Intercept",-0.6846,1.0649,-0.6429,0.5203,NA
-"Rotation Risk 2024","fixed",NA,"Treatment F/NW",-3.5805,0.8389,-4.2682,0,NA
-"Rotation Risk 2024","fixed",NA,"Treatment F/W",-2.8356,0.7128,-3.978,1e-04,NA
-"Rotation Risk 2024","fixed",NA,"Treatment W",0.0047,0.5857,0.008,0.9936,NA
-"Rotation Risk 2024","fixed",NA,"Species Effect",0.7774,0.5295,1.4683,0.142,NA
-"Rotation Risk 2024","ran_pars","plot","sd__(Intercept)",1.5837,NA,NA,NA,NA
-"Height 2024","fixed",NA,"Intercept",2.8065,0.355,7.9067,0.001,4.2766
-"Height 2024","fixed",NA,"Treatment F/NW",-0.4791,0.2729,-1.7559,0.0803,255.0988
-"Height 2024","fixed",NA,"Treatment F/W",0.233,0.2742,0.8498,0.3962,255.2926
-"Height 2024","fixed",NA,"Treatment W",-0.1303,0.3007,-0.4333,0.6652,255.0181
-"Height 2024","fixed",NA,"Species Effect",-1.6128,0.2472,-6.5242,0,255.2298
-"Height 2024","fixed",NA,"F/NW x Species",2.0906,0.3213,6.5073,0,255.2582
-"Height 2024","fixed",NA,"F/W x Species",1.4724,0.3179,4.6314,0,255.2228
-"Height 2024","fixed",NA,"W x Species",0.154,0.3679,0.4186,0.6759,255.027
-"Height 2024","ran_pars","plot","sd__(Intercept)",0.4997,NA,NA,NA,NA
-"Height 2024","ran_pars","Residual","sd__Observation",0.7639,NA,NA,NA,NA
-"Diameter 2024","fixed",NA,"Intercept",32.1307,5.7313,5.6061,1e-04,11.492
-"Diameter 2024","fixed",NA,"Treatment F/NW",-12.1489,5.9108,-2.0554,0.041,226.737
-"Diameter 2024","fixed",NA,"Treatment F/W",-2.257,6.0938,-0.3704,0.7114,227.2229
-"Diameter 2024","fixed",NA,"Treatment W",-7.6658,6.6158,-1.1587,0.2478,225.994
-"Diameter 2024","fixed",NA,"Species Effect",-21.7394,6.0848,-3.5727,4e-04,227.3725
-"Diameter 2024","fixed",NA,"F/NW x Species",36.8355,7.4866,4.9202,0,227.2393
-"Diameter 2024","fixed",NA,"F/W x Species",30.0794,7.5465,3.9859,1e-04,227.1837
-"Diameter 2024","fixed",NA,"W x Species",6.3772,8.8305,0.7222,0.4709,226.1157
-"Diameter 2024","ran_pars","plot","sd__(Intercept)",5.9804,NA,NA,NA,NA
-"Diameter 2024","ran_pars","Residual","sd__Observation",16.1489,NA,NA,NA,NA
+"Survival, Year 2","fixed",NA,"Intercept",-1.2805,0.8632,-1.4834,0.138,NA
+"Survival, Year 2","fixed",NA,"F/NW x DF",-18.4288,79.4806,-0.2319,0.8166,NA
+"Survival, Year 2","fixed",NA,"F/W x DF",-0.4275,0.9755,-0.4382,0.6612,NA
+"Survival, Year 2","fixed",NA,"W x DF",-1.8863,1.3155,-1.4339,0.1516,NA
+"Survival, Year 2","fixed",NA,"Species Effect",0.3083,0.8846,0.3485,0.7275,NA
+"Survival, Year 2","fixed",NA,"F/NW x WRC",-0.341,106.7636,-0.0032,0.9975,NA
+"Survival, Year 2","fixed",NA,"F/W x WRC",-0.0891,1.0454,-0.0852,0.9321,NA
+"Survival, Year 2","fixed",NA,"W x WRC",2.3513,1.3732,1.7122,0.0869,NA
+"Survival, Year 2","ran_pars","plot","sd__(Intercept)",0.4199,NA,NA,NA,NA
+"Height, Year 2","fixed",NA,"Intercept",100.6729,11.8043,8.5285,0,40.7923
+"Height, Year 2","fixed",NA,"F/NW x DF",-47.7556,12.0065,-3.9775,1e-04,412.4352
+"Height, Year 2","fixed",NA,"F/W x DF",-41.0051,11.3867,-3.6011,4e-04,412.7524
+"Height, Year 2","fixed",NA,"W x DF",-53.0489,11.9914,-4.4239,0,411.0681
+"Height, Year 2","fixed",NA,"Species Effect",-44.2159,10.9891,-4.0236,1e-04,412.3688
+"Height, Year 2","fixed",NA,"F/NW x WRC",88.767,12.9648,6.8468,0,412.1432
+"Height, Year 2","fixed",NA,"F/W x WRC",81.2048,12.3163,6.5933,0,412.651
+"Height, Year 2","fixed",NA,"W x WRC",48.3529,13.0638,3.7013,2e-04,411.3771
+"Height, Year 2","ran_pars","plot","sd__(Intercept)",11.7177,NA,NA,NA,NA
+"Height, Year 2","ran_pars","Residual","sd__Observation",28.6462,NA,NA,NA,NA
+"Diameter, Year 2","fixed",NA,"Intercept",13.0864,1.8731,6.9865,0,34.114
+"Diameter, Year 2","fixed",NA,"F/NW x DF",-6.469,1.8705,-3.4583,6e-04,412.281
+"Diameter, Year 2","fixed",NA,"F/W x DF",-4.5197,1.774,-2.5477,0.0112,412.5775
+"Diameter, Year 2","fixed",NA,"W x DF",-4.2565,1.868,-2.2787,0.0232,411.0581
+"Diameter, Year 2","fixed",NA,"Species Effect",-3.9624,1.712,-2.3144,0.0211,412.2188
+"Diameter, Year 2","fixed",NA,"F/NW x WRC",8.8349,2.0198,4.3742,0,412.0149
+"Diameter, Year 2","fixed",NA,"F/W x WRC",7.7782,1.9189,4.0536,1e-04,412.4815
+"Diameter, Year 2","fixed",NA,"W x WRC",2.8147,2.0351,1.3831,0.1674,411.3297
+"Diameter, Year 2","ran_pars","plot","sd__(Intercept)",1.9592,NA,NA,NA,NA
+"Diameter, Year 2","ran_pars","Residual","sd__Observation",4.4624,NA,NA,NA,NA
+"Deformity, Year 7","fixed",NA,"Intercept",0.94,0.7885,1.1921,0.2332,NA
+"Deformity, Year 7","fixed",NA,"F/NW x DF",-0.3853,0.8132,-0.4738,0.6357,NA
+"Deformity, Year 7","fixed",NA,"F/W x DF",-0.915,0.813,-1.1254,0.2604,NA
+"Deformity, Year 7","fixed",NA,"W x DF",-0.3698,0.9109,-0.4059,0.6848,NA
+"Deformity, Year 7","fixed",NA,"Species Effect",0.3281,0.8163,0.4019,0.6878,NA
+"Deformity, Year 7","fixed",NA,"F/NW x WRC",-1.5709,1.0061,-1.5614,0.1184,NA
+"Deformity, Year 7","fixed",NA,"F/W x WRC",-0.3338,0.9928,-0.3362,0.7367,NA
+"Deformity, Year 7","fixed",NA,"W x WRC",-0.3995,1.1659,-0.3426,0.7319,NA
+"Deformity, Year 7","ran_pars","plot","sd__(Intercept)",0.8086,NA,NA,NA,NA
+"Rotation, Year 7","fixed",NA,"Intercept",-0.8072,1.2151,-0.6643,0.5065,NA
+"Rotation, Year 7","fixed",NA,"F/NW x DF",-1.1986,1.0806,-1.1092,0.2674,NA
+"Rotation, Year 7","fixed",NA,"F/W x DF",-3.1003,1.3941,-2.2239,0.0262,NA
+"Rotation, Year 7","fixed",NA,"W x DF",-18.9479,128.6464,-0.1473,0.8829,NA
+"Rotation, Year 7","fixed",NA,"Species Effect",1.007,0.9068,1.1105,0.2668,NA
+"Rotation, Year 7","fixed",NA,"F/NW x WRC",-18.0971,139.503,-0.1297,0.8968,NA
+"Rotation, Year 7","fixed",NA,"F/W x WRC",0.1623,1.4653,0.1107,0.9118,NA
+"Rotation, Year 7","fixed",NA,"W x WRC",19.5078,128.6463,0.1516,0.8795,NA
+"Rotation, Year 7","ran_pars","plot","sd__(Intercept)",1.6528,NA,NA,NA,NA
+"Height, Year 7","fixed",NA,"Intercept",2.8065,0.355,7.9067,0.001,4.2766
+"Height, Year 7","fixed",NA,"F/NW x DF",-0.4791,0.2729,-1.7559,0.0803,255.0988
+"Height, Year 7","fixed",NA,"F/W x DF",0.233,0.2742,0.8498,0.3962,255.2926
+"Height, Year 7","fixed",NA,"W x DF",-0.1303,0.3007,-0.4333,0.6652,255.0181
+"Height, Year 7","fixed",NA,"Species Effect",-1.6128,0.2472,-6.5242,0,255.2298
+"Height, Year 7","fixed",NA,"F/NW x WRC",2.0906,0.3213,6.5073,0,255.2582
+"Height, Year 7","fixed",NA,"F/W x WRC",1.4724,0.3179,4.6314,0,255.2228
+"Height, Year 7","fixed",NA,"W x WRC",0.154,0.3679,0.4186,0.6759,255.027
+"Height, Year 7","ran_pars","plot","sd__(Intercept)",0.4997,NA,NA,NA,NA
+"Height, Year 7","ran_pars","Residual","sd__Observation",0.7639,NA,NA,NA,NA
+"Diameter, Year 7","fixed",NA,"Intercept",32.1307,5.7313,5.6061,1e-04,11.492
+"Diameter, Year 7","fixed",NA,"F/NW x DF",-12.1489,5.9108,-2.0554,0.041,226.737
+"Diameter, Year 7","fixed",NA,"F/W x DF",-2.257,6.0938,-0.3704,0.7114,227.2229
+"Diameter, Year 7","fixed",NA,"W x DF",-7.6658,6.6158,-1.1587,0.2478,225.994
+"Diameter, Year 7","fixed",NA,"Species Effect",-21.7394,6.0848,-3.5727,4e-04,227.3725
+"Diameter, Year 7","fixed",NA,"F/NW x WRC",36.8355,7.4866,4.9202,0,227.2393
+"Diameter, Year 7","fixed",NA,"F/W x WRC",30.0794,7.5465,3.9859,1e-04,227.1837
+"Diameter, Year 7","fixed",NA,"W x WRC",6.3772,8.8305,0.7222,0.4709,226.1157
+"Diameter, Year 7","ran_pars","plot","sd__(Intercept)",5.9804,NA,NA,NA,NA
+"Diameter, Year 7","ran_pars","Residual","sd__Observation",16.1489,NA,NA,NA,NA

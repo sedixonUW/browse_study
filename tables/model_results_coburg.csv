@@ -1,0 +1,9 @@
+"response","term","estimate","std.error","statistic","p.value","parameter","method"
+"Height, Year 5","Intercept",3.0315,0.0475,63.7584,0,NA,NA
+"Height, Year 5","Vexar Treatment",-0.6286,0.0761,-8.2567,0,NA,NA
+"Deform, Year 5",NA,NA,NA,37.3595,0,1,"Pearson's Chi-squared test with Yates' continuity correction"
+"Deform, Year 5",NA,NA,NA,0.2855,0.5931,1,"Pearson's Chi-squared test with Yates' continuity correction"
+"Diameter, Year 5","Intercept",35.4917,0.7839,45.2785,0,NA,NA
+"Diameter, Year 5","Vexar Treatment",-9.3369,1.2849,-7.2664,0,NA,NA
+"Number of Leaders, Year 5","Intercept",0.4282,0.0442,9.6802,0,NA,NA
+"Number of Leaders, Year 5","Vexar Treatment",-0.0758,0.0725,-1.0452,0.2959,NA,NA

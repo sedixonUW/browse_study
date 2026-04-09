@@ -78,7 +78,8 @@ levels(silv_d_2019$graze1is_yes)
 # making NW the control
 silv_d_2019$treatment <- relevel(factor(silv_d_2019$treatment), ref = "NW")
 
-silv_d_2019_mod_final <- glmer(graze1is_yes ~ treatment*species + (1|plot), silv_d_2019, family = "binomial")
+silv_d_2019_mod_final <- glmer(graze1is_yes ~ treatment*species + (1|plot), silv_d_2019, 
+                               family = "binomial", control = glmerControl(optimizer = "bobyqa")) #used bobyqa to aid in convergence here
 
 summary(silv_d_2019_mod_final) #no significance
 
@@ -163,8 +164,6 @@ silv_d_2024_deform_mod_final <- glmer(deformity_y_n ~ treatment*species + (1|plo
 summary(silv_d_2024_deform_mod_final)
 
 #Positive coefficient → that treatment has higher odds of deformity compared to the reference
-#treatment F/NW sig reduced deformity
-#treatment F/W sig reduced deformity 
 
 check_resids(silv_d_2024_deform_mod_final)
 simulationOutput <- simulateResiduals(silv_d_2024_deform_mod_final)
@@ -196,7 +195,7 @@ colnames(silv_d_2024_deform)
 #     .groups = "drop"
 #   )
 
-tapply(silv_d_2024_rotate$total_seedlings, silv_d_2024_rotate$treatment, FUN = "mean")
+#tapply(silv_d_2024_rotate$total_seedlings, silv_d_2024_rotate$treatment, FUN = "mean")
 # NW      F/NW       F/W         W 
 # 7.666667 13.833333 16.666667  6.600000 
 #more you have in the denominator, more precision you have in proportion
@@ -220,7 +219,7 @@ check_resids(silv_d_2024_rotate_mod_final)
 #dharma check resids
 simulationOutput <- simulateResiduals(silv_d_2024_rotate_mod_final)
 plot(simulationOutput)
-#DEVIATION IS SIG HERE
+#DEVIATION IS SIG HERE but we think it is okay
 
 table(silv_d_2024_deform$treatment, silv_d_2024_deform$rotation_risk_y_n)
 
@@ -289,14 +288,15 @@ sum(residuals(n_leaders_mod_2024, type= "pearson")^2) / df.residual(n_leaders_mo
 
 my_theme <- theme_bw() +
   theme(
-    axis.title.x = element_text(size = 13),
-    axis.title.y = element_text(size = 13),
-    axis.text    = element_text(size = 11),
+    axis.title.x = element_text(size = 16),
+    axis.title.y = element_text(size = 18),
+    axis.text    = element_text(size = 16),
     axis.text.x  = element_text(angle = 30, hjust = 1),
     legend.position = "bottom",
     legend.title = element_blank(),
     legend.text  = element_text(size = 11),
-    legend.key    = element_rect(fill = "white", color = NA)  # add this line
+    legend.key    = element_rect(fill = "white", color = NA),
+    aspect.ratio = 1.2
   )
 
 treatment_colors <- c(
@@ -338,7 +338,7 @@ p_browse_2019 <- ggplot(browse_summary_2019,
                    pattern_spacing = 0.03,
                    color = "black",
                    show.legend = TRUE) +
-  annotate("text", x = 2.5, y = 90,
+  annotate("text", x = 2.5, y = 98,
            label = "All effects: ns",
            size = 4, hjust = 0.5) +
   scale_fill_manual(values = treatment_colors, labels = treatment_labels, guide = "none") +
@@ -426,7 +426,7 @@ p_deform_2024 <- ggplot(deform_summary_2024,
                    pattern_spacing = 0.03,
                    color = "black",
                    show.legend = TRUE) +
-  annotate("text", x = 2.5, y = 90,
+  annotate("text", x = 2.5, y = 98,
            label = "All effects: ns",
            size = 4, hjust = 0.5) +
   scale_fill_manual(values = treatment_colors, labels = treatment_labels, guide = "none") +
@@ -457,9 +457,9 @@ p_rotate_2024 <- ggplot(rotate_summary_2024,
                    pattern_spacing = 0.03,
                    color = "black",
                    show.legend = TRUE) +
-  # annotate("text", x = 2.5, y = 90,
-  #          label = "NEED TO ADD",
-  #          size = 4, hjust = 0.5) +
+  annotate("text", x = 2.5, y = 98,
+           label = "F/W treatment: p = 0.026 | All other effects: ns",
+           size = 4, hjust = 0.5) +
   scale_fill_manual(values = treatment_colors, labels = treatment_labels, guide = "none") +
   scale_pattern_manual(values = species_pattern, labels = species_labels) +
   scale_x_discrete(labels = treatment_labels) +
@@ -521,24 +521,24 @@ p_diam_2024 <- ggplot(silv_d_2024diam_df,
   scale_pattern_manual(values = species_pattern, labels = species_labels) +
   scale_x_discrete(labels = treatment_labels) +
   labs(x = "", y = "Diameter (mm) in Year 7", title = "", pattern = "") +
-  my_theme + theme(legend.position = "none")
+  my_theme
 
 # 5.8) Number of leaders 2024
-p_leaders_2024 <- ggplot(silv_d_2024,
-                         aes(x = treatment, y = number_of_leaders,
-                             fill = treatment, pattern = species)) +
-  geom_boxplot_pattern(position = position_dodge(width = 0.8),
-                       pattern_fill  = "black",
-                       pattern_angle = 45,
-                       pattern_density = 0.15,
-                       pattern_spacing = 0.03,
-                       color = "black",
-                       show.legend = TRUE) +
-  scale_fill_manual(values = treatment_colors, labels = treatment_labels, guide = "none") +
-  scale_pattern_manual(values = species_pattern, labels = species_labels) +
-  scale_x_discrete(labels = treatment_labels) +
-  labs(x = "", y = "Number of Leaders in Year 7", title = "", pattern = "") +
-  my_theme + theme(legend.position = "none")
+# p_leaders_2024 <- ggplot(silv_d_2024,
+#                          aes(x = treatment, y = number_of_leaders,
+#                              fill = treatment, pattern = species)) +
+#   geom_boxplot_pattern(position = position_dodge(width = 0.8),
+#                        pattern_fill  = "black",
+#                        pattern_angle = 45,
+#                        pattern_density = 0.15,
+#                        pattern_spacing = 0.03,
+#                        color = "black",
+#                        show.legend = TRUE) +
+#   scale_fill_manual(values = treatment_colors, labels = treatment_labels, guide = "none") +
+#   scale_pattern_manual(values = species_pattern, labels = species_labels) +
+#   scale_x_discrete(labels = treatment_labels) +
+#   labs(x = "", y = "Number of Leaders in Year 7", title = "", pattern = "") +
+#   my_theme + theme(legend.position = "none")
 
 # ─────────────────────────────────────────────
 # Combined figure
@@ -548,19 +548,37 @@ p_leaders_2024 <- ggplot(silv_d_2024,
 # ─────────────────────────────────────────────
 library(patchwork)
 
-fig_combined <-
-  (p_browse_2019 | p_ht_2019 | p_diam_2019 | plot_spacer()) /
-  (p_deform_2024 | p_rotate_2024 | p_ht_2024 | p_diam_2024) +
-  plot_layout(guides = "collect") +
+# fig_combined <-
+#   (p_browse_2019 | p_ht_2019 | p_diam_2019 | plot_spacer()) /
+#   (p_deform_2024 | p_rotate_2024 | p_ht_2024 | p_diam_2024) +
+#   plot_layout(guides = "collect") +
+#   plot_annotation(theme = theme(legend.position = "none"))
+# 
+# fig_combined
+# 
+# fig_combined_save <- patchwork::wrap_elements(fig_combined)
+# 
+# 
+
+# Each plot is 2 characters wide.
+# Row 1: 3 plots (6 units) + 3 spacers (6 units) = 12 total
+# Row 2: 4 plots (8 units) + 2 spacers (4 units) = 12 total
+design <- "
+  #112233#
+  44556677
+"
+
+fig_combined <- 
+  (p_browse_2019 + p_ht_2019 + p_diam_2019 + 
+     p_deform_2024 + p_rotate_2024 + p_ht_2024 + p_diam_2024) +
+  #plot_layout(design = design, guides = "collect") +
+  plot_layout(design = design, guides = "collect", widths = c(1,1,1,1), heights = c(1,1)) +
   plot_annotation(theme = theme(legend.position = "none"))
 
-fig_combined
-
-fig_combined_save <- patchwork::wrap_elements(fig_combined)
 
 
 ggsave("figures/silv_demo_combined.png",
-       plot = fig_combined_save, dpi = 800, width = 20, height = 12, units = "in")
+       plot = fig_combined, dpi = 800, width = 20, height = 12, units = "in")
 
 
 ##################
@@ -568,26 +586,26 @@ ggsave("figures/silv_demo_combined.png",
 library(broom.mixed)
 
 silv_model_table <- bind_rows(
-  tidy(silv_d_2019_mod_final)       |> mutate(response = "Survival 2019"),
-  tidy(silv_d_2019_ht_mod_final)    |> mutate(response = "Height 2019"),
-  tidy(silv_d_2019_diam_mod_final)  |> mutate(response = "Diameter 2019"),
-  tidy(silv_d_2024_deform_mod_final)|> mutate(response = "Deformity 2024"),
-  tidy(silv_d_2024_rotate_mod_final)|> mutate(response = "Rotation Risk 2024"),
-  tidy(silv_d_2024_ht_mod_final)    |> mutate(response = "Height 2024"),
-  tidy(silv_d_2024_diam_mod_final)  |> mutate(response = "Diameter 2024")
+  tidy(silv_d_2019_mod_final)       |> mutate(response = "Survival, Year 2"),
+  tidy(silv_d_2019_ht_mod_final)    |> mutate(response = "Height, Year 2"),
+  tidy(silv_d_2019_diam_mod_final)  |> mutate(response = "Diameter, Year 2"),
+  tidy(silv_d_2024_deform_mod_final)|> mutate(response = "Deformity, Year 7"),
+  tidy(silv_d_2024_rotate_mod_final)|> mutate(response = "Rotation, Year 7"),
+  tidy(silv_d_2024_ht_mod_final)    |> mutate(response = "Height, Year 7"),
+  tidy(silv_d_2024_diam_mod_final)  |> mutate(response = "Diameter, Year 7")
 ) |>
   mutate(term = recode(term,
                        "(Intercept)"                = "Intercept",
-                       "treatmentF/NW"              = "Treatment F/NW",
-                       "treatmentF/W"               = "Treatment F/W",
-                       "treatmentW"                 = "Treatment W",
+                       "treatmentF/NW"              = "F/NW x DF",
+                       "treatmentF/W"               = "F/W x DF",
+                       "treatmentW"                 = "W x DF",
                        "speciesWRC"                 = "Species Effect",
-                       "treatmentF/NW:speciesWRC"   = "F/NW x Species",
-                       "treatmentF/W:speciesWRC"    = "F/W x Species",
-                       "treatmentW:speciesWRC"      = "W x Species"
+                       "treatmentF/NW:speciesWRC"   = "F/NW x WRC",
+                       "treatmentF/W:speciesWRC"    = "F/W x WRC",
+                       "treatmentW:speciesWRC"      = "W x WRC"
   )) |>
   mutate(across(where(is.numeric), ~round(., 4))) |>
-  select(response, everything())
+  dplyr::select(response, everything())
 
 #View(silv_model_table)
 

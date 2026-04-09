@@ -1,0 +1,49 @@
+response,effect,group,term,estimate,std.error,statistic,p.value,df
+"Browse, Month 4",fixed,NA,Intercept,0.5368,0.2695,1.9918,0.0464,NA
+"Browse, Month 4",fixed,NA,SS Co-Planting,-0.8903,0.2717,-3.2764,0.0011,NA
+"Browse, Month 4",fixed,NA,Flexible Fencing,-4.7149,0.7425,-6.3504,0,NA
+"Browse, Month 4",fixed,NA,Plantskydd,-2.2153,0.3189,-6.9459,0,NA
+"Browse, Month 4",fixed,NA,Vexar,-4.7149,0.7424,-6.3506,0,NA
+"Browse, Month 4",ran_pars,rep,sd__(Intercept),0.4591,NA,NA,NA,NA
+"Mortality, Month 4",fixed,NA,Intercept,-1.3685,0.7897,-1.733,0.0831,NA
+"Mortality, Month 4",fixed,NA,SS Co-Planting,0.1522,0.3865,0.3938,0.6938,NA
+"Mortality, Month 4",fixed,NA,Flexible Fencing,-0.2384,0.3954,-0.6029,0.5466,NA
+"Mortality, Month 4",fixed,NA,Plantskydd,0.5784,0.3791,1.5259,0.127,NA
+"Mortality, Month 4",fixed,NA,Vexar,0.7758,0.3764,2.0611,0.0393,NA
+"Mortality, Month 4",ran_pars,rep,sd__(Intercept),1.8051,NA,NA,NA,NA
+"Height, Month 4",fixed,NA,Intercept,30.849,1.6174,19.073,0,14.5069
+"Height, Month 4",fixed,NA,SS Co-Planting,3.9537,1.6517,2.3937,0.017,548.3495
+"Height, Month 4",fixed,NA,Flexible Fencing,7.5515,1.6475,4.5837,0,548.1757
+"Height, Month 4",fixed,NA,Plantskydd,8.3458,1.6589,5.0309,0,548.1828
+"Height, Month 4",fixed,NA,Vexar,8.5509,1.648,5.1887,0,548.3503
+"Height, Month 4",ran_pars,rep,sd__(Intercept),2.7602,NA,NA,NA,NA
+"Height, Month 4",ran_pars,Residual,sd__Observation,12.3815,NA,NA,NA,NA
+"Diameter, Month 4",fixed,NA,Intercept,4.365,0.2698,16.1788,0,7.7581
+"Diameter, Month 4",fixed,NA,SS Co-Planting,0.1098,0.192,0.5718,0.5677,547.1042
+"Diameter, Month 4",fixed,NA,Flexible Fencing,0.7756,0.191,4.0608,1.00E-04,547.0321
+"Diameter, Month 4",fixed,NA,Plantskydd,0.4232,0.1923,2.2003,0.0282,547.034
+"Diameter, Month 4",fixed,NA,Vexar,0.3262,0.1911,1.7073,0.0883,547.1004
+"Diameter, Month 4",ran_pars,rep,sd__(Intercept),0.5729,NA,NA,NA,NA
+"Diameter, Month 4",ran_pars,Residual,sd__Observation,1.4354,NA,NA,NA,NA
+"Deform Risk, Year 10",fixed,NA,Intercept,0.2838,0.4574,0.6205,0.5349,NA
+"Deform Risk, Year 10",fixed,NA,SS Co-Planting,-0.647,0.3945,-1.6403,0.1009,NA
+"Deform Risk, Year 10",fixed,NA,Flexible Fencing,1.9167,0.5095,3.7619,2.00E-04,NA
+"Deform Risk, Year 10",fixed,NA,Vexar,-0.352,0.4018,-0.876,0.381,NA
+"Deform Risk, Year 10",ran_pars,plot,sd__(Intercept),0.6714,NA,NA,NA,NA
+"Rotion Risk, Year 10",fixed,NA,Intercept,-4.4428,1.0378,-4.2811,0,NA
+"Rotion Risk, Year 10",fixed,NA,SS Co-Planting,0.5566,1.4224,0.3913,0.6956,NA
+"Rotion Risk, Year 10",fixed,NA,Flexible Fencing,2.7442,1.0777,2.5464,0.0109,NA
+"Rotion Risk, Year 10",fixed,NA,Vexar,0.6197,1.4244,0.435,0.6635,NA
+"Rotion Risk, Year 10",ran_pars,plot,sd__(Intercept),0.3203,NA,NA,NA,NA
+"Height, Year 10",fixed,NA,Intercept,2.7917,0.1612,17.3224,6.00E-04,2.8468
+"Height, Year 10",fixed,NA,SS Co-Planting,-0.1628,0.1379,-1.1805,0.2391,214.9978
+"Height, Year 10",fixed,NA,Flexible Fencing,0.1704,0.1357,1.2556,0.2106,215.4296
+"Height, Year 10",fixed,NA,Vexar,0.4108,0.1421,2.8911,0.0042,215.1056
+"Height, Year 10",ran_pars,plot,sd__(Intercept),0.2369,NA,NA,NA,NA
+"Height, Year 10",ran_pars,Residual,sd__Observation,0.7519,NA,NA,NA,NA
+"Diameter, Year 10",fixed,NA,Intercept,33.2369,1.9673,16.8945,0,6.3613
+"Diameter, Year 10",fixed,NA,SS Co-Planting,-6.875,2.9916,-2.2981,0.0225,208.0809
+"Diameter, Year 10",fixed,NA,Flexible Fencing,8.5457,2.974,2.8734,0.0045,209.6361
+"Diameter, Year 10",fixed,NA,Vexar,8.9679,3.0602,2.9305,0.0038,208.4241
+"Diameter, Year 10",ran_pars,plot,sd__(Intercept),1.3751,NA,NA,NA,NA
+"Diameter, Year 10",ran_pars,Residual,sd__Observation,16.0869,NA,NA,NA,NA

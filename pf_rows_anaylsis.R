@@ -2,13 +2,14 @@
 library(janitor)
 library(readxl)
 library(tidyverse)
-
 library(dplyr)
 library(lme4)
 library(pbkrtest)
 library(faraway)
 library(ggplot2)
 library(ggsignif)
+library(ggpattern)
+
 
 source("./functions/check_resids_func.R")
 
@@ -17,8 +18,8 @@ Rows_2024 <- read_excel("./analysis_ready_data/pack_forest_rows/Pack Rows Data 2
 Rows_2024 <- clean_names(Rows_2024)
 
 #ht is in cm, diameter is in mm
-Rows_2015 <- read.csv("./analysis_ready_data/pack_forest_rows/2015_meas_clean.csv")
-
+Rows_2015 <- read.csv("./analysis_ready_data/pack_forest_rows/2015_meas_cleanv2.csv")
+Rows_2015 <- clean_names(Rows_2015)
 ######################
 #1.1 2015 Data Clean
 ######################
@@ -26,34 +27,51 @@ Rows_2015 <- read.csv("./analysis_ready_data/pack_forest_rows/2015_meas_clean.cs
 #need to clean this one up
 colnames(Rows_2015)
 
-colnames(Rows_2015) <- c(
-  "rep", "row", "treat_name", "concat_treatment",
-  "tree_nmbr", "species",
-  # planting
+# colnames(Rows_2015) <- c(
+#   "rep", "row", "treat_name", "concat_treatment",
+#   "tree_nmbr", "species",
+#   # planting
+#   "plant_date", "plant_ht", "plant_diam",
+#   # week 1
+#   "wk1_date", "wk1_browse", "wk1_mort", "wk1_ht", "wk1_initial_current_ht",
+#   "wk1_browse_loss", "wk1_browse_freq", "wk1_mort_count",
+#   # 2 month
+#   "month2_date", "month2_browse", "month2_mort", "month2_ht", "month2_current_ht",
+#   "month2_browse_loss", "month2_browse_freq", "month2_mort_count",
+#   # 4 month
+#   "month4_date", "month4_browse", "month4_mort", "month4_ht", "month4_current_ht",
+#   "month4_browse_loss", "month4_browse_freq", "month4_mort_count"
+# )
+
+colnames(Rows_2015) <-c("rep", "row", "treat_name", "tree_nmbr",
+  "species",
+  #planting
   "plant_date", "plant_ht", "plant_diam",
-  # week 1
-  "wk1_date", "wk1_browse", "wk1_mort", "wk1_ht", "wk1_initial_current_ht",
-  "wk1_browse_loss", "wk1_browse_freq", "wk1_mort_count",
-  # 2 month
-  "month2_date", "month2_browse", "month2_mort", "month2_ht", "month2_current_ht",
-  "month2_browse_loss", "month2_browse_freq", "month2_mort_count",
-  # 4 month
-  "month4_date", "month4_browse", "month4_mort", "month4_ht", "month4_current_ht",
-  "month4_browse_loss", "month4_browse_freq", "month4_mort_count"
-)
+  #week 1
+  "wk1_date", "wk1_browse_y_n", "wk1_mort_y_n", "wk1_ht",
+  #2 month
+  "month2_date", "month2_browse_y_n_1", "month2_mort_y_n_1", "month2_vexar_damage_failure",
+  "month2_ht_2",
+  #month 4
+  "month4_date", "month4_browse_y_n", "month4_mort_y_n",
+  "month4_vexar_damage_failure_1", "month4_ht", "month4_diam")     
 
 #there were a couple extra rows we need to drop 
 Rows_2015 <- Rows_2015 %>%
   filter(!is.na(rep) & rep != "")
 
-# do this BEFORE as.factor()
+# cleaning up month four mort
 Rows_2015$month4_mort <- as.character(Rows_2015$month4_mort)
 Rows_2015$month4_mort[is.na(Rows_2015$month4_mort) | Rows_2015$month4_mort == ""] <- "N"
 Rows_2015$month4_mort <- as.factor(Rows_2015$month4_mort)
 
-unique(Rows_2015$treat_name)
+# cleaning up month four browse
+Rows_2015$month4_browse_y_n <- as.character(Rows_2015$month4_browse_y_n)
+Rows_2015$month4_browse_y_n[is.na(Rows_2015$month4_browse_y_n) | Rows_2015$month4_browse_y_n == ""] <- "N"
+Rows_2015$month4_browse_y_n <- as.factor(Rows_2015$month4_browse_y_n)
 
 Rows_2015$treat_name <- gsub("CO-PLANTING", "CO_PLANTING", Rows_2015$treat_name)
+
 
 #########
 #1.2 WRC 4 month mortality 2015
@@ -69,7 +87,7 @@ WRC_Rows_2015 <- Rows_2015 %>%
 levels(factor(WRC_Rows_2015$treat_name))
 unique(WRC_Rows_2015$treat_name)
 
-wrc_mort_mod_2015_final <- glmer(month4_mort_count ~ treat_name + (1|rep), WRC_Rows_2015, family = "binomial")
+wrc_mort_mod_2015_final <- glmer(month4_mort ~ treat_name + (1|rep), WRC_Rows_2015, family = "binomial")
 
 summary(wrc_mort_mod_2015_final) #vexar sig
 
@@ -78,6 +96,19 @@ check_resids(wrc_mort_mod_2015_final) #okay for binomial
 simulationOutput <- simulateResiduals(wrc_mort_mod_2015_final)
 plot(simulationOutput)
 
+
+#########
+#1.25 WRC 4 month browse 2015
+##########
+
+wrc_browse_mod_2015_final <- glmer(month4_browse_y_n ~ treat_name + (1|rep), WRC_Rows_2015, family = "binomial")
+
+summary(wrc_browse_mod_2015_final) #vexar sig
+
+check_resids(wrc_browse_mod_2015_final) #okay for binomial 
+
+simulationOutput <- simulateResiduals(wrc_browse_mod_2015_final)
+plot(simulationOutput)
 
 #########
 #1.3 WRC 4 month height 2015
@@ -95,6 +126,26 @@ summary(wrc_ht_mod_2015_final) #all sig
 
 check_resids(wrc_ht_mod_2015_final) #much better here 
 
+
+#################
+#1.4 WRC 4 month diameter 2015
+####################
+#filer where don't have diameter 
+#filter so that we don't have any without height values
+WRC_Rows_2015_diam_vals <- WRC_Rows_2015 %>%
+  filter(!is.na(month4_diam)) %>%
+  filter(!month4_diam == 41.00) #bad measurement
+
+hist(WRC_Rows_2015_diam_vals$month4_diam)
+
+wrc_diam_mod_2015_final <- lmerTest::lmer(month4_diam ~ treat_name + (1|rep), WRC_Rows_2015_diam_vals) #mixed effect model so using lmer
+
+summary(wrc_diam_mod_2015_final) #all sig
+
+check_resids(wrc_diam_mod_2015_final) #much better here 
+
+
+
 ####################################
 #2. 2024 Data
 ####################################
@@ -106,13 +157,13 @@ t.test(diameter_mm ~ treatment,
 t.test(height_m ~ treatment, 
        data = Rows_2024 |> filter(treatment %in% c("P OR CC 1", "P OR CC 2")))
 # deformity
-chisq.test(table(Rows_2024 |> 
-                   filter(treatment %in% c("P OR CC 1", "P OR CC 2")) |>
-                   select(treatment, deformity_y_n)))
-# rotation risk
-chisq.test(table(Rows_2024 |>
-                   filter(treatment %in% c("P OR CC 1", "P OR CC 2")) |>
-                   select(treatment, rotation_risk_y_n)))
+# chisq.test(table(Rows_2024 |> 
+#                    filter(treatment %in% c("P OR CC 1", "P OR CC 2")) |>
+#                    select(treatment, deformity_y_n)))
+# # rotation risk
+# chisq.test(table(Rows_2024 |>
+#                    filter(treatment %in% c("P OR CC 1", "P OR CC 2")) |>
+#                    select(treatment, rotation_risk_y_n)))
 
 table(Rows_2024$rotation_risk_y_n, Rows_2024$treatment)
 
@@ -178,10 +229,11 @@ plot(simulationOutput)
 
 hist(WRC_2024$height_m)
 
-wrc_ht_mod_2024_final <- lmer(height_m ~ treatment + (1|plot), WRC_2024)
+wrc_ht_mod_2024_final <- lmerTest::lmer(height_m ~ treatment + (1|plot), WRC_2024)
 
-summary(wrc_ht_mod_2024_final) #sig effect of vexar on height
+summary(wrc_ht_mod_2024_final) #vexar sig
 check_resids(wrc_ht_mod_2024_final)
+
 ##################
 #2.4 Diameter 2024
 ####################
@@ -204,12 +256,66 @@ check_resids(wrc_diam_mod_2024_final)
 #3) Plotting
 ################################
 
+my_theme <- theme_bw() +
+  theme(
+    axis.title.x = element_text(size = 16),
+    axis.title.y = element_text(size = 18),
+    axis.text    = element_text(size = 16),
+    axis.text.x  = element_text(angle = 30, hjust = 1),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    legend.text  = element_text(size = 11),
+    legend.key    = element_rect(fill = "white", color = NA),
+  #  aspect.ratio = 1.2
+  )
+
 ############
+#3.05 plotting browse
+wrc_browse_mod_2015_final
+
+browse_2015 <- WRC_Rows_2015 |>
+  group_by(treat_name) |>
+  summarise(pct_browse = mean(month4_browse_y_n  == "Y") * 100) |>
+  ggplot(aes(x = treat_name, y = pct_browse, fill = treat_name)) +
+  geom_bar_pattern(stat = "identity", show.legend = FALSE,
+                   pattern = "stripe",
+                   pattern_fill = "black",
+                   pattern_angle = 45,
+                   pattern_density = 0.15,
+                   pattern_spacing = 0.03,
+                   color = "black") +
+  scale_fill_manual(values = c(
+    "WRC CTRL"    = "#0072B2",
+    "CO_PLANTING" = "#E69F00",
+    "FENCE CTRL"  = "#009E73",
+    "PLANTSKYDD"  = "#CC79A7",
+    "VEXAR"       = "#56B4E9"
+  )) +
+  scale_x_discrete(labels = c(
+    "WRC CTRL" = "Control",
+    "PLANTSKYDD"= "Plantskydd",
+    "CO_PLANTING"  = "SS Co Planting",
+    "FENCE CTRL"    = "Flexible Fencing",
+    "VEXAR"       = "Vexar"
+  )) +
+  scale_y_continuous(limits = c(0, 100)) +
+  # annotate("text", x = 4.5, y = 97,
+  #          label = format_p(p_mort_2015),
+  #          color = "black", size = 5, hjust = 0, fontface = "bold.italic") +
+  labs(x = "",
+       y = "Browse (%) in Month 4") +
+  theme_bw() +
+  annotate("text", x = 3, y = 96,
+           label = "All effects: p < 0.05",
+           size = 4, hjust = 0.5) +
+  my_theme
+
 #3.1) Plotting 2015 Mortality 
+summary(wrc_mort_mod_2015_final) #vexar sig
 
 mort_2015 <- WRC_Rows_2015 |>
   group_by(treat_name) |>
-  summarise(pct_mort = mean(month4_mort_count == 1) * 100) |>
+  summarise(pct_mort = mean(month4_mort == "Y") * 100) |>
   ggplot(aes(x = treat_name, y = pct_mort, fill = treat_name)) +
   geom_bar_pattern(stat = "identity", show.legend = FALSE,
                    pattern = "stripe",
@@ -239,12 +345,10 @@ mort_2015 <- WRC_Rows_2015 |>
   labs(x = "",
        y = "Mortality (%) in Month 4") +
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  )
+  annotate("text", x = 3, y = 96,
+           label = "Vexar: p = 0.039\nAll other effects: ns",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 mort_2015
 ############
@@ -274,23 +378,59 @@ ht_2015 <- ggplot(WRC_Rows_2015, aes(x = treat_name, y = month4_ht, fill = treat
     "FENCE CTRL"    = "Flexible Fencing",
     "VEXAR"       = "Vexar"
   )) +
-  # annotate("text", x = 4.5, y = max(WRC_Rows_2015$month4_ht, na.rm = TRUE),
-  #          label = format_p(p_ht_2015),
-  #          color = "black", size = 5, hjust = 0) +
+  #scale_y_continuous(expand = expansion(mult = c(0.05, 0.1))) +
   labs(x = "",
        y = "Height (cm) in Month 4") +
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  ) + annotate("text", x = c(1, 2, 3, 4, 5), 
-              y = 79,
-              label = c("", "*", "", "***", "***"),  # replace with your results
-              size = 10) 
+  annotate("text", x = 3, y = max(WRC_Rows_2015$month4_ht, na.rm = TRUE)*1.12,
+           label = "All effects: p < 0.05",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 ht_2015
+
+##### 
+#Plotting 2015 diameter
+#####
+
+
+#hist(WRC_Rows_2015_diam_vals$month4_diam)
+summary(wrc_diam_mod_2015_final) #all s
+
+diam_2015 <- ggplot(WRC_Rows_2015_diam_vals, aes(x = treat_name, y = month4_diam, fill = treat_name)) +
+  geom_boxplot_pattern(show.legend = FALSE,
+                       pattern = "stripe",
+                       pattern_fill = "black",
+                       pattern_angle = 45,
+                       pattern_density = 0.15,
+                       pattern_spacing = 0.03,
+                       color = "black") +
+  scale_fill_manual(values = c(
+    "WRC CTRL"    = "#0072B2",
+    "CO_PLANTING" = "#E69F00",
+    "FENCE CTRL"  = "#009E73",
+    "PLANTSKYDD"  = "#CC79A7",
+    "VEXAR"       = "#56B4E9"
+  )) +
+  scale_x_discrete(labels = c(
+    "WRC CTRL" = "Control",
+    "PLANTSKYDD"= "Plantskydd",
+    "CO_PLANTING"  = "SS Co Planting",
+    "FENCE CTRL"    = "Flexible Fencing",
+    "VEXAR"       = "Vexar"
+  )) +
+  #scale_y_continuous(expand = expansion(mult = c(0.05, 0.1))) +
+  labs(x = "",
+       y = "Diameter (mm) in Month 4") +
+  theme_bw() +
+  annotate("text", x = 3, y = max(WRC_Rows_2015_diam_vals$month4_diam, na.rm = TRUE)*1.12,
+           label = "Flexible fencing and plantskydd: p < 0.05",
+           size = 4, hjust = 0.5) +
+  my_theme
+
+
+
+
 ############
 #3.3) Plotting 2024 deformity 
 
@@ -333,22 +473,17 @@ deform_2024 <- WRC_2024 |>
   labs(x = "",
        y = "Deformity (%) in Year 10") +
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  )+  annotate("text", x = c(1, 2, 3, 4), 
-               y = 92,
-               label = c("", "", "***", ""),  # replace with your results
-               size = 10) 
+  annotate("text", x = 2.5, y = 96,
+           label = "Flexible fencing: p < 0.001\nAll other effects: ns",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 deform_2024
 
 ############
 #3.4) 2024 Rotation Risk
 
-summary(wrc_rotate_mod_2024_final) #not sig
+summary(wrc_rotate_mod_2024_final) #FC sig
 
 rotate_2024 <- WRC_2024 |>
   group_by(treatment) |>
@@ -377,15 +512,10 @@ rotate_2024 <- WRC_2024 |>
   labs(x = "",
        y = "Rotation risk (%) in Year 10") +
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  ) +  annotate("text", x = c(1, 2, 3, 4), 
-                y = 20,
-                label = c("", "", "*", ""),  # replace with your results
-                size = 10) 
+  annotate("text", x = 2.5, y = 95,
+           label = "Flexible fencing: p = 0.011\nAll other effects: ns",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 rotate_2024
 
@@ -416,17 +546,12 @@ ht_2024 <- ggplot(WRC_2024, aes(x = treatment, y = height_m, fill = treatment)) 
   )) +
   labs(x = "",
        y = "Height (m) in Year 10") +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.1))) + #little padding at top
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  )+ 
-  annotate("text", x = c(1, 2, 3, 4), 
-           y = max(WRC_2024$height_m, na.rm = TRUE) + 1,
-           label = c("", "", "", "**"),  # replace with your results
-           size = 10)
+  annotate("text", x = 2.5, y = max(WRC_2024$height_m, na.rm = TRUE) * 1.12,
+           label = "Vexar: p < 0.05\nAll other effects: ns",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 #ht_2024
 
@@ -459,16 +584,10 @@ diam_2024 <- ggplot(WRC_2024diam_df, aes(x = treatment, y = diameter_mm, fill = 
   labs(x = "",
        y = "Diameter (mm) in Year 10") +
   theme_bw() +
-  theme(
-    axis.title.x = element_text(size = 14),
-    axis.title.y = element_text(size = 14),
-    axis.text    = element_text(size = 12),
-    axis.text.x  = element_text(angle = 25, hjust = 1)
-  ) +
-  annotate("text", x = c(1, 2, 3, 4), 
-            y = max(WRC_2024diam_df$diameter_mm, na.rm = TRUE) + 10,
-            label = c("", "*", "*", "**"),  # replace with your results
-            size = 10)
+  annotate("text", x = 2.5, y = max(WRC_2024diam_df$diameter_mm, na.rm = TRUE) * 1.12,
+           label = "All effects: p < 0.05",
+           size = 4, hjust = 0.5) +
+  my_theme
 
 diam_2024
 
@@ -476,17 +595,61 @@ diam_2024
 
 library(patchwork)
 
-six_plots <- (mort_2015 + ht_2015 + deform_2024) /
-  (rotate_2024 + diam_2024 + ht_2024)
+six_plots <- (browse_2015 + mort_2015 + ht_2015 + diam_2015) /
+  (deform_2024 + rotate_2024 +  ht_2024 + diam_2024 )
 
 # Display
 six_plots
 
 # Save (same output path you used earlier, adjust name as desired)
-ggsave(
-  filename = "figures/PF_row_all.png",
-  plot = six_plots, dpi = 800, width = 16, height = 12, units = "in"
-)
+# ggsave(
+#   filename = "figures/PF_row_all.png",
+#   plot = six_plots, dpi = 800, width = 22, height = 12, units = "in"
+# )
+
+eight_plots <- wrap_plots(list(browse_2015, mort_2015, ht_2015, diam_2015,
+                               deform_2024, rotate_2024, ht_2024, diam_2024),
+                          nrow = 2, ncol = 4)
+
+ggsave("figures/PF_row_all.png",
+       plot = eight_plots, dpi = 800, width = 24, height = 12, units = "in")
 
 
+
+#TABLES##
+wrc_browse_mod_2015_final
+
+model_table <- bind_rows(
+  tidy(wrc_browse_mod_2015_final)           |> mutate(response = "Browse, Month 4"),
+  tidy(wrc_mort_mod_2015_final)           |> mutate(response = "Mortality, Month 4"),
+  tidy(wrc_ht_mod_2015_final)           |> mutate(response = "Height, Month 4"),
+  tidy(wrc_diam_mod_2015_final)           |> mutate(response = "Diameter, Month 4"),
+  tidy(wrc_deform_mod_2024_final)           |> mutate(response = "Deform Risk, Year 10"),
+  tidy(wrc_rotate_mod_2024_final)           |> mutate(response = "Rotion Risk, Year 10"),
+  tidy(wrc_ht_mod_2024_final)  |> mutate(response = "Height, Year 10"),
+  tidy(wrc_diam_mod_2024_final) |> mutate(response = "Diameter, Year 10"),
+  
+) |> #change term names
+  mutate(term = recode(term,
+                       "treatmentCP"            = "SS Co-Planting",
+                       "treatmentFC"            = "Flexible Fencing",
+                       "treatmentV"            = "Vexar",
+                       "(Intercept)"         = "Intercept",
+                       "treat_nameCO_PLANTING"            = "SS Co-Planting",
+                       "treat_nameFENCE CTRL"            = "Flexible Fencing",
+                       "treat_nameVEXAR"            = "Vexar",
+                       "treat_namePLANTSKYDD"         = "Plantskydd"
+  )) |>
+  mutate(across(where(is.numeric), ~round(., 4))) |>
+  dplyr::select(response, everything())
+
+#View(model_table)
+#model_table$term
+
+write.csv(model_table, "../Browse_analysis/tables/model_results_row_plots.csv", row.names = FALSE)
+
+wrc_diam_mod_2024_final
+wrc_mort_mod_2015_final
+
+colnames(WRC_2024)
 
